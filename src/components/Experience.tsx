@@ -21,7 +21,7 @@ const experiences: ExperienceItem[] = [
     achievements: [
       "Spearheaded the development of a cloud-native data integration platform on Google Cloud Platform (GCP) that ingested 150+ education formats via secure APIs/SFTP into BigQuery, which reduced database load by 40%.",
       "Fortified data security by containerizing SFTP servers with Docker and Terraform; implemented strict IP allow-lists and key-based authentication, resolving 4 critical vulnerabilities.",
-      "Engineered a Golang ingestion pipeline in GCP, processing 45+GB zip files and encoding thousands, reducing CTO/support weekend overtime by 10+ hours monthly, and improving application availability.",
+      "Engineered a Golang ingestion pipeline in GCP, processing 45+GB zip files and encoding thousands, reducing manual processing by 10+ hours monthly, and improving application availability.",
       "Authored detailed documentation for GCP cloud infrastructure utilizing Terraform, slashing new engineer onboarding time by 50% and accelerating project integration by 30% within the team.",
       "Led the creation of detailed API documentation, including SFTP protocols, enabling new engineers to deploy code within the first week, improving initial productivity.",
       "Developed a structured behavioral interview question set, decreasing time-to-hire by 15% for Software and Data Engineer roles across six-round interview processes; improved candidate quality scores by 20%.",
