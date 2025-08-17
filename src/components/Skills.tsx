@@ -43,8 +43,8 @@ const allSkills = [
   { name: "DataDog", category: "observability", color: "purple" },
   
   // Emerging Tech
-  { name: "MLOps, category: "emerging", color: "orange" },
-  { name: "Agentic AI, category: "emerging", color: "orange" },
+  { name: "MLOps", category: "emerging", color: "orange" },
+  { name: "Agentic AI", category: "emerging", color: "orange" },
   { name: "Metal Performance Shaders", category: "emerging", color: "orange" },
   { name: "Gradient Descent", category: "emerging", color: "orange" },
 ]
