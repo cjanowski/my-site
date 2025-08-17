@@ -12,6 +12,7 @@ const navItems = [
   { name: 'Projects', href: '#projects' },
   { name: 'Education', href: '#education' },
   { name: 'Thor', href: '#thor' },
+  { name: 'Live Stats', href: '#live-stats' },
 ]
 
 export default function Navigation() {
