@@ -31,7 +31,7 @@ export default function Summary() {
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="glass-effect rounded-3xl p-8 lg:p-12"
+            className="liquid-card rounded-3xl p-8 lg:p-12"
           >
             <p className="text-lg lg:text-xl leading-relaxed text-apple-gray-600 font-medium">
               Software engineer with over{' '}
@@ -52,17 +52,17 @@ export default function Summary() {
             transition={{ duration: 0.6, delay: 0.6 }}
             className="grid md:grid-cols-3 gap-6 mt-12"
           >
-            <div className="glass-effect rounded-2xl p-6 hover:bg-white/90 transition-all duration-300">
+            <div className="liquid-card rounded-2xl p-6 transition-all duration-300 hover:scale-105">
               <div className="text-3xl font-bold text-apple-blue-500 mb-2">4+</div>
               <div className="text-apple-gray-600 font-medium">Years Experience</div>
             </div>
-            
-            <div className="glass-effect rounded-2xl p-6 hover:bg-white/90 transition-all duration-300">
+
+            <div className="liquid-card rounded-2xl p-6 transition-all duration-300 hover:scale-105">
               <div className="text-3xl font-bold text-apple-blue-500 mb-2">150+</div>
               <div className="text-apple-gray-600 font-medium">Data Formats Integrated</div>
             </div>
-            
-            <div className="glass-effect rounded-2xl p-6 hover:bg-white/90 transition-all duration-300">
+
+            <div className="liquid-card rounded-2xl p-6 transition-all duration-300 hover:scale-105">
               <div className="text-3xl font-bold text-apple-blue-500 mb-2">99.98%</div>
               <div className="text-apple-gray-600 font-medium">Platform Uptime</div>
             </div>

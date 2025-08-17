@@ -64,7 +64,7 @@ export default function Education() {
               <div className="absolute left-4 top-8 w-4 h-4 bg-apple-blue-500 rounded-full ring-4 ring-white shadow-lg" />
               
               <div className="ml-16">
-                <div className="glass-effect rounded-2xl p-6 hover:bg-white/90 transition-all duration-300">
+                <div className="liquid-card rounded-2xl p-6 transition-all duration-300 hover:scale-[1.02]">
                   <div className="flex items-start gap-4">
                     <div className="w-12 h-12 rounded-xl bg-gradient-to-r from-apple-blue-500 to-apple-blue-600 flex items-center justify-center text-white flex-shrink-0">
                       <GraduationCap className="w-6 h-6" />

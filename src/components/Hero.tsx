@@ -17,7 +17,7 @@ export default function Hero() {
             className="flex justify-center lg:justify-start order-2 lg:order-1"
           >
             <div className="relative">
-              <div className="w-96 h-96 lg:w-[28rem] lg:h-[28rem] rounded-full overflow-hidden shadow-2xl ring-8 ring-white/50">
+              <div className="w-96 h-96 lg:w-[28rem] lg:h-[28rem] rounded-full overflow-hidden shadow-liquid ring-4 ring-white/30 liquid-card">
                 <Image
                   src="/portrait.jpeg"
                   alt="Cory Janowski"
@@ -30,8 +30,8 @@ export default function Hero() {
               </div>
               <motion.div
                 animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                className="absolute -inset-4 rounded-full bg-gradient-to-r from-apple-blue-500 to-apple-gray-400 opacity-20 blur-xl"
+                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                className="absolute -inset-6 rounded-full bg-gradient-to-r from-apple-blue-500/20 via-purple-500/15 to-apple-blue-500/20 blur-2xl"
               />
             </div>
           </motion.div>
@@ -80,7 +80,7 @@ export default function Hero() {
             >
               <a
                 href="mailto:coryjanowski@gmail.com"
-                className="flex items-center gap-2 glass-effect px-4 py-3 rounded-full hover:bg-white/90 transition-all duration-300 group"
+                className="flex items-center gap-2 liquid-card px-4 py-3 rounded-full transition-all duration-300 group hover:scale-105"
               >
                 <Mail className="w-5 h-5 text-apple-blue-500 group-hover:scale-110 transition-transform" />
                 <span className="text-sm font-medium">Email</span>
@@ -88,7 +88,7 @@ export default function Hero() {
               
               <a
                 href="tel:1-260-699-7339"
-                className="flex items-center gap-2 glass-effect px-4 py-3 rounded-full hover:bg-white/90 transition-all duration-300 group"
+                className="flex items-center gap-2 liquid-card px-4 py-3 rounded-full transition-all duration-300 group hover:scale-105"
               >
                 <Phone className="w-5 h-5 text-apple-blue-500 group-hover:scale-110 transition-transform" />
                 <span className="text-sm font-medium">Call</span>
@@ -98,7 +98,7 @@ export default function Hero() {
                 href="https://www.linkedin.com/in/coryjanowski/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 glass-effect px-4 py-3 rounded-full hover:bg-white/90 transition-all duration-300 group"
+                className="flex items-center gap-2 liquid-card px-4 py-3 rounded-full transition-all duration-300 group hover:scale-105"
               >
                 <Linkedin className="w-5 h-5 text-apple-blue-500 group-hover:scale-110 transition-transform" />
                 <span className="text-sm font-medium">LinkedIn</span>
@@ -108,7 +108,7 @@ export default function Hero() {
                 href="https://github.com/cjanowski"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 glass-effect px-4 py-3 rounded-full hover:bg-white/90 transition-all duration-300 group"
+                className="flex items-center gap-2 liquid-card px-4 py-3 rounded-full transition-all duration-300 group hover:scale-105"
               >
                 <Github className="w-5 h-5 text-apple-blue-500 group-hover:scale-110 transition-transform" />
                 <span className="text-sm font-medium">GitHub</span>

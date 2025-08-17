@@ -95,7 +95,7 @@ export default function Experience() {
               
               <div className="ml-16">
                 <div 
-                  className="glass-effect rounded-2xl p-6 cursor-pointer hover:bg-white/90 transition-all duration-300"
+                  className="liquid-card rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:scale-[1.02]"
                   onClick={() => toggleExpanded(index)}
                 >
                   <div className="flex items-start justify-between">

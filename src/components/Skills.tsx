@@ -63,7 +63,7 @@ export default function Skills() {
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="glass-effect rounded-2xl p-6 hover:bg-white/90 transition-all duration-300 group"
+              className="liquid-card rounded-2xl p-6 transition-all duration-300 group hover:scale-105"
             >
               <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${category.color} flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform duration-300`}>
                 {category.icon}

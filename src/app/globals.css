@@ -16,17 +16,45 @@
 
 @layer components {
   .glass-effect {
-    @apply bg-white/80 backdrop-blur-apple border border-white/20;
+    @apply bg-glass-light backdrop-blur-glass border border-white/30 shadow-liquid;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.1) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
+
+  .glass-effect:hover {
+    @apply shadow-liquid-hover;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.35) 0%, rgba(255, 255, 255, 0.15) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+  }
+
+  .liquid-card {
+    @apply bg-glass-medium backdrop-blur-glass-heavy border border-white/20 shadow-glass;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .liquid-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  }
+
   .section-padding {
     @apply px-6 sm:px-8 lg:px-12 xl:px-16;
   }
-  
+
   .container-max {
     @apply max-w-6xl mx-auto;
   }
-  
+
   .text-gradient {
     @apply bg-gradient-to-r from-apple-gray-700 to-apple-gray-500 bg-clip-text text-transparent;
   }

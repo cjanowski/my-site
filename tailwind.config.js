@@ -25,6 +25,11 @@ module.exports = {
         'apple-blue': {
           500: '#007aff',
           600: '#0056cc',
+        },
+        'glass': {
+          'light': 'rgba(255, 255, 255, 0.25)',
+          'medium': 'rgba(255, 255, 255, 0.18)',
+          'dark': 'rgba(255, 255, 255, 0.1)',
         }
       },
       animation: {
@@ -48,6 +53,14 @@ module.exports = {
       },
       backdropBlur: {
         'apple': '20px',
+        'glass': '16px',
+        'glass-heavy': '24px',
+      },
+      boxShadow: {
+        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+        'glass-inset': 'inset 0 1px 0 0 rgba(255, 255, 255, 0.5)',
+        'liquid': '0 8px 32px 0 rgba(31, 38, 135, 0.2), 0 0 0 1px rgba(255, 255, 255, 0.1)',
+        'liquid-hover': '0 12px 40px 0 rgba(31, 38, 135, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.2)',
       }
     },
   },
