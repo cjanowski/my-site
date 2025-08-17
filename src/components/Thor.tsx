@@ -182,16 +182,16 @@ export default function Thor() {
                 <li>• Playing fetch in the park</li>
                 <li>• Long walks and adventures</li>
                 <li>• Belly rubs and cuddles</li>
-                <li>• Meeting new friends</li>
+                <li>• Code Reviews</li>
               </ul>
             </div>
             <div className="glass-tile-subtle rounded-xl p-6">
               <h4 className="font-semibold text-lg mb-3 text-gray-800">Special Traits</h4>
               <ul className="space-y-2 text-gray-600">
-                <li>• Incredibly loyal and loving</li>
+                <li>• Loves KFC Chicken</li>
                 <li>• Great with kids and other pets</li>
-                <li>• Always ready for an adventure</li>
-                <li>• The best listener you'll ever meet</li>
+                <li>• Excellent problem solver</li>
+                <li>• Encourages naps</li>
               </ul>
             </div>
           </div>
