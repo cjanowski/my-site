@@ -99,7 +99,7 @@ const projects: Project[] = [
     },
     links: {
       github: 'https://github.com/cjanowski/ragzzy',
-      demo: 'https://ragzzy-demo.vercel.app'
+      demo: 'https://ragzzy.vercel.app/'
     },
     stats: [
       { label: 'Response Time', value: '<200ms' },

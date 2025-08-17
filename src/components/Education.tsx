@@ -16,7 +16,7 @@ interface EducationItem {
 const education: EducationItem[] = [
   {
     institution: "University of the People",
-    degree: "BS, Computer Science",
+    degree: "Bachelor of Science - BS, Computer Science",
     duration: "Jan 2023 - Dec 2027",
     status: "In Progress - 3rd year",
     details: "Achievements: Student Ambassador"
