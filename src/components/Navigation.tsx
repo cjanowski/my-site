@@ -12,7 +12,6 @@ const navItems = [
   { name: 'Projects', href: '#projects' },
   { name: 'Education', href: '#education' },
   { name: 'Thor', href: '#thor' },
-  { name: 'Family', href: '#family' },
 ]
 
 export default function Navigation() {
