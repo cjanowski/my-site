@@ -34,7 +34,7 @@ const experiences: ExperienceItem[] = [
     position: "Software QA Engineer | Main App",
     duration: "Jun 2021 - Dec 2023",
     achievements: [
-      "Improved email deliverability for over 10 million emails, supporting ongoing marketing campaigns and maintaining 99.98% platform uptime with zero downtime incidents on AWS.",
+      "Maintained email deliverability for over 10 million daily fintect emails, supporting ongoing marketing campaigns and maintaining 99.98% platform uptime with zero downtime incidents on AWS.",
       "Implemented a suite of Python/SQL scripts for automated log analysis, enabling rapid detection of anomalies and reduced the number of high-priority escalations by 20% within six months. Monitored on DataDog and AWS.",
       "Optimized SQL queries and database schemas in SQL, leading to a 50% reduction in query execution times and improved overall system performance."
     ]
