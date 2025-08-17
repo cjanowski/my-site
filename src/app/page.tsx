@@ -7,6 +7,8 @@ import Experience from '@/components/Experience'
 import Skills from '@/components/Skills'
 import Projects from '@/components/Projects'
 import Education from '@/components/Education'
+import Thor from '@/components/Thor'
+import Family from '@/components/Family'
 import { motion } from 'framer-motion'
 
 export default function Home() {
@@ -36,6 +38,14 @@ export default function Home() {
 
         <div id="education">
           <Education />
+        </div>
+
+        <div id="thor">
+          <Thor />
+        </div>
+
+        <div id="family">
+          <Family />
         </div>
 
         {/* Footer */}
