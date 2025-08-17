@@ -6,6 +6,11 @@ export const metadata: Metadata = {
   description: 'Software engineer with over 4 years experience in Engineering, Distributed Systems, Data Ingestion, and Cloud infrastructure.',
   keywords: ['Software Engineer', 'Python', 'Go', 'Cloud Infrastructure', 'GCP', 'AWS'],
   authors: [{ name: 'Cory Janowski' }],
+  icons: {
+    icon: '/favicon.svg',
+    shortcut: '/favicon.svg',
+    apple: '/favicon.svg',
+  },
   openGraph: {
     title: 'Cory Janowski - Software Engineer',
     description: 'Software engineer with over 4 years experience in Engineering, Distributed Systems, Data Ingestion, and Cloud infrastructure.',

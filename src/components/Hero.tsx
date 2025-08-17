@@ -16,16 +16,18 @@ export default function Hero() {
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="flex justify-center lg:justify-start order-2 lg:order-1"
           >
-            <div className="w-80 h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden shadow-lg">
-              <Image
-                src="/portrait.jpeg"
-                alt="Cory Janowski"
-                width={384}
-                height={384}
-                className="w-full h-full object-cover"
-                style={{ objectPosition: '50% 15%' }}
-                priority
-              />
+            <div className="glass-portrait-container">
+              <div className="w-80 h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden">
+                <Image
+                  src="/portrait.jpeg"
+                  alt="Cory Janowski"
+                  width={384}
+                  height={384}
+                  className="w-full h-full object-cover"
+                  style={{ objectPosition: '50% 15%' }}
+                  priority
+                />
+              </div>
             </div>
           </motion.div>
 

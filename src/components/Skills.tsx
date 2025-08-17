@@ -100,10 +100,11 @@ export default function Skills() {
                 }}
                 className={`
                   ${colorClasses}
-                  rounded-full px-6 py-3 
+                  rounded-full px-6 py-3
                   font-medium text-sm
                   cursor-pointer select-none
                   border transition-all duration-200
+                  backdrop-blur-md glass-skill-button
                   shadow-sm hover:shadow-md
                 `}
               >
