@@ -86,7 +86,8 @@ export default function Thor() {
               <img
                 src={thorImages[currentImageIndex]}
                 alt={`Thor photo ${currentImageIndex + 1}`}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                style={{ objectPosition: 'center 30%' }}
                 onError={(e) => {
                   // Fallback for missing images
                   e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAwIiBoZWlnaHQ9IjUwMCIgdmlld0JveD0iMCAwIDgwMCA1MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4MDAiIGhlaWdodD0iNTAwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0zNzUgMjI1SDQyNVYyNzVIMzc1VjIyNVoiIGZpbGw9IiM5Q0EzQUYiLz4KPHA+VGhvciBQaG90byAjJHtjdXJyZW50SW1hZ2VJbmRleCArIDF9PC9wPgo8L3N2Zz4K'
@@ -135,7 +136,8 @@ export default function Thor() {
                 <img
                   src={image}
                   alt={`Thor thumbnail ${index + 1}`}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-center"
+                  style={{ objectPosition: 'center 30%' }}
                   onError={(e) => {
                     e.currentTarget.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODAiIGhlaWdodD0iODAiIHZpZXdCb3g9IjAgMCA4MCA4MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjgwIiBoZWlnaHQ9IjgwIiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0zNSAzNUg0NVY0NUgzNVYzNVoiIGZpbGw9IiM5Q0EzQUYiLz4KPC9zdmc+Cg=='
                   }}
