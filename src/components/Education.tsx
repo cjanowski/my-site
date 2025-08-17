@@ -18,12 +18,12 @@ const education: EducationItem[] = [
     institution: "University of the People",
     degree: "BS, Computer Science",
     duration: "Jan 2023 - Dec 2027",
-    status: "In Progress",
+    status: "In Progress - 3rd year",
     details: "Achievements: Student Ambassador"
   },
   {
     institution: "Woz-U",
-    degree: "Diploma, Data Science",
+    degree: "Technical Diploma - Data Science",
     duration: "Feb 2020 - Dec 2020",
     status: "Graduated",
     details: "Achievements: Graduated"
