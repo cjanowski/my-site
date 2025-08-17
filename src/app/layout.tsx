@@ -3,7 +3,7 @@ import './globals.css'
 
 export const metadata: Metadata = {
   title: 'Cory Janowski - Software Engineer',
-  description: 'Software engineer with over 4 years experience in Engineering, Distributed Systems, Data Ingestion, and Cloud infrastructure.',
+  description: 'Software engineer with over 5 years experience in Engineering, Distributed Systems, Data Ingestion, and Cloud infrastructure.',
   keywords: ['Software Engineer', 'Python', 'Go', 'Cloud Infrastructure', 'GCP', 'AWS'],
   authors: [{ name: 'Cory Janowski' }],
   icons: {
@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Cory Janowski - Software Engineer',
-    description: 'Software engineer with over 4 years experience in Engineering, Distributed Systems, Data Ingestion, and Cloud infrastructure.',
+    description: 'Software engineer with over 5 years experience in Engineering, Distributed Systems, Data Ingestion, and Cloud infrastructure.',
     url: 'https://coryjanowski.vercel.app',
     siteName: 'Cory Janowski',
     locale: 'en_US',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Cory Janowski - Software Engineer',
-    description: 'Software engineer with over 4 years experience in Engineering, Distributed Systems, Data Ingestion, and Cloud infrastructure.',
+    description: 'Software engineer with over 5 years experience in Engineering, Distributed Systems, Data Ingestion, and Cloud infrastructure.',
   },
   robots: {
     index: true,
