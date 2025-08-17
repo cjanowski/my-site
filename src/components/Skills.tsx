@@ -3,92 +3,140 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
-import { Code, Cloud, Database, Settings, Cpu, Globe } from 'lucide-react'
 
-interface SkillCategory {
-  title: string
-  icon: React.ReactNode
-  skills: string[]
-  color: string
-}
-
-const skillCategories: SkillCategory[] = [
-  {
-    title: "Development",
-    icon: <Code className="w-6 h-6" />,
-    skills: ["Microservices", "REST APIs", "gRPC", "Message Queues", "System Design", "Distributed Systems", "Caching Strategies", "Go", "Python", "Java", "C++", "PHP", "TypeScript", "JavaScript"],
-    color: "from-blue-500 to-blue-600"
-  },
-  {
-    title: "Backend & Cloud",
-    icon: <Cloud className="w-6 h-6" />,
-    skills: ["Google Cloud Platform (GCP)", "Amazon Web Services (AWS)", "Docker", "Kubernetes", "Terraform", "CI/CD Pipelines", "Infrastructure as Code", "Cloud Functions", "Cloud Storage", "IaC", "IAM", "Node.js"],
-    color: "from-green-500 to-green-600"
-  },
-  {
-    title: "Observability",
-    icon: <Settings className="w-6 h-6" />,
-    skills: ["Grafana", "OpenTelemetry", "Prometheus", "Splunk", "DataDog"],
-    color: "from-purple-500 to-purple-600"
-  },
-  {
-    title: "Emerging Tech",
-    icon: <Cpu className="w-6 h-6" />,
-    skills: ["Generative AI"],
-    color: "from-orange-500 to-orange-600"
-  }
+// Define all skills as individual items with their categories for color coding
+const allSkills = [
+  // Development Skills
+  { name: "Microservices", category: "development", color: "blue" },
+  { name: "REST APIs", category: "development", color: "blue" },
+  { name: "gRPC", category: "development", color: "blue" },
+  { name: "Message Queues", category: "development", color: "blue" },
+  { name: "System Design", category: "development", color: "blue" },
+  { name: "Distributed Systems", category: "development", color: "blue" },
+  { name: "Caching Strategies", category: "development", color: "blue" },
+  { name: "Go", category: "development", color: "blue" },
+  { name: "Python", category: "development", color: "blue" },
+  { name: "Java", category: "development", color: "blue" },
+  { name: "C++", category: "development", color: "blue" },
+  { name: "PHP", category: "development", color: "blue" },
+  { name: "TypeScript", category: "development", color: "blue" },
+  { name: "JavaScript", category: "development", color: "blue" },
+  { name: "Node.js", category: "development", color: "blue" },
+  
+  // Cloud & Infrastructure
+  { name: "Google Cloud Platform", category: "cloud", color: "green" },
+  { name: "Amazon Web Services", category: "cloud", color: "green" },
+  { name: "Docker", category: "cloud", color: "green" },
+  { name: "Kubernetes", category: "cloud", color: "green" },
+  { name: "Terraform", category: "cloud", color: "green" },
+  { name: "CI/CD Pipelines", category: "cloud", color: "green" },
+  { name: "Infrastructure as Code", category: "cloud", color: "green" },
+  { name: "Cloud Functions", category: "cloud", color: "green" },
+  { name: "Cloud Storage", category: "cloud", color: "green" },
+  { name: "IAM", category: "cloud", color: "green" },
+  
+  // Observability
+  { name: "Grafana", category: "observability", color: "purple" },
+  { name: "OpenTelemetry", category: "observability", color: "purple" },
+  { name: "Prometheus", category: "observability", color: "purple" },
+  { name: "Splunk", category: "observability", color: "purple" },
+  { name: "DataDog", category: "observability", color: "purple" },
+  
+  // Emerging Tech
+  { name: "Generative AI", category: "emerging", color: "orange" },
 ]
+
+const getSkillColorClasses = (color: string) => {
+  const colorMap = {
+    blue: "bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-blue-600 hover:to-cyan-600 border-blue-300",
+    green: "bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600 border-green-300",
+    purple: "bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 border-purple-300",
+    orange: "bg-gradient-to-r from-orange-500 to-red-500 text-white hover:from-orange-600 hover:to-red-600 border-orange-300"
+  }
+  return colorMap[color as keyof typeof colorMap] || colorMap.blue
+}
 
 export default function Skills() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section ref={ref} className="py-24 section-padding bg-white">
+    <section ref={ref} className="py-24 section-padding glass-section-light">
       <div className="container-max">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6 }}
-          className="text-4xl lg:text-5xl font-bold text-apple-gray-800 mb-16 text-center"
+          className="text-4xl lg:text-5xl font-bold text-gray-900 mb-16 text-center"
         >
           Technical
-          <span className="text-gradient block">Skills</span>
+          <span className="gradient-title-tech block">Skills</span>
         </motion.h2>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {skillCategories.map((category, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="liquid-card rounded-2xl p-6 transition-all duration-300 group hover:scale-105"
-            >
-              <div className={`w-12 h-12 rounded-xl bg-gradient-to-r ${category.color} flex items-center justify-center text-white mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                {category.icon}
-              </div>
-              
-              <h3 className="text-xl font-bold text-apple-gray-800 mb-4">
-                {category.title}
-              </h3>
-              
-              <div className="flex flex-wrap gap-2">
-                {category.skills.map((skill, skillIndex) => (
-                  <motion.span
-                    key={skillIndex}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-                    transition={{ duration: 0.3, delay: (index * 0.1) + (skillIndex * 0.05) }}
-                    className="px-3 py-1 bg-apple-gray-100 text-apple-gray-700 rounded-full text-sm font-medium hover:bg-apple-blue-500 hover:text-white transition-colors duration-200 cursor-default"
-                  >
-                    {skill}
-                  </motion.span>
-                ))}
-              </div>
-            </motion.div>
-          ))}
+        {/* Skills as Individual Buttons */}
+        <div className="flex flex-wrap justify-center gap-4 max-w-5xl mx-auto">
+          {allSkills.map((skill, index) => {
+            const colorClasses = getSkillColorClasses(skill.color)
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.8, y: 20 }}
+                animate={isInView ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.8, y: 20 }}
+                transition={{ 
+                  duration: 0.4, 
+                  delay: index * 0.03,
+                  type: "spring",
+                  stiffness: 100,
+                  damping: 10
+                }}
+                whileHover={{ 
+                  scale: 1.05, 
+                  y: -2,
+                  transition: { duration: 0.2 }
+                }}
+                whileTap={{ 
+                  scale: 0.98,
+                  transition: { duration: 0.1 }
+                }}
+                className={`
+                  ${colorClasses}
+                  rounded-full px-6 py-3 
+                  font-medium text-sm
+                  cursor-pointer select-none
+                  border transition-all duration-200
+                  shadow-sm hover:shadow-md
+                `}
+              >
+                {skill.name}
+              </motion.div>
+            )
+          })}
         </div>
+
+        {/* Category Legend */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          className="mt-16 flex flex-wrap justify-center gap-6 text-sm text-gray-600"
+        >
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+            <span>Development</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-green-500"></div>
+            <span>Cloud & Infrastructure</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-purple-500"></div>
+            <span>Observability</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="w-3 h-3 rounded-full bg-orange-500"></div>
+            <span>Emerging Tech</span>
+          </div>
+        </motion.div>
       </div>
     </section>
   )

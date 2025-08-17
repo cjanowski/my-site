@@ -9,16 +9,33 @@ const navItems = [
   { name: 'About', href: '#about' },
   { name: 'Experience', href: '#experience' },
   { name: 'Skills', href: '#skills' },
+  { name: 'Projects', href: '#projects' },
   { name: 'Education', href: '#education' },
 ]
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('home')
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
+      
+      // Update active section based on scroll position
+      const sections = navItems.map(item => item.href.substring(1))
+      const current = sections.find(section => {
+        const element = document.getElementById(section)
+        if (element) {
+          const rect = element.getBoundingClientRect()
+          return rect.top <= 100 && rect.bottom >= 100
+        }
+        return false
+      })
+      
+      if (current) {
+        setActiveSection(current)
+      }
     }
 
     window.addEventListener('scroll', handleScroll)
@@ -37,10 +54,10 @@ export default function Navigation() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled 
-          ? 'liquid-card shadow-liquid'
-          : 'bg-transparent'
+          ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-200'
+          : 'bg-white/80 backdrop-blur-sm'
       }`}
     >
       <div className="container-max section-padding">
@@ -48,7 +65,8 @@ export default function Navigation() {
           {/* Logo */}
           <motion.div
             whileHover={{ scale: 1.05 }}
-            className="text-xl font-bold text-apple-gray-800 cursor-pointer"
+            whileTap={{ scale: 0.95 }}
+            className="text-2xl font-bold gradient-logo cursor-pointer transition-all duration-300"
             onClick={() => scrollToSection('#home')}
           >
             CJ
@@ -56,28 +74,41 @@ export default function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <button
-                key={item.name}
-                onClick={() => scrollToSection(item.href)}
-                className="text-apple-gray-600 hover:text-apple-blue-500 transition-colors duration-200 font-medium"
-              >
-                {item.name}
-              </button>
-            ))}
+            {navItems.map((item) => {
+              const sectionId = item.href.substring(1)
+              const isActive = activeSection === sectionId
+              
+              return (
+                <motion.button
+                  key={item.name}
+                  onClick={() => scrollToSection(item.href)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`relative font-medium px-3 py-2 rounded-lg transition-all duration-300 ${
+                    isActive 
+                      ? 'text-blue-600 bg-blue-50' 
+                      : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
+                  }`}
+                >
+                  {item.name}
+                </motion.button>
+              )
+            })}
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 rounded-lg hover:bg-apple-gray-100 transition-colors"
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-all duration-300"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? (
-              <X className="w-6 h-6 text-apple-gray-600" />
+              <X className="w-6 h-6 text-gray-600" />
             ) : (
-              <Menu className="w-6 h-6 text-apple-gray-600" />
+              <Menu className="w-6 h-6 text-gray-600" />
             )}
-          </button>
+          </motion.button>
         </div>
 
         {/* Mobile Menu */}
@@ -90,15 +121,26 @@ export default function Navigation() {
           transition={{ duration: 0.3 }}
           className="md:hidden overflow-hidden"
         >
-          <div className="py-4 space-y-2">
-            {navItems.map((item) => (
-              <button
+          <div className="py-4 space-y-2 glass-tile-subtle rounded-xl mt-4">
+            {navItems.map((item, index) => (
+              <motion.button
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
-                className="block w-full text-left px-4 py-2 text-apple-gray-600 hover:text-apple-blue-500 hover:bg-apple-gray-50 rounded-lg transition-colors duration-200 font-medium"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ 
+                  opacity: isMobileMenuOpen ? 1 : 0, 
+                  x: isMobileMenuOpen ? 0 : -20 
+                }}
+                transition={{ 
+                  duration: 0.3, 
+                  delay: isMobileMenuOpen ? index * 0.1 : 0 
+                }}
+                whileHover={{ scale: 1.02, x: 4 }}
+                whileTap={{ scale: 0.98 }}
+                className="block w-full text-left px-4 py-3 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-all duration-300 font-medium"
               >
                 {item.name}
-              </button>
+              </motion.button>
             ))}
           </div>
         </motion.div>

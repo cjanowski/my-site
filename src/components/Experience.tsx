@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef, useState } from 'react'
-import { ChevronDown, ChevronUp, Calendar, MapPin } from 'lucide-react'
+import { ChevronDown, ChevronUp, Calendar } from 'lucide-react'
 
 interface ExperienceItem {
   company: string
@@ -64,16 +64,16 @@ export default function Experience() {
   }
 
   return (
-    <section ref={ref} className="py-24 section-padding bg-apple-gray-50">
+    <section ref={ref} className="py-24 section-padding glass-section-white">
       <div className="container-max">
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6 }}
-          className="text-4xl lg:text-5xl font-bold text-apple-gray-800 mb-16 text-center"
+          className="text-4xl lg:text-5xl font-bold text-gray-900 mb-16 text-center"
         >
           Work
-          <span className="text-gradient block">Experience</span>
+          <span className="gradient-title-experience block">Experience</span>
         </motion.h2>
 
         <div className="max-w-4xl mx-auto">
@@ -87,39 +87,48 @@ export default function Experience() {
             >
               {/* Timeline line */}
               {index < experiences.length - 1 && (
-                <div className="absolute left-6 top-20 w-0.5 h-full bg-gradient-to-b from-apple-blue-500 to-apple-gray-300" />
+                <div className="absolute left-6 top-20 w-0.5 h-full bg-gradient-to-b from-indigo-300 to-purple-300" />
               )}
               
               {/* Timeline dot */}
-              <div className="absolute left-4 top-8 w-4 h-4 bg-apple-blue-500 rounded-full ring-4 ring-white shadow-lg" />
+              <motion.div 
+                whileHover={{ scale: 1.2 }}
+                className="absolute left-4 top-8 w-4 h-4 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full ring-4 ring-indigo-100 shadow-lg"
+              />
               
               <div className="ml-16">
-                <div 
-                  className="liquid-card rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:scale-[1.02]"
+                <motion.div 
+                  className="glass-tile rounded-2xl p-6 cursor-pointer transition-all duration-300"
                   onClick={() => toggleExpanded(index)}
+                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileTap={{ scale: 0.98 }}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
-                      <h3 className="text-xl lg:text-2xl font-bold text-apple-gray-800 mb-1">
+                      <h3 className="text-xl lg:text-2xl font-bold text-gray-900 mb-1">
                         {exp.position}
                       </h3>
-                      <p className="text-lg font-semibold text-apple-blue-500 mb-2">
+                      <p className="text-lg font-semibold text-blue-600 mb-2">
                         {exp.company}
                       </p>
-                      <div className="flex items-center gap-4 text-apple-gray-500 text-sm">
+                      <div className="flex items-center gap-4 text-gray-600 text-sm">
                         <div className="flex items-center gap-1">
                           <Calendar className="w-4 h-4" />
                           <span>{exp.duration}</span>
                         </div>
                       </div>
                     </div>
-                    <button className="ml-4 p-2 rounded-full hover:bg-apple-gray-100 transition-colors">
+                    <motion.button 
+                      className="ml-4 p-2 rounded-full hover:bg-gray-100 transition-all duration-300"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
                       {expandedItems.includes(index) ? (
-                        <ChevronUp className="w-5 h-5 text-apple-gray-500" />
+                        <ChevronUp className="w-5 h-5 text-gray-600" />
                       ) : (
-                        <ChevronDown className="w-5 h-5 text-apple-gray-500" />
+                        <ChevronDown className="w-5 h-5 text-gray-600" />
                       )}
-                    </button>
+                    </motion.button>
                   </div>
 
                   <motion.div
@@ -131,12 +140,17 @@ export default function Experience() {
                     transition={{ duration: 0.3 }}
                     className="overflow-hidden"
                   >
-                    <div className="pt-4 border-t border-apple-gray-200 mt-4">
+                    <div className="pt-4 border-t border-gray-200 mt-4 bg-gray-50 rounded-xl p-4">
                       <ul className="space-y-3">
                         {exp.achievements.map((achievement, achIndex) => (
                           <li key={achIndex} className="flex items-start gap-3">
-                            <div className="w-2 h-2 bg-apple-blue-500 rounded-full mt-2 flex-shrink-0" />
-                            <p className="text-apple-gray-600 leading-relaxed">
+                            <motion.div 
+                              initial={{ scale: 0 }}
+                              animate={{ scale: 1 }}
+                              transition={{ delay: achIndex * 0.1 }}
+                              className="w-2 h-2 bg-blue-600 rounded-full mt-2 flex-shrink-0"
+                            />
+                            <p className="text-gray-700 leading-relaxed">
                               {achievement}
                             </p>
                           </li>
@@ -144,7 +158,7 @@ export default function Experience() {
                       </ul>
                     </div>
                   </motion.div>
-                </div>
+                </motion.div>
               </div>
             </motion.div>
           ))}
