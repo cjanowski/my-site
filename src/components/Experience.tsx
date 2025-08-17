@@ -16,7 +16,7 @@ interface ExperienceItem {
 const experiences: ExperienceItem[] = [
   {
     company: "Abre",
-    position: "Software Engineer",
+    position: "Software Engineer | Distributed Systems and Integrations",
     duration: "Jan 2024 - Present",
     achievements: [
       "Spearheaded the development of a cloud-native data integration platform on Google Cloud Platform (GCP) that ingested 150+ education formats via secure APIs/SFTP into BigQuery, which reduced database load by 40%.",
@@ -53,7 +53,7 @@ const experiences: ExperienceItem[] = [
 export default function Experience() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
-  const [expandedItems, setExpandedItems] = useState<number[]>([0])
+  const [expandedItems, setExpandedItems] = useState<number[]>([])
 
   const toggleExpanded = (index: number) => {
     setExpandedItems(prev => 

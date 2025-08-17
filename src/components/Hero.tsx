@@ -6,7 +6,7 @@ import Image from 'next/image'
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex items-center justify-center section-padding bg-white">
+    <section className="min-h-screen flex items-center justify-center section-padding bg-white pt-20">
       <div className="container-max">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           {/* Profile Image */}
@@ -42,7 +42,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-6xl lg:text-8xl font-bold mb-4"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold mb-4"
             >
               <span className="gradient-name">Cory</span>
               <span className="block gradient-title-hero">Janowski</span>
