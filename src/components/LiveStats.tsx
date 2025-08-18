@@ -124,8 +124,8 @@ const fetchLLMRankings = async (): Promise<LLMModel[]> => {
           trend
         }
       })
-      .sort((a, b) => b.tokens - a.tokens) // Sort by token usage
-      .map((model, index) => ({ ...model, rank: index + 1 })) // Re-rank based on usage
+      .sort((a: any, b: any) => b.tokens - a.tokens) // Sort by token usage
+      .map((model: any, index: number) => ({ ...model, rank: index + 1 })) // Re-rank based on usage
     
     if (processedModels.length === 0) {
       throw new Error('No valid models found in API response')
