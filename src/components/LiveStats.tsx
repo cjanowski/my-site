@@ -17,16 +17,6 @@ import {
   Shield
 } from 'lucide-react'
 
-// Types
-interface LLMModel {
-  name: string
-  provider: string
-  rank: number
-  tokens: number
-  percentage: number
-  cost: number
-  trend: 'up' | 'down' | 'stable'
-}
 
 interface ServiceStatus {
   name: string
@@ -36,108 +26,6 @@ interface ServiceStatus {
   lastUpdated: string
 }
 
-// Real data fetchers
-const fetchLLMRankings = async (): Promise<LLMModel[]> => {
-  try {
-    // Try to fetch the actual rankings/usage data from OpenRouter
-    // First attempt: try the rankings endpoint
-    let response = await fetch('https://openrouter.ai/api/v1/rankings', {
-      headers: {
-        'Accept': 'application/json',
-      }
-    })
-    
-    if (!response.ok) {
-      // Fallback: try the models endpoint and simulate usage data
-      response = await fetch('https://openrouter.ai/api/v1/models', {
-        headers: {
-          'Accept': 'application/json',
-        }
-      })
-    }
-    
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}: ${response.statusText}`)
-    }
-    
-    const data = await response.json()
-    
-    if (!data.data || !Array.isArray(data.data)) {
-      throw new Error('Invalid API response structure')
-    }
-    
-    // Process the models and simulate realistic usage statistics
-    const processedModels = data.data
-      .filter((model: any) => {
-        return model.name && 
-               model.pricing?.prompt &&
-               !model.name.includes('free') &&
-               !model.name.includes('preview') &&
-               !model.name.includes('instruct') // Filter out some variants
-      })
-      .slice(0, 20) // Take top 20
-      .map((model: any, index: number) => {
-        const nameParts = model.name.split('/')
-        const provider = nameParts[0] || 'Unknown'
-        const modelName = nameParts[nameParts.length - 1] || model.name
-        
-        // Clean up model name
-        const cleanName = modelName
-          .replace(/-/g, ' ')
-          .replace(/_/g, ' ')
-          .replace(/\b\w/g, (l: string) => l.toUpperCase())
-        
-        const cleanProvider = provider.charAt(0).toUpperCase() + provider.slice(1)
-        
-        // Generate realistic usage statistics based on model characteristics
-        const baseCost = parseFloat(model.pricing.prompt) || 0.001
-        const contextLength = model.context_length || 4096
-        
-        // Simulate tokens used based on model popularity and cost
-        // More expensive models typically have higher usage due to capabilities
-        const popularityFactor = Math.max(0.1, 1 / (index + 1)) // Higher rank = more popular
-        const costFactor = Math.min(baseCost * 10000, 5) // Higher cost = more capability
-        const contextFactor = Math.min(contextLength / 100000, 2) // Longer context = more usage
-        
-        const baseTokens = 1000000 * popularityFactor * costFactor * contextFactor
-        const randomVariation = 0.8 + Math.random() * 0.4 // ±20% variation
-        const tokens = Math.round(baseTokens * randomVariation)
-        
-        // Calculate percentage (first model gets highest percentage)
-        const maxTokens = index === 0 ? tokens : tokens * (20 / (index + 1))
-        const percentage = Math.round((tokens / maxTokens) * 100)
-        
-        // Determine trend
-        let trend: 'up' | 'down' | 'stable' = 'stable'
-        if (index < 3) trend = 'up'
-        else if (index > 15) trend = 'down'
-        else if (Math.random() > 0.7) trend = 'up'
-        else if (Math.random() < 0.3) trend = 'down'
-        
-        return {
-          name: cleanName,
-          provider: cleanProvider,
-          rank: index + 1,
-          tokens: tokens,
-          percentage: Math.min(percentage, 100),
-          cost: baseCost,
-          trend
-        }
-      })
-      .sort((a: any, b: any) => b.tokens - a.tokens) // Sort by token usage
-      .map((model: any, index: number) => ({ ...model, rank: index + 1 })) // Re-rank based on usage
-    
-    if (processedModels.length === 0) {
-      throw new Error('No valid models found in API response')
-    }
-    
-    return processedModels
-    
-  } catch (error) {
-    console.error('Error fetching LLM rankings:', error)
-    return []
-  }
-}
 
 const fetchServiceStatuses = async (): Promise<ServiceStatus[]> => {
   const services = [
@@ -401,47 +289,34 @@ const ServiceStatusGrid = ({ statuses, loading }: { statuses: ServiceStatus[], l
   )
 }
 
-export default function LiveStats() {
-  const [llmModels, setLlmModels] = useState<LLMModel[]>([])
+export default function ServiceStatus() {
   const [serviceStatuses, setServiceStatuses] = useState<ServiceStatus[]>([])
   const [loading, setLoading] = useState(true)
-  const [statusLoading, setStatusLoading] = useState(true)
 
   // Fetch initial data
   useEffect(() => {
-    const fetchAllData = async () => {
+    const fetchData = async () => {
       try {
-        const [models, statuses] = await Promise.all([
-          fetchLLMRankings(),
-          fetchServiceStatuses()
-        ])
-        
-        setLlmModels(models)
+        const statuses = await fetchServiceStatuses()
         setServiceStatuses(statuses)
         setLoading(false)
-        setStatusLoading(false)
       } catch (error) {
-        console.error('Error fetching initial data:', error)
+        console.error('Error fetching service statuses:', error)
         setLoading(false)
-        setStatusLoading(false)
       }
     }
 
-    fetchAllData()
+    fetchData()
   }, [])
 
   // Refresh data periodically
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
-        const [newModels, newStatuses] = await Promise.all([
-          fetchLLMRankings(),
-          fetchServiceStatuses()
-        ])
-        setLlmModels(newModels)
+        const newStatuses = await fetchServiceStatuses()
         setServiceStatuses(newStatuses)
       } catch (error) {
-        console.error('Error refreshing data:', error)
+        console.error('Error refreshing service statuses:', error)
       }
     }, 300000) // Refresh every 5 minutes
 
@@ -461,142 +336,22 @@ export default function LiveStats() {
           <div className="flex items-center justify-center gap-3 mb-6">
             <Activity className="w-8 h-8 text-blue-500" />
             <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
-              AI & Cloud Status
+              Service Status
             </h2>
             <BarChart3 className="w-8 h-8 text-purple-500" />
           </div>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Real-time LLM rankings and cloud service status monitoring.
+            Real-time cloud service and AI provider status monitoring.
           </p>
         </motion.div>
 
-        {/* LLM Rankings Section */}
+        {/* Service Status Grid */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="mb-16"
         >
-          <h3 className="text-2xl font-bold text-center mb-8 text-gray-800 flex items-center justify-center gap-2">
-            <Brain className="w-6 h-6 text-blue-500" />
-            OpenRouter Model Usage Rankings
-          </h3>
-          
-          {loading ? (
-            <div className="glass-tile rounded-2xl p-6">
-              <div className="space-y-3">
-                {[...Array(10)].map((_, i) => (
-                  <div key={i} className="flex items-center gap-4 animate-pulse">
-                    <div className="w-8 h-4 bg-gray-300 rounded"></div>
-                    <div className="flex-1 h-4 bg-gray-300 rounded"></div>
-                    <div className="w-20 h-4 bg-gray-300 rounded"></div>
-                    <div className="w-16 h-4 bg-gray-300 rounded"></div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : llmModels.length === 0 ? (
-            <div className="glass-tile rounded-2xl p-8 text-center">
-              <p className="text-gray-500">LLM ranking data unavailable</p>
-            </div>
-          ) : (
-            <div className="glass-tile rounded-2xl p-6 max-h-[600px] overflow-y-auto">
-              {/* Header */}
-              <div className="grid grid-cols-12 gap-4 pb-3 mb-4 border-b border-gray-200 text-sm font-semibold text-gray-600">
-                <div className="col-span-1">#</div>
-                <div className="col-span-4">Model</div>
-                <div className="col-span-3">Tokens (24h)</div>
-                <div className="col-span-2">Share</div>
-                <div className="col-span-1">Cost</div>
-                <div className="col-span-1">Trend</div>
-              </div>
-              
-              {/* Rankings List */}
-              <div className="space-y-2">
-                {llmModels.map((model, index) => (
-                  <motion.div
-                    key={model.name}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.3, delay: index * 0.05 }}
-                    className="grid grid-cols-12 gap-4 py-3 px-2 rounded-lg hover:bg-gray-50 transition-colors"
-                  >
-                    {/* Rank */}
-                    <div className="col-span-1 flex items-center">
-                      <span className={`text-sm font-semibold ${
-                        model.rank <= 3 ? 'text-blue-600' : 'text-gray-600'
-                      }`}>
-                        {model.rank}
-                      </span>
-                    </div>
-                    
-                    {/* Model Name & Provider */}
-                    <div className="col-span-4 flex flex-col">
-                      <span className="font-medium text-gray-800 text-sm">{model.name}</span>
-                      <span className="text-xs text-gray-500">{model.provider}</span>
-                    </div>
-                    
-                    {/* Token Count */}
-                    <div className="col-span-3 flex items-center">
-                      <span className="text-sm font-mono text-gray-700">
-                        <AnimatedCounter value={model.tokens} />
-                      </span>
-                    </div>
-                    
-                    {/* Percentage with Bar */}
-                    <div className="col-span-2 flex items-center gap-2">
-                      <div className="flex-1 bg-gray-200 rounded-full h-2">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: `${model.percentage}%` }}
-                          transition={{ duration: 1, delay: index * 0.1 }}
-                          className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full"
-                        />
-                      </div>
-                      <span className="text-xs text-gray-600 w-8">
-                        {model.percentage}%
-                      </span>
-                    </div>
-                    
-                    {/* Cost */}
-                    <div className="col-span-1 flex items-center">
-                      <span className="text-xs text-gray-600">
-                        ${(model.cost * 1000).toFixed(1)}k
-                      </span>
-                    </div>
-                    
-                    {/* Trend */}
-                    <div className="col-span-1 flex items-center justify-center">
-                      <TrendingUp className={`w-4 h-4 ${
-                        model.trend === 'up' ? 'text-green-500' : 
-                        model.trend === 'down' ? 'text-red-500 transform rotate-180' : 'text-gray-400'
-                      }`} />
-                    </div>
-                  </motion.div>
-                ))}
-              </div>
-              
-              {/* Footer */}
-              <div className="mt-6 pt-4 border-t border-gray-200 text-center">
-                <p className="text-xs text-gray-500">
-                  Data updates every 5 minutes • Based on OpenRouter API usage
-                </p>
-              </div>
-            </div>
-          )}
-        </motion.div>
-
-        {/* Service Status Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          <h3 className="text-2xl font-bold text-center mb-8 text-gray-800 flex items-center justify-center gap-2">
-            <Zap className="w-6 h-6 text-green-500" />
-            Service Status
-          </h3>
-          <ServiceStatusGrid statuses={serviceStatuses} loading={statusLoading} />
+          <ServiceStatusGrid statuses={serviceStatuses} loading={loading} />
         </motion.div>
 
         {/* Animated Background Elements */}

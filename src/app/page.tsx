@@ -8,7 +8,7 @@ import Skills from '@/components/Skills'
 import Projects from '@/components/Projects'
 import Education from '@/components/Education'
 import Thor from '@/components/Thor'
-import LiveStats from '@/components/LiveStats'
+import ServiceStatus from '@/components/LiveStats'
 import { motion } from 'framer-motion'
 
 export default function Home() {
@@ -44,8 +44,8 @@ export default function Home() {
           <Thor />
         </div>
 
-        <div id="live-stats">
-          <LiveStats />
+        <div id="service-status">
+          <ServiceStatus />
         </div>
 
         {/* Footer */}
