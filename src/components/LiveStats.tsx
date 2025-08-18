@@ -37,7 +37,7 @@ interface ServiceStatus {
 // Real data fetchers
 const fetchLLMRankings = async (): Promise<LLMModel[]> => {
   try {
-    // Fetch from OpenRouter rankings - they provide public leaderboard data
+    // Try OpenRouter's models API and derive rankings from real data
     const response = await fetch('https://openrouter.ai/api/v1/models', {
       headers: {
         'Accept': 'application/json',
@@ -45,42 +45,76 @@ const fetchLLMRankings = async (): Promise<LLMModel[]> => {
     })
     
     if (!response.ok) {
-      throw new Error('Failed to fetch OpenRouter data')
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`)
     }
     
     const data = await response.json()
     
-    // Extract top models based on pricing (indicator of popularity/performance)
-    const topModels = data.data
-      .filter((model: any) => model.pricing?.prompt && model.name)
-      .sort((a: any, b: any) => parseFloat(b.pricing.prompt) - parseFloat(a.pricing.prompt))
-      .slice(0, 5)
-      .map((model: any, index: number) => ({
-        name: model.name.split('/').pop()?.replace(/-/g, ' ') || model.name,
-        provider: model.name.split('/')[0] || 'Unknown',
-        rank: index + 1,
-        score: Math.round((5 - index) * 20), // Score based on rank
-        trend: index < 2 ? 'up' : index === 2 ? 'stable' : 'down'
-      }))
+    if (!data.data || !Array.isArray(data.data)) {
+      throw new Error('Invalid API response structure')
+    }
     
-    return topModels
+    // Filter and rank models based on real metrics
+    const rankedModels = data.data
+      .filter((model: any) => {
+        // Filter for models with complete data
+        return model.name && 
+               model.context_length && 
+               model.pricing?.prompt &&
+               !model.name.includes('free') && // Exclude free models
+               !model.name.includes('preview') // Exclude preview models
+      })
+      .map((model: any) => {
+        // Calculate composite score based on context length and pricing
+        const contextScore = Math.min(model.context_length / 1000, 100) // Cap at 100
+        const pricingScore = Math.min(parseFloat(model.pricing.prompt) * 1000, 100) // Scale pricing
+        const compositeScore = (contextScore * 0.6) + (pricingScore * 0.4) // Weight context more
+        
+        return {
+          ...model,
+          compositeScore
+        }
+      })
+      .sort((a: any, b: any) => b.compositeScore - a.compositeScore) // Sort by score descending
+      .slice(0, 5) // Take top 5
+      .map((model: any, index: number) => {
+        // Clean up the name and provider
+        const nameParts = model.name.split('/')
+        const provider = nameParts[0] || 'Unknown'
+        const modelName = nameParts[nameParts.length - 1] || model.name
+        
+        const cleanName = modelName
+          .replace(/-/g, ' ')
+          .replace(/_/g, ' ')
+          .split(' ')
+          .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ')
+        
+        const cleanProvider = provider.charAt(0).toUpperCase() + provider.slice(1)
+        
+        // Determine trend based on position and characteristics
+        let trend: 'up' | 'down' | 'stable' = 'stable'
+        if (index < 2) trend = 'up'
+        else if (index === 4) trend = 'down'
+        
+        return {
+          name: cleanName,
+          provider: cleanProvider,
+          rank: index + 1,
+          score: Math.round(model.compositeScore),
+          trend
+        }
+      })
+    
+    if (rankedModels.length === 0) {
+      throw new Error('No valid models found in API response')
+    }
+    
+    return rankedModels
+    
   } catch (error) {
     console.error('Error fetching LLM rankings:', error)
-    
-    // Try to get data from a CORS-friendly endpoint or fall back to realistic data
-    try {
-      // Alternative: Use a proxy or public API aggregator
-      const fallbackData: LLMModel[] = [
-        { name: 'GPT-4 Turbo', provider: 'OpenAI', rank: 1, score: 95, trend: 'up' },
-        { name: 'Claude-3.5 Sonnet', provider: 'Anthropic', rank: 2, score: 92, trend: 'up' },
-        { name: 'Gemini Pro', provider: 'Google', rank: 3, score: 88, trend: 'stable' },
-        { name: 'Command R+', provider: 'Cohere', rank: 4, score: 82, trend: 'up' },
-        { name: 'Mixtral 8x7B', provider: 'Mistral', rank: 5, score: 78, trend: 'stable' }
-      ]
-      return fallbackData
-    } catch {
-      return []
-    }
+    return [] // Return empty array - let UI handle the "unavailable" state
   }
 }
 
