@@ -12,7 +12,7 @@ const navItems = [
   { name: 'Projects', href: '#projects' },
   { name: 'Education', href: '#education' },
   { name: 'Thor', href: '#thor' },
-  { name: 'Service Status', href: '#service-status' },
+  { name: 'Puzzles', href: '#puzzles' },
 ]
 
 export default function Navigation() {

@@ -44,7 +44,7 @@ export default function Home() {
           <Thor />
         </div>
 
-        <div id="service-status">
+        <div id="puzzles">
           <CodeChallenges />
         </div>
 
