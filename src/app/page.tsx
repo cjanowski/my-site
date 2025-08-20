@@ -8,7 +8,7 @@ import Skills from '@/components/Skills'
 import Projects from '@/components/Projects'
 import Education from '@/components/Education'
 import Thor from '@/components/Thor'
-import ServiceStatus from '@/components/LiveStats'
+import CodeChallenges from '@/components/LiveStats'
 import { motion } from 'framer-motion'
 
 export default function Home() {
@@ -45,7 +45,7 @@ export default function Home() {
         </div>
 
         <div id="service-status">
-          <ServiceStatus />
+          <CodeChallenges />
         </div>
 
         {/* Footer */}

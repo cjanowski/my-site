@@ -1,327 +1,351 @@
 'use client'
 
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { 
-  Activity, 
-  Brain, 
-  Zap, 
-  BarChart3, 
+import {
+  Code,
+  Brain,
+  Zap,
+  Target,
   CheckCircle,
-  XCircle,
-  AlertCircle,
-  Clock,
-  TrendingUp,
-  Server,
-  Cloud,
-  Shield
+  Shuffle,
+  Binary,
+  Lightbulb
 } from 'lucide-react'
 
+// Binary Decoder Puzzle
+const BinaryDecoder = ({ onComplete }: { onComplete: () => void }) => {
+  const [binary, setBinary] = useState('01001000 01100101 01101100 01101100 01101111')
+  const [userInput, setUserInput] = useState('')
+  const [solved, setSolved] = useState(false)
 
-interface ServiceStatus {
-  name: string
-  status: 'operational' | 'degraded' | 'outage' | 'maintenance'
-  icon: string
-  color: string
-  lastUpdated: string
-}
+  const solution = 'Hello'
+  const binaryToText = (bin: string) => {
+    return bin.split(' ')
+      .map(byte => String.fromCharCode(parseInt(byte, 2)))
+      .join('')
+  }
 
-
-const fetchServiceStatuses = async (): Promise<ServiceStatus[]> => {
-  const services = [
-    {
-      name: 'AWS',
-      endpoint: 'https://health.aws.amazon.com/health/status',
-      icon: 'cloud'
-    },
-    {
-      name: 'Google Cloud',
-      endpoint: 'https://status.cloud.google.com/',
-      icon: 'server'
-    },
-    {
-      name: 'OpenAI',
-      endpoint: 'https://status.openai.com/api/v2/status.json',
-      icon: 'brain'
-    },
-    {
-      name: 'Anthropic',
-      endpoint: 'https://status.anthropic.com/api/v2/status.json',
-      icon: 'brain'
-    },
-    {
-      name: 'Cloudflare',
-      endpoint: 'https://www.cloudflarestatus.com/api/v2/status.json',
-      icon: 'shield'
-    }
-  ]
-
-  const statuses: ServiceStatus[] = []
-
-  for (const service of services) {
-    try {
-      let status: ServiceStatus['status'] = 'operational'
-      let lastUpdated = new Date().toISOString()
-
-      // For services with public status APIs
-      if (service.name === 'OpenAI' || service.name === 'Anthropic' || service.name === 'Cloudflare') {
-        try {
-          const response = await fetch(service.endpoint)
-          if (response.ok) {
-            const data = await response.json()
-            const indicator = data.status?.indicator || data.page?.status
-            
-            switch (indicator) {
-              case 'none':
-              case 'operational':
-                status = 'operational'
-                break
-              case 'minor':
-              case 'degraded':
-                status = 'degraded'
-                break
-              case 'major':
-              case 'critical':
-                status = 'outage'
-                break
-              case 'maintenance':
-                status = 'maintenance'
-                break
-              default:
-                status = 'operational'
-            }
-            lastUpdated = data.page?.updated_at || new Date().toISOString()
-          }
-        } catch (error) {
-          // If we can't fetch, assume operational (conservative approach)
-          status = 'operational'
-        }
-      } else {
-        // For AWS and GCP, we'll show operational since their status pages are complex
-        // In a real implementation, you'd need to parse their specific formats
-        status = 'operational'
-      }
-
-      const colors: Record<ServiceStatus['status'], string> = {
-        operational: 'text-green-500',
-        degraded: 'text-yellow-500', 
-        outage: 'text-red-500',
-        maintenance: 'text-blue-500'
-      }
-
-      statuses.push({
-        name: service.name,
-        status,
-        icon: service.icon,
-        color: colors[status],
-        lastUpdated
-      })
-    } catch (error) {
-      console.error(`Error fetching ${service.name} status:`, error)
-      // Default to operational if we can't fetch
-      statuses.push({
-        name: service.name,
-        status: 'operational',
-        icon: service.icon,
-        color: 'text-green-500',
-        lastUpdated: new Date().toISOString()
-      })
+  const checkAnswer = () => {
+    if (userInput.trim().toLowerCase() === solution.toLowerCase()) {
+      setSolved(true)
+      onComplete()
     }
   }
 
-  return statuses
-}
-
-// Animated Counter Component
-const AnimatedCounter = ({ value, duration = 2000 }: { value: number; duration?: number }) => {
-  const [count, setCount] = useState(0)
-
-  useEffect(() => {
-    let startTime: number
-    let animationFrame: number
-
-    const animate = (timestamp: number) => {
-      if (!startTime) startTime = timestamp
-      const progress = Math.min((timestamp - startTime) / duration, 1)
-      
-      setCount(Math.floor(progress * value))
-      
-      if (progress < 1) {
-        animationFrame = requestAnimationFrame(animate)
-      }
-    }
-
-    animationFrame = requestAnimationFrame(animate)
-    return () => cancelAnimationFrame(animationFrame)
-  }, [value, duration])
-
-  return <span>{count.toLocaleString()}</span>
-}
-
-// Circular Progress Component
-const CircularProgress = ({ 
-  percentage, 
-  size = 120, 
-  strokeWidth = 8,
-  color = '#3B82F6'
-}: { 
-  percentage: number
-  size?: number
-  strokeWidth?: number
-  color?: string
-}) => {
-  const radius = (size - strokeWidth) / 2
-  const circumference = radius * 2 * Math.PI
-  const offset = circumference - (percentage / 100) * circumference
-
   return (
-    <div className="relative">
-      <svg width={size} height={size} className="transform -rotate-90">
-        <circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          stroke="#E5E7EB"
-          strokeWidth={strokeWidth}
-          fill="transparent"
-        />
-        <motion.circle
-          cx={size / 2}
-          cy={size / 2}
-          r={radius}
-          stroke={color}
-          strokeWidth={strokeWidth}
-          fill="transparent"
-          strokeDasharray={circumference}
-          initial={{ strokeDashoffset: circumference }}
-          animate={{ strokeDashoffset: offset }}
-          transition={{ duration: 2, ease: "easeInOut" }}
-          strokeLinecap="round"
-        />
-      </svg>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <span className="text-2xl font-bold text-gray-800">
-          <AnimatedCounter value={percentage} />%
-        </span>
+    <div className="glass-tile-subtle rounded-xl p-6">
+      <div className="flex items-center gap-2 mb-4">
+        <Binary className="w-5 h-5 text-blue-500" />
+        <h3 className="font-semibold text-gray-800">Binary Decoder</h3>
       </div>
+      <p className="text-sm text-gray-600 mb-4">
+        Decode this binary message:
+      </p>
+      <div className="font-mono text-lg mb-4 p-3 bg-gray-100 rounded">
+        {binary}
+      </div>
+      <div className="flex gap-2">
+        <input
+          type="text"
+          value={userInput}
+          onChange={(e) => setUserInput(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
+          className="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+          placeholder="Enter decoded text"
+          disabled={solved}
+        />
+        <button
+          onClick={checkAnswer}
+          disabled={solved}
+          className={`px-4 py-2 rounded transition-colors ${
+            solved
+              ? 'bg-green-500 text-white'
+              : 'bg-blue-500 text-white hover:bg-blue-600'
+          }`}
+        >
+          {solved ? <CheckCircle className="w-4 h-4" /> : 'Check'}
+        </button>
+      </div>
+      {solved && (
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-green-600 text-sm mt-2"
+        >
+          🎉 Correct! You decoded it!
+        </motion.p>
+      )}
     </div>
   )
 }
 
-// Service Status Display
-const ServiceStatusGrid = ({ statuses, loading }: { statuses: ServiceStatus[], loading: boolean }) => {
-  const getStatusIcon = (status: ServiceStatus['status']) => {
-    switch (status) {
-      case 'operational':
-        return <CheckCircle className="w-5 h-5" />
-      case 'degraded':
-        return <AlertCircle className="w-5 h-5" />
-      case 'outage':
-        return <XCircle className="w-5 h-5" />
-      case 'maintenance':
-        return <Clock className="w-5 h-5" />
-      default:
-        return <CheckCircle className="w-5 h-5" />
+// Sorting Algorithm Challenge
+const SortingChallenge = ({ onComplete }: { onComplete: () => void }) => {
+  const [numbers, setNumbers] = useState([5, 2, 8, 1, 9, 3])
+  const [userSolution, setUserSolution] = useState('')
+  const [solved, setSolved] = useState(false)
+
+  const solution = '1,2,3,5,8,9'
+
+  const shuffleNumbers = () => {
+    const shuffled = [...numbers].sort(() => Math.random() - 0.5)
+    setNumbers(shuffled)
+    setSolved(false)
+  }
+
+  const checkAnswer = () => {
+    if (userSolution.trim() === solution) {
+      setSolved(true)
+      onComplete()
     }
   }
 
-  const getServiceIcon = (icon: string) => {
-    switch (icon) {
-      case 'cloud':
-        return <Cloud className="w-6 h-6" />
-      case 'server':
-        return <Server className="w-6 h-6" />
-      case 'brain':
-        return <Brain className="w-6 h-6" />
-      case 'shield':
-        return <Shield className="w-6 h-6" />
-      default:
-        return <Server className="w-6 h-6" />
-    }
-  }
-
-  if (loading) {
-    return (
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {[1, 2, 3, 4, 5].map((i) => (
-          <div key={i} className="glass-tile-subtle rounded-xl p-4 animate-pulse">
-            <div className="flex items-center gap-3">
-              <div className="w-6 h-6 bg-gray-300 rounded"></div>
-              <div className="flex-1">
-                <div className="h-4 bg-gray-300 rounded mb-2"></div>
-                <div className="h-3 bg-gray-300 rounded w-20"></div>
-              </div>
-              <div className="w-5 h-5 bg-gray-300 rounded-full"></div>
-            </div>
-          </div>
+  return (
+    <div className="glass-tile-subtle rounded-xl p-6">
+      <div className="flex items-center gap-2 mb-4">
+        <Shuffle className="w-5 h-5 text-purple-500" />
+        <h3 className="font-semibold text-gray-800">Sorting Challenge</h3>
+      </div>
+      <p className="text-sm text-gray-600 mb-4">
+        Sort these numbers in ascending order:
+      </p>
+      <div className="font-mono text-lg mb-4 p-3 bg-gray-100 rounded flex gap-2">
+        {numbers.map((num, i) => (
+          <span key={i} className="bg-white px-2 py-1 rounded border">
+            {num}
+          </span>
         ))}
       </div>
-    )
-  }
-
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-      {statuses.map((service) => (
-        <motion.div
-          key={service.name}
-          className="glass-tile-subtle rounded-xl p-4"
-          whileHover={{ scale: 1.02 }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
+      <div className="flex gap-2 mb-3">
+        <button
+          onClick={shuffleNumbers}
+          className="px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600"
         >
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <div className="text-gray-600">
-                {getServiceIcon(service.icon)}
-              </div>
-              <div>
-                <h4 className="font-semibold text-gray-800">{service.name}</h4>
-                <p className="text-xs text-gray-500 capitalize">{service.status}</p>
-              </div>
-            </div>
-            <div className={service.color}>
-              {getStatusIcon(service.status)}
-            </div>
-          </div>
-        </motion.div>
-      ))}
+          Shuffle
+        </button>
+      </div>
+      <div className="flex gap-2">
+        <input
+          type="text"
+          value={userSolution}
+          onChange={(e) => setUserSolution(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
+          className="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500"
+          placeholder="Enter sorted numbers (comma separated)"
+          disabled={solved}
+        />
+        <button
+          onClick={checkAnswer}
+          disabled={solved}
+          className={`px-4 py-2 rounded transition-colors ${
+            solved
+              ? 'bg-green-500 text-white'
+              : 'bg-purple-500 text-white hover:bg-purple-600'
+          }`}
+        >
+          {solved ? <CheckCircle className="w-4 h-4" /> : 'Check'}
+        </button>
+      </div>
+      {solved && (
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-green-600 text-sm mt-2"
+        >
+          🎉 Perfect sorting!
+        </motion.p>
+      )}
     </div>
   )
 }
 
-export default function ServiceStatus() {
-  const [serviceStatuses, setServiceStatuses] = useState<ServiceStatus[]>([])
-  const [loading, setLoading] = useState(true)
+// Logic Pattern Challenge
+const PatternChallenge = ({ onComplete }: { onComplete: () => void }) => {
+  const [pattern, setPattern] = useState([1, 1, 2, 3, 5])
+  const [userSolution, setUserSolution] = useState('')
+  const [solved, setSolved] = useState(false)
 
-  // Fetch initial data
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const statuses = await fetchServiceStatuses()
-        setServiceStatuses(statuses)
-        setLoading(false)
-      } catch (error) {
-        console.error('Error fetching service statuses:', error)
-        setLoading(false)
-      }
+  const solution = '8'
+
+  const generateNewPattern = () => {
+    const patterns = [
+      [2, 4, 8, 16],
+      [1, 4, 9, 16],
+      [3, 6, 12, 24],
+      [5, 10, 20, 40]
+    ]
+    const randomPattern = patterns[Math.floor(Math.random() * patterns.length)]
+    setPattern(randomPattern)
+    setSolved(false)
+  }
+
+  const checkAnswer = () => {
+    if (userSolution.trim() === solution) {
+      setSolved(true)
+      onComplete()
     }
+  }
 
-    fetchData()
-  }, [])
+  return (
+    <div className="glass-tile-subtle rounded-xl p-6">
+      <div className="flex items-center gap-2 mb-4">
+        <Lightbulb className="w-5 h-5 text-yellow-500" />
+        <h3 className="font-semibold text-gray-800">Pattern Challenge</h3>
+      </div>
+      <p className="text-sm text-gray-600 mb-4">
+        What comes next in this sequence?
+      </p>
+      <div className="font-mono text-lg mb-4 p-3 bg-gray-100 rounded flex gap-2">
+        {pattern.map((num, i) => (
+          <span key={i} className="bg-white px-3 py-1 rounded border">
+            {num}
+          </span>
+        ))}
+        <span className="bg-blue-100 px-3 py-1 rounded border border-blue-300">
+          ?
+        </span>
+      </div>
+      <div className="flex gap-2 mb-3">
+        <button
+          onClick={generateNewPattern}
+          className="px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600"
+        >
+          New Pattern
+        </button>
+      </div>
+      <div className="flex gap-2">
+        <input
+          type="text"
+          value={userSolution}
+          onChange={(e) => setUserSolution(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
+          className="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-yellow-500"
+          placeholder="Enter next number"
+          disabled={solved}
+        />
+        <button
+          onClick={checkAnswer}
+          disabled={solved}
+          className={`px-4 py-2 rounded transition-colors ${
+            solved
+              ? 'bg-green-500 text-white'
+              : 'bg-yellow-500 text-white hover:bg-yellow-600'
+          }`}
+        >
+          {solved ? <CheckCircle className="w-4 h-4" /> : 'Check'}
+        </button>
+      </div>
+      {solved && (
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-green-600 text-sm mt-2"
+        >
+          🎉 Great pattern recognition!
+        </motion.p>
+      )}
+    </div>
+  )
+}
 
-  // Refresh data periodically
+// Code Riddle Challenge
+const CodeRiddle = ({ onComplete }: { onComplete: () => void }) => {
+  const [riddle, setRiddle] = useState({
+    question: "What programming language is always running but has no legs?",
+    answer: "javascript"
+  })
+  const [userAnswer, setUserAnswer] = useState('')
+  const [solved, setSolved] = useState(false)
+
+  const riddles = [
+    { question: "What programming language is always running but has no legs?", answer: "javascript" },
+    { question: "What do you call a developer who doesn't comment code?", answer: "unemployed" },
+    { question: "Why do programmers prefer dark mode?", answer: "because light attracts bugs" },
+    { question: "What's a programmer's favorite place?", answer: "stackoverflow" }
+  ]
+
+  const newRiddle = () => {
+    const randomRiddle = riddles[Math.floor(Math.random() * riddles.length)]
+    setRiddle(randomRiddle)
+    setSolved(false)
+  }
+
+  const checkAnswer = () => {
+    if (userAnswer.trim().toLowerCase().replace(/[^a-z]/g, '') === riddle.answer) {
+      setSolved(true)
+      onComplete()
+    }
+  }
+
+  return (
+    <div className="glass-tile-subtle rounded-xl p-6">
+      <div className="flex items-center gap-2 mb-4">
+        <Brain className="w-5 h-5 text-green-500" />
+        <h3 className="font-semibold text-gray-800">Code Riddle</h3>
+      </div>
+      <p className="text-sm text-gray-600 mb-4">
+        {riddle.question}
+      </p>
+      <div className="flex gap-2 mb-3">
+        <button
+          onClick={newRiddle}
+          className="px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600"
+        >
+          New Riddle
+        </button>
+      </div>
+      <div className="flex gap-2">
+        <input
+          type="text"
+          value={userAnswer}
+          onChange={(e) => setUserAnswer(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
+          className="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-green-500"
+          placeholder="Enter your answer"
+          disabled={solved}
+        />
+        <button
+          onClick={checkAnswer}
+          disabled={solved}
+          className={`px-4 py-2 rounded transition-colors ${
+            solved
+              ? 'bg-green-500 text-white'
+              : 'bg-green-500 text-white hover:bg-green-600'
+          }`}
+        >
+          {solved ? <CheckCircle className="w-4 h-4" /> : 'Check'}
+        </button>
+      </div>
+      {solved && (
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-green-600 text-sm mt-2"
+        >
+          🎉 That's correct!
+        </motion.p>
+      )}
+    </div>
+  )
+}
+
+export default function CodeChallenges() {
+  const [completed, setCompleted] = useState<string[]>([])
+  const [showCelebration, setShowCelebration] = useState(false)
+
+  const handlePuzzleComplete = (puzzleName: string) => {
+    if (!completed.includes(puzzleName)) {
+      setCompleted([...completed, puzzleName])
+    }
+  }
+
   useEffect(() => {
-    const interval = setInterval(async () => {
-      try {
-        const newStatuses = await fetchServiceStatuses()
-        setServiceStatuses(newStatuses)
-      } catch (error) {
-        console.error('Error refreshing service statuses:', error)
-      }
-    }, 300000) // Refresh every 5 minutes
-
-    return () => clearInterval(interval)
-  }, [])
+    if (completed.length === 4) {
+      setShowCelebration(true)
+      setTimeout(() => setShowCelebration(false), 3000)
+    }
+  }, [completed])
 
   return (
     <section className="py-20 bg-gradient-to-br from-slate-50 via-blue-50 to-purple-50 relative overflow-hidden">
@@ -334,25 +358,50 @@ export default function ServiceStatus() {
           className="text-center mb-16"
         >
           <div className="flex items-center justify-center gap-3 mb-6">
-            <Activity className="w-8 h-8 text-blue-500" />
+            <Code className="w-8 h-8 text-blue-500" />
             <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
-              Service Status
+              Code Challenges
             </h2>
-            <BarChart3 className="w-8 h-8 text-purple-500" />
+            <Target className="w-8 h-8 text-purple-500" />
           </div>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Real-time cloud service and AI provider status monitoring.
+            Test your programming knowledge with fun interactive challenges!
           </p>
+          <div className="mt-4 text-sm text-gray-500">
+            Completed: {completed.length}/4 challenges
+          </div>
         </motion.div>
 
-        {/* Service Status Grid */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <ServiceStatusGrid statuses={serviceStatuses} loading={loading} />
-        </motion.div>
+        {/* Challenges Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <BinaryDecoder onComplete={() => handlePuzzleComplete('binary')} />
+          <SortingChallenge onComplete={() => handlePuzzleComplete('sorting')} />
+          <PatternChallenge onComplete={() => handlePuzzleComplete('pattern')} />
+          <CodeRiddle onComplete={() => handlePuzzleComplete('riddle')} />
+        </div>
+
+        {/* Celebration */}
+        {showCelebration && (
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            className="text-center py-8"
+          >
+            <motion.div
+              animate={{ rotate: [0, 10, -10, 0] }}
+              transition={{ duration: 0.5, repeat: 3 }}
+              className="text-6xl mb-4"
+            >
+              🎉
+            </motion.div>
+            <h3 className="text-2xl font-bold text-green-600 mb-2">
+              Congratulations!
+            </h3>
+            <p className="text-gray-600">
+              You've completed all the code challenges! You're a true code master! 🏆
+            </p>
+          </motion.div>
+        )}
 
         {/* Animated Background Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -368,7 +417,7 @@ export default function ServiceStatus() {
             }}
             className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-blue-200/20 to-purple-200/20 rounded-full blur-xl"
           />
-          
+
           <motion.div
             animate={{
               x: [20, -20, 20],
@@ -381,7 +430,7 @@ export default function ServiceStatus() {
             }}
             className="absolute bottom-10 right-10 w-40 h-40 bg-gradient-to-tl from-cyan-200/20 to-pink-200/20 rounded-full blur-xl"
           />
-          
+
           <motion.div
             animate={{
               rotate: [0, 360],
