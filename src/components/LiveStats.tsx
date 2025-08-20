@@ -360,12 +360,12 @@ export default function CodeChallenges() {
           <div className="flex items-center justify-center gap-3 mb-6">
             <Code className="w-8 h-8 text-blue-500" />
             <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-cyan-600 bg-clip-text text-transparent">
-              Code Challenges
+              Puzzles
             </h2>
             <Target className="w-8 h-8 text-purple-500" />
           </div>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-            Test your programming knowledge with fun interactive challenges!
+            Test your problem-solving skills with fun interactive puzzles!
           </p>
           <div className="mt-4 text-sm text-gray-500">
             Completed: {completed.length}/4 challenges
@@ -398,7 +398,7 @@ export default function CodeChallenges() {
               Congratulations!
             </h3>
             <p className="text-gray-600">
-              You've completed all the code challenges! You're a true code master! 🏆
+              You've completed all the puzzles! You're a true puzzle master! 🏆
             </p>
           </motion.div>
         )}
