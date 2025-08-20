@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
-import { Github, ExternalLink, Bot, Cpu, Globe } from 'lucide-react'
+import { Github, ExternalLink, Bot, Cpu, Globe, Server } from 'lucide-react'
 
 interface Project {
   id: string
@@ -12,7 +12,7 @@ interface Project {
   longDescription: string
   technologies: string[]
   primaryTech: string
-  category: 'ML Systems' | 'Low Level' | 'Web Application'
+  category: 'ML Systems' | 'Low Level' | 'Web Application' | 'Infrastructure/DevOps'
   icon: React.ReactNode
   color: {
     primary: string
@@ -31,30 +31,30 @@ interface Project {
 
 const projects: Project[] = [
   {
-    id: 'chimera',
-    title: 'Project Chimera',
-    description: 'Advanced ML Systems Design with Python-based distributed architecture',
-    longDescription: 'A sophisticated machine learning systems framework designed for scalable model deployment and distributed training across multiple environments.',
-    technologies: ['Python', 'TensorFlow', 'Docker', 'Kubernetes', 'Redis', 'PostgreSQL'],
-    primaryTech: 'Python',
-    category: 'ML Systems',
-    icon: <Bot className="w-6 h-6" />,
+    id: 'k8s-python-argocd',
+    title: 'K8s ML Platform',
+    description: 'Production ML deployment platform with Kubernetes and ArgoCD GitOps',
+    longDescription: 'A complete infrastructure-as-code solution for deploying and managing machine learning workloads in production using Kubernetes orchestration and ArgoCD for continuous delivery.',
+    technologies: ['Python', 'Kubernetes', 'ArgoCD', 'Docker', 'Helm', 'Prometheus'],
+    primaryTech: 'Kubernetes',
+    category: 'Infrastructure/DevOps',
+    icon: <Server className="w-6 h-6" />,
     color: {
-      primary: 'bg-gradient-to-r from-purple-600 to-pink-600',
-      secondary: 'bg-purple-100'
+      primary: 'bg-gradient-to-r from-orange-600 to-amber-600',
+      secondary: 'bg-orange-100'
     },
     links: {
-      github: 'https://github.com/cjanowski/project-chimera'
+      github: 'https://github.com/cjanowski/k8s-python-argocd'
     },
     stats: [
-      { label: 'Models Deployed', value: '15+' },
-      { label: 'Accuracy', value: '94.2%' }
+      { label: 'Deployment Time', value: '<5min' },
+      { label: 'Environments', value: 'Multi-cloud' }
     ],
     features: [
-      'Distributed model training',
-      'Real-time inference pipeline',
-      'Automated model versioning',
-      'Performance monitoring'
+      'GitOps continuous delivery',
+      'Auto-scaling ML workloads',
+      'Infrastructure as code',
+      'Multi-environment support'
     ]
   },
   {

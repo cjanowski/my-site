@@ -46,7 +46,6 @@ const allSkills = [
   { name: "MLOps", category: "emerging", color: "orange" },
   { name: "Agentic AI", category: "emerging", color: "orange" },
   { name: "Metal Performance Shaders", category: "emerging", color: "orange" },
-  { name: "Gradient Descent", category: "emerging", color: "orange" },
 ]
 
 const getSkillColorClasses = (color: string) => {
