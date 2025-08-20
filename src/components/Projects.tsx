@@ -32,9 +32,9 @@ interface Project {
 const projects: Project[] = [
   {
     id: 'k8s-python-argocd',
-    title: 'K8s ML Platform',
-    description: 'Production ML deployment platform with Kubernetes and ArgoCD GitOps',
-    longDescription: 'A complete infrastructure-as-code solution for deploying and managing machine learning workloads in production using Kubernetes orchestration and ArgoCD for continuous delivery.',
+    title: 'K8s Backend Platform',
+    description: 'Production backend deployment platform with Kubernetes and ArgoCD GitOps',
+    longDescription: 'A complete infrastructure-as-code solution for deploying and managing backend applications in production using Kubernetes orchestration and ArgoCD for continuous delivery.',
     technologies: ['Python', 'Kubernetes', 'ArgoCD', 'Docker', 'Helm', 'Prometheus'],
     primaryTech: 'Kubernetes',
     category: 'Infrastructure/DevOps',
@@ -48,11 +48,11 @@ const projects: Project[] = [
     },
     stats: [
       { label: 'Deployment Time', value: '<5min' },
-      { label: 'Environments', value: 'Multi-cloud' }
+      { label: 'Uptime', value: '99.9%' }
     ],
     features: [
       'GitOps continuous delivery',
-      'Auto-scaling ML workloads',
+      'Auto-scaling backend services',
       'Infrastructure as code',
       'Multi-environment support'
     ]
@@ -132,7 +132,7 @@ export default function Projects() {
             <span className="gradient-title-projects block">Projects</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Showcasing innovative solutions across machine learning, systems programming, and web development
+            Showcasing innovative solutions across backend infrastructure, systems programming, and web development
           </p>
         </motion.div>
 
