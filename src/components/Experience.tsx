@@ -16,7 +16,7 @@ interface ExperienceItem {
 const experiences: ExperienceItem[] = [
   {
     company: "Abre",
-    position: "Software Engineer | Distributed Systems and Integrations",
+    position: "Software Engineer | Distributed Systems & Integrations",
     duration: "Jan 2024 - Present",
     achievements: [
       "Spearheaded the development of a cloud-native data integration platform on Google Cloud Platform (GCP) that ingested 150+ education formats via secure APIs/SFTP into BigQuery, which reduced database load by 40%.",
@@ -31,7 +31,7 @@ const experiences: ExperienceItem[] = [
   },
   {
     company: "Total Expert",
-    position: "Software QA Engineer | Main App",
+    position: "Software Engineer | Support and Reliability",
     duration: "Jun 2021 - Dec 2023",
     achievements: [
       "Maintained email deliverability for over 10 million daily fintect emails, supporting ongoing marketing campaigns and maintaining 99.98% platform uptime with zero downtime incidents on AWS.",
@@ -41,7 +41,7 @@ const experiences: ExperienceItem[] = [
   },
   {
     company: "Apple Inc",
-    position: "Data Engineer | CD | Wireless",
+    position: "Data Engineer | Wireless",
     duration: "Jul 2015 - Jun 2021",
     achievements: [
       "Engineered Python scripts leveraging regular expressions and pattern matching, enabling rapid identification of urgent VIP wireless support tickets, reducing executive escalation response times to less than four hours.",

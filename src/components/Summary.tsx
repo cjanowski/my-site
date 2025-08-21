@@ -35,7 +35,7 @@ export default function Summary() {
           >
             <p className="text-lg lg:text-xl leading-relaxed text-gray-700 font-medium">
               Software engineer with over{' '}
-              <span className="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent font-bold">4 years experience</span>{' '}
+              <span className="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent font-bold">5+ years experience</span>{' '}
               in Engineering, Distributed Systems, Data Ingestion, and Cloud infrastructure. 
               I have extensive production experience with{' '}
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent font-bold">Python</span>,{' '}
