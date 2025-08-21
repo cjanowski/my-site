@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react'
 import {
   Code,
   Brain,
-  Zap,
   Target,
   CheckCircle,
   Shuffle,
@@ -18,16 +17,27 @@ const BinaryDecoder = ({ onComplete }: { onComplete: () => void }) => {
   const [binary, setBinary] = useState('01001000 01100101 01101100 01101100 01101111')
   const [userInput, setUserInput] = useState('')
   const [solved, setSolved] = useState(false)
+  const [currentSolution, setCurrentSolution] = useState('Hello')
 
-  const solution = 'Hello'
-  const binaryToText = (bin: string) => {
-    return bin.split(' ')
-      .map(byte => String.fromCharCode(parseInt(byte, 2)))
-      .join('')
+  const binaryWords = [
+    { binary: '01001000 01100101 01101100 01101100 01101111', text: 'Hello' },
+    { binary: '01010111 01101111 01110010 01101100 01100100', text: 'World' },
+    { binary: '01000011 01101111 01100100 01100101', text: 'Code' },
+    { binary: '01000100 01100001 01110100 01100001', text: 'Data' },
+    { binary: '01001010 01100001 01110110 01100001', text: 'Java' }
+  ]
+
+
+  const generateNewBinary = () => {
+    const randomWord = binaryWords[Math.floor(Math.random() * binaryWords.length)]
+    setBinary(randomWord.binary)
+    setCurrentSolution(randomWord.text)
+    setSolved(false)
+    setUserInput('')
   }
 
   const checkAnswer = () => {
-    if (userInput.trim().toLowerCase() === solution.toLowerCase()) {
+    if (userInput.trim().toLowerCase() === currentSolution.toLowerCase()) {
       setSolved(true)
       onComplete()
     }
@@ -45,12 +55,20 @@ const BinaryDecoder = ({ onComplete }: { onComplete: () => void }) => {
       <div className="font-mono text-lg mb-4 p-3 bg-gray-100 rounded">
         {binary}
       </div>
+      <div className="flex gap-2 mb-3">
+        <button
+          onClick={generateNewBinary}
+          className="px-3 py-1 bg-gray-500 text-white rounded text-sm hover:bg-gray-600"
+        >
+          New Challenge
+        </button>
+      </div>
       <div className="flex gap-2">
         <input
           type="text"
           value={userInput}
           onChange={(e) => setUserInput(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
+          onKeyDown={(e) => e.key === 'Enter' && checkAnswer()}
           className="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
           placeholder="Enter decoded text"
           disabled={solved}
@@ -86,16 +104,20 @@ const SortingChallenge = ({ onComplete }: { onComplete: () => void }) => {
   const [userSolution, setUserSolution] = useState('')
   const [solved, setSolved] = useState(false)
 
-  const solution = '1,2,3,5,8,9'
+  const getSortedSolution = (nums: number[]) => {
+    return [...nums].sort((a, b) => a - b).join(',')
+  }
 
   const shuffleNumbers = () => {
     const shuffled = [...numbers].sort(() => Math.random() - 0.5)
     setNumbers(shuffled)
     setSolved(false)
+    setUserSolution('')
   }
 
   const checkAnswer = () => {
-    if (userSolution.trim() === solution) {
+    const correctSolution = getSortedSolution(numbers)
+    if (userSolution.trim() === correctSolution) {
       setSolved(true)
       onComplete()
     }
@@ -130,7 +152,7 @@ const SortingChallenge = ({ onComplete }: { onComplete: () => void }) => {
           type="text"
           value={userSolution}
           onChange={(e) => setUserSolution(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
+          onKeyDown={(e) => e.key === 'Enter' && checkAnswer()}
           className="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500"
           placeholder="Enter sorted numbers (comma separated)"
           disabled={solved}
@@ -165,23 +187,26 @@ const PatternChallenge = ({ onComplete }: { onComplete: () => void }) => {
   const [pattern, setPattern] = useState([1, 1, 2, 3, 5])
   const [userSolution, setUserSolution] = useState('')
   const [solved, setSolved] = useState(false)
+  const [currentSolution, setCurrentSolution] = useState('8')
 
-  const solution = '8'
+  const patternData = [
+    { sequence: [1, 1, 2, 3, 5], answer: '8', type: 'Fibonacci' },
+    { sequence: [2, 4, 8, 16], answer: '32', type: 'Powers of 2' },
+    { sequence: [1, 4, 9, 16], answer: '25', type: 'Perfect squares' },
+    { sequence: [3, 6, 12, 24], answer: '48', type: 'Double each time' },
+    { sequence: [5, 10, 20, 40], answer: '80', type: 'Double each time' }
+  ]
 
   const generateNewPattern = () => {
-    const patterns = [
-      [2, 4, 8, 16],
-      [1, 4, 9, 16],
-      [3, 6, 12, 24],
-      [5, 10, 20, 40]
-    ]
-    const randomPattern = patterns[Math.floor(Math.random() * patterns.length)]
-    setPattern(randomPattern)
+    const randomPatternData = patternData[Math.floor(Math.random() * patternData.length)]
+    setPattern(randomPatternData.sequence)
+    setCurrentSolution(randomPatternData.answer)
     setSolved(false)
+    setUserSolution('')
   }
 
   const checkAnswer = () => {
-    if (userSolution.trim() === solution) {
+    if (userSolution.trim() === currentSolution) {
       setSolved(true)
       onComplete()
     }
@@ -219,7 +244,7 @@ const PatternChallenge = ({ onComplete }: { onComplete: () => void }) => {
           type="text"
           value={userSolution}
           onChange={(e) => setUserSolution(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
+          onKeyDown={(e) => e.key === 'Enter' && checkAnswer()}
           className="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-yellow-500"
           placeholder="Enter next number"
           disabled={solved}
@@ -269,6 +294,7 @@ const CodeRiddle = ({ onComplete }: { onComplete: () => void }) => {
     const randomRiddle = riddles[Math.floor(Math.random() * riddles.length)]
     setRiddle(randomRiddle)
     setSolved(false)
+    setUserAnswer('')
   }
 
   const checkAnswer = () => {
@@ -300,7 +326,7 @@ const CodeRiddle = ({ onComplete }: { onComplete: () => void }) => {
           type="text"
           value={userAnswer}
           onChange={(e) => setUserAnswer(e.target.value)}
-          onKeyPress={(e) => e.key === 'Enter' && checkAnswer()}
+          onKeyDown={(e) => e.key === 'Enter' && checkAnswer()}
           className="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-green-500"
           placeholder="Enter your answer"
           disabled={solved}
