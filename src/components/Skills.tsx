@@ -41,6 +41,7 @@ const allSkills = [
   { name: "Prometheus", category: "observability", color: "purple" },
   { name: "Splunk", category: "observability", color: "purple" },
   { name: "DataDog", category: "observability", color: "purple" },
+]
 
 const getSkillColorClasses = (color: string) => {
   const colorMap = {
