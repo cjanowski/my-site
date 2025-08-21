@@ -41,12 +41,6 @@ const allSkills = [
   { name: "Prometheus", category: "observability", color: "purple" },
   { name: "Splunk", category: "observability", color: "purple" },
   { name: "DataDog", category: "observability", color: "purple" },
-  
-  // Emerging Tech
-  { name: "MLOps", category: "emerging", color: "orange" },
-  { name: "Agentic AI", category: "emerging", color: "orange" },
-  { name: "Metal Performance Shaders", category: "emerging", color: "orange" },
-]
 
 const getSkillColorClasses = (color: string) => {
   const colorMap = {
