@@ -47,7 +47,15 @@ export default function Navigation() {
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href)
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
+      // Add a small offset for mobile header
+      const headerOffset = 80
+      const elementPosition = element.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      })
     }
     setIsMobileMenuOpen(false)
   }
@@ -102,8 +110,9 @@ export default function Navigation() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-all duration-300"
+            className="md:hidden p-3 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-all duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle mobile menu"
           >
             {isMobileMenuOpen ? (
               <X className="w-6 h-6 text-gray-600" />
@@ -113,6 +122,15 @@ export default function Navigation() {
           </motion.button>
         </div>
 
+        {/* Mobile Menu Backdrop */}
+        {isMobileMenuOpen && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-25 z-40 md:hidden"
+            onClick={() => setIsMobileMenuOpen(false)}
+            aria-hidden="true"
+          />
+        )}
+
         {/* Mobile Menu */}
         <motion.div
           initial={false}
@@ -121,7 +139,7 @@ export default function Navigation() {
             opacity: isMobileMenuOpen ? 1 : 0,
           }}
           transition={{ duration: 0.3 }}
-          className="md:hidden overflow-hidden"
+          className="md:hidden overflow-hidden relative z-50"
         >
           <div className="py-4 space-y-2 glass-tile-subtle rounded-xl mt-4">
             {navItems.map((item, index) => (
@@ -129,17 +147,17 @@ export default function Navigation() {
                 key={item.name}
                 onClick={() => scrollToSection(item.href)}
                 initial={{ opacity: 0, x: -20 }}
-                animate={{ 
-                  opacity: isMobileMenuOpen ? 1 : 0, 
-                  x: isMobileMenuOpen ? 0 : -20 
+                animate={{
+                  opacity: isMobileMenuOpen ? 1 : 0,
+                  x: isMobileMenuOpen ? 0 : -20
                 }}
-                transition={{ 
-                  duration: 0.3, 
-                  delay: isMobileMenuOpen ? index * 0.1 : 0 
+                transition={{
+                  duration: 0.3,
+                  delay: isMobileMenuOpen ? index * 0.1 : 0
                 }}
                 whileHover={{ scale: 1.02, x: 4 }}
                 whileTap={{ scale: 0.98 }}
-                className="block w-full text-left px-4 py-3 text-gray-600 hover:text-blue-600 hover:bg-gray-50 rounded-lg transition-all duration-300 font-medium"
+                className="block w-full text-left px-6 py-4 text-gray-600 hover:text-blue-600 hover:bg-gray-50 active:bg-gray-100 rounded-lg transition-all duration-300 font-medium min-h-[44px] flex items-center"
               >
                 {item.name}
               </motion.button>
