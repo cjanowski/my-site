@@ -18,6 +18,7 @@ const BinaryDecoder = ({ onComplete }: { onComplete: () => void }) => {
   const [userInput, setUserInput] = useState('')
   const [solved, setSolved] = useState(false)
   const [currentSolution, setCurrentSolution] = useState('Hello')
+  const [showError, setShowError] = useState(false)
 
   const binaryWords = [
     { binary: '01001000 01100101 01101100 01101100 01101111', text: 'Hello' },
@@ -34,12 +35,17 @@ const BinaryDecoder = ({ onComplete }: { onComplete: () => void }) => {
     setCurrentSolution(randomWord.text)
     setSolved(false)
     setUserInput('')
+    setShowError(false)
   }
 
   const checkAnswer = () => {
     if (userInput.trim().toLowerCase() === currentSolution.toLowerCase()) {
       setSolved(true)
+      setShowError(false)
       onComplete()
+    } else {
+      setShowError(true)
+      setTimeout(() => setShowError(false), 3000)
     }
   }
 
@@ -94,6 +100,15 @@ const BinaryDecoder = ({ onComplete }: { onComplete: () => void }) => {
           🎉 Correct! You decoded it!
         </motion.p>
       )}
+      {showError && (
+        <motion.p
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-red-500 text-sm mt-2"
+        >
+          ❌ Try again! That's not quite right.
+        </motion.p>
+      )}
     </div>
   )
 }
@@ -103,6 +118,7 @@ const SortingChallenge = ({ onComplete }: { onComplete: () => void }) => {
   const [numbers, setNumbers] = useState([5, 2, 8, 1, 9, 3])
   const [userSolution, setUserSolution] = useState('')
   const [solved, setSolved] = useState(false)
+  const [showError, setShowError] = useState(false)
 
   const getSortedSolution = (nums: number[]) => {
     return [...nums].sort((a, b) => a - b).join(',')
@@ -113,13 +129,20 @@ const SortingChallenge = ({ onComplete }: { onComplete: () => void }) => {
     setNumbers(shuffled)
     setSolved(false)
     setUserSolution('')
+    setShowError(false)
   }
 
   const checkAnswer = () => {
     const correctSolution = getSortedSolution(numbers)
-    if (userSolution.trim() === correctSolution) {
+    // Allow flexible input: remove spaces and compare
+    const normalizedInput = userSolution.trim().replace(/\s+/g, '')
+    if (normalizedInput === correctSolution) {
       setSolved(true)
+      setShowError(false)
       onComplete()
+    } else {
+      setShowError(true)
+      setTimeout(() => setShowError(false), 3000)
     }
   }
 
@@ -154,7 +177,7 @@ const SortingChallenge = ({ onComplete }: { onComplete: () => void }) => {
           onChange={(e) => setUserSolution(e.target.value)}
           onKeyDown={(e) => e.key === 'Enter' && checkAnswer()}
           className="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:border-purple-500"
-          placeholder="Enter sorted numbers (comma separated)"
+          placeholder="Enter sorted numbers (e.g., 1,2,3,4)"
           disabled={solved}
         />
         <button
@@ -178,6 +201,15 @@ const SortingChallenge = ({ onComplete }: { onComplete: () => void }) => {
           🎉 Perfect sorting!
         </motion.p>
       )}
+      {showError && (
+        <motion.p
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-red-500 text-sm mt-2"
+        >
+          ❌ Not quite right! Try again.
+        </motion.p>
+      )}
     </div>
   )
 }
@@ -188,6 +220,7 @@ const PatternChallenge = ({ onComplete }: { onComplete: () => void }) => {
   const [userSolution, setUserSolution] = useState('')
   const [solved, setSolved] = useState(false)
   const [currentSolution, setCurrentSolution] = useState('8')
+  const [showError, setShowError] = useState(false)
 
   const patternData = [
     { sequence: [1, 1, 2, 3, 5], answer: '8', type: 'Fibonacci' },
@@ -203,12 +236,17 @@ const PatternChallenge = ({ onComplete }: { onComplete: () => void }) => {
     setCurrentSolution(randomPatternData.answer)
     setSolved(false)
     setUserSolution('')
+    setShowError(false)
   }
 
   const checkAnswer = () => {
     if (userSolution.trim() === currentSolution) {
       setSolved(true)
+      setShowError(false)
       onComplete()
+    } else {
+      setShowError(true)
+      setTimeout(() => setShowError(false), 3000)
     }
   }
 
@@ -270,6 +308,15 @@ const PatternChallenge = ({ onComplete }: { onComplete: () => void }) => {
           🎉 Great pattern recognition!
         </motion.p>
       )}
+      {showError && (
+        <motion.p
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-red-500 text-sm mt-2"
+        >
+          ❌ Wrong answer! Keep thinking.
+        </motion.p>
+      )}
     </div>
   )
 }
@@ -282,6 +329,7 @@ const CodeRiddle = ({ onComplete }: { onComplete: () => void }) => {
   })
   const [userAnswer, setUserAnswer] = useState('')
   const [solved, setSolved] = useState(false)
+  const [showError, setShowError] = useState(false)
 
   const riddles = [
     { question: "What programming language is always running but has no legs?", answer: "javascript" },
@@ -295,12 +343,19 @@ const CodeRiddle = ({ onComplete }: { onComplete: () => void }) => {
     setRiddle(randomRiddle)
     setSolved(false)
     setUserAnswer('')
+    setShowError(false)
   }
 
   const checkAnswer = () => {
-    if (userAnswer.trim().toLowerCase().replace(/[^a-z]/g, '') === riddle.answer) {
+    // More flexible matching: normalize both answer and user input
+    const normalizeText = (text: string) => text.trim().toLowerCase().replace(/[^a-z0-9]/g, '')
+    if (normalizeText(userAnswer) === normalizeText(riddle.answer)) {
       setSolved(true)
+      setShowError(false)
       onComplete()
+    } else {
+      setShowError(true)
+      setTimeout(() => setShowError(false), 3000)
     }
   }
 
@@ -352,6 +407,15 @@ const CodeRiddle = ({ onComplete }: { onComplete: () => void }) => {
           🎉 That's correct!
         </motion.p>
       )}
+      {showError && (
+        <motion.p
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="text-red-500 text-sm mt-2"
+        >
+          ❌ Wrong answer! Try again.
+        </motion.p>
+      )}
     </div>
   )
 }
@@ -394,7 +458,7 @@ export default function CodeChallenges() {
             Test your problem-solving skills with fun interactive puzzles!
           </p>
           <div className="mt-4 text-sm text-gray-500">
-            Completed: {completed.length}/4 challenges
+            Completed: {completed.length}/4 puzzles
           </div>
         </motion.div>
 
