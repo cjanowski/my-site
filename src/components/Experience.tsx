@@ -31,7 +31,7 @@ const experiences: ExperienceItem[] = [
   },
   {
     company: "Total Expert",
-    position: "Software Engineer | Support and Reliability",
+    position: "Software Engineer | Test",
     duration: "Jun 2021 - Dec 2023",
     achievements: [
       "Maintained email deliverability for over 10 million daily fintect emails, supporting ongoing marketing campaigns and maintaining 99.98% platform uptime with zero downtime incidents on AWS.",
@@ -41,7 +41,7 @@ const experiences: ExperienceItem[] = [
   },
   {
     company: "Apple Inc",
-    position: "Data Engineer | Wireless",
+    position: "Software Engineer - Career Development | Wireless",
     duration: "Jul 2015 - Jun 2021",
     achievements: [
       "Engineered Python scripts leveraging regular expressions and pattern matching, enabling rapid identification of urgent VIP wireless support tickets, reducing executive escalation response times to less than four hours.",
