@@ -7,8 +7,8 @@ import Experience from '@/components/Experience'
 import Skills from '@/components/Skills'
 import Projects from '@/components/Projects'
 import Education from '@/components/Education'
-import Thor from '@/components/Thor'
-import CodeChallenges from '@/components/LiveStats'
+import Tetris from '@/components/Tetris'
+import Frogger from '@/components/Frogger'
 import { motion } from 'framer-motion'
 
 export default function Home() {
@@ -40,12 +40,12 @@ export default function Home() {
           <Education />
         </div>
 
-        <div id="thor">
-          <Thor />
+        <div id="tetris">
+          <Tetris />
         </div>
 
-        <div id="puzzles">
-          <CodeChallenges />
+        <div id="frogger">
+          <Frogger />
         </div>
 
         {/* Footer */}

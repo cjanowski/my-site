@@ -16,7 +16,7 @@ interface ExperienceItem {
 const experiences: ExperienceItem[] = [
   {
     company: "Abre",
-    position: "Software Engineer | Backend and Integrations",
+    position: "Software Engineer II | Backend and Integrations",
     duration: "Jan 2024 - Present",
     achievements: [
       "Spearheaded the development of a cloud-native data integration platform on Google Cloud Platform (GCP) that ingested 150+ education formats via secure APIs/SFTP into BigQuery, which reduced database load by 40%.",

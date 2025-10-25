@@ -11,8 +11,8 @@ const navItems = [
   { name: 'Skills', href: '#skills' },
   { name: 'Projects', href: '#projects' },
   { name: 'Education', href: '#education' },
-  { name: 'Thor', href: '#thor' },
-  { name: 'Puzzles', href: '#puzzles' },
+  { name: 'Tetris', href: '#tetris' },
+  { name: 'Frogger', href: '#frogger' },
 ]
 
 export default function Navigation() {
