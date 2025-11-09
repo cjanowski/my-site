@@ -31,7 +31,7 @@ const experiences: ExperienceItem[] = [
   },
   {
     company: "Total Expert",
-    position: "Software Engineering | Test",
+    position: "Software Engineering | QA",
     duration: "Jun 2021 - Dec 2023",
     achievements: [
       "Maintained email deliverability for over 10 million daily fintect emails, supporting ongoing marketing campaigns and maintaining 99.98% platform uptime with zero downtime incidents on AWS.",
