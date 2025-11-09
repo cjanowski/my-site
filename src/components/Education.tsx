@@ -15,24 +15,17 @@ interface EducationItem {
 
 const education: EducationItem[] = [
   {
-    institution: "University of the People",
-    degree: "Bachelor of Science - BS, Computer Science",
-    duration: "Jan 2023 - Dec 2027",
-    status: "In Progress - 3rd year",
-    details: "Achievements: Student Ambassador"
-  },
-  {
-    institution: "Woz-U",
-    degree: "Technical Diploma - Data Science",
+    institution: "Woz U",
+    degree: "Bootcamp - Data Science",
     duration: "Feb 2020 - Dec 2020",
-    status: "Graduated",
+    status: "Completed",
     details: "Achievements: Graduated"
   },
   {
     institution: "Regis University",
     degree: "Bachelor of Science - BS, Computer Science",
     duration: "Jan 2017 - Feb 2018",
-    status: "Intro to CS, Programming I/II, and CS Math",
+    status: "CS Foundations, Data Structures, and Algorithms",
     details: "Studied Computer Science fundamentals"
   }
 ]
