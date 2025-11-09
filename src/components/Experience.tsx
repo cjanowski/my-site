@@ -44,7 +44,7 @@ const experiences: ExperienceItem[] = [
     position: "Software Engineer - | Wireless",
     duration: "Jul 2015 - Jun 2021",
     achievements: [
-      "Internal Career Development Program",
+      "Internal Career Development",
       "Engineered Python scripts leveraging regular expressions and pattern matching, enabling rapid identification of urgent VIP wireless support tickets, reducing executive escalation response times to less than four hours.",
       "Designed and maintained real-time Splunk dashboards visualizing geospatial wireless Key Performance Indicators (KPIs) across major U.S. carriers, cutting issue investigation time by 30% and improving network performance."
     ]
