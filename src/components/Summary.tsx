@@ -36,7 +36,7 @@ export default function Summary() {
             <p className="text-lg lg:text-xl leading-relaxed text-gray-700 font-medium">
               Software engineer with over{' '}
               <span className="bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent font-bold">5+ years experience</span>{' '}
-              in Engineering, Distributed Systems, Data Ingestion, and Cloud infrastructure. 
+              in Software Development, Distributed Systems, Data Ingestion, and Cloud infrastructure. 
               I have extensive production experience with{' '}
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent font-bold">Python</span>,{' '}
               <span className="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent font-bold">Go</span>,{' '}
@@ -57,7 +57,7 @@ export default function Summary() {
               className="glass-tile-subtle rounded-xl p-6"
             >
               <div className="text-3xl font-bold bg-gradient-to-r from-emerald-600 to-blue-600 bg-clip-text text-transparent mb-2">
-                4+
+                5+
               </div>
               <div className="text-gray-700 font-medium">Years Experience</div>
             </motion.div>
@@ -77,7 +77,7 @@ export default function Summary() {
               className="glass-tile-subtle rounded-xl p-6"
             >
               <div className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">
-                99.98%
+                99.999%
               </div>
               <div className="text-gray-700 font-medium">Platform Uptime</div>
             </motion.div>
