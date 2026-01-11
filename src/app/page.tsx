@@ -7,8 +7,6 @@ import Experience from '@/components/Experience'
 import Skills from '@/components/Skills'
 import Projects from '@/components/Projects'
 import Education from '@/components/Education'
-import Tetris from '@/components/Tetris'
-import Frogger from '@/components/Frogger'
 import { motion } from 'framer-motion'
 
 export default function Home() {
@@ -28,10 +26,6 @@ export default function Home() {
           <Experience />
         </div>
 
-        <div id="skills">
-          <Skills />
-        </div>
-
         <div id="projects">
           <Projects />
         </div>
@@ -40,12 +34,8 @@ export default function Home() {
           <Education />
         </div>
 
-        <div id="tetris">
-          <Tetris />
-        </div>
-
-        <div id="frogger">
-          <Frogger />
+        <div id="skills">
+          <Skills />
         </div>
 
         {/* Footer */}
@@ -58,7 +48,7 @@ export default function Home() {
               className="text-center"
             >
               <p className="text-gray-300 mb-4">
-                © 2025 Cory Janowski. All rights reserved.
+                © 2026 Cory Janowski. All rights reserved.
               </p>
               <p className="text-gray-400 text-sm">
                 Built with Next.js, TypeScript, Tailwind CSS, and Framer Motion

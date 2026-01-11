@@ -8,11 +8,9 @@ const navItems = [
   { name: 'Home', href: '#home' },
   { name: 'About', href: '#about' },
   { name: 'Experience', href: '#experience' },
-  { name: 'Skills', href: '#skills' },
   { name: 'Projects', href: '#projects' },
   { name: 'Education', href: '#education' },
-  { name: 'Tetris', href: '#tetris' },
-  { name: 'Frogger', href: '#frogger' },
+  { name: 'Skills', href: '#skills' },
 ]
 
 export default function Navigation() {
@@ -23,7 +21,7 @@ export default function Navigation() {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50)
-      
+
       // Update active section based on scroll position
       const sections = navItems.map(item => item.href.substring(1))
       const current = sections.find(section => {
@@ -34,7 +32,7 @@ export default function Navigation() {
         }
         return false
       })
-      
+
       if (current) {
         setActiveSection(current)
       }
@@ -64,11 +62,10 @@ export default function Navigation() {
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        isScrolled 
-          ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-200'
-          : 'bg-white/80 backdrop-blur-sm'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
+        ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-200'
+        : 'bg-white/80 backdrop-blur-sm'
+        }`}
     >
       <div className="container-max section-padding">
         <div className="flex items-center justify-between h-16">
@@ -87,18 +84,17 @@ export default function Navigation() {
             {navItems.map((item) => {
               const sectionId = item.href.substring(1)
               const isActive = activeSection === sectionId
-              
+
               return (
                 <motion.button
                   key={item.name}
                   onClick={() => scrollToSection(item.href)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className={`relative font-medium px-3 py-2 rounded-lg transition-all duration-300 ${
-                    isActive 
-                      ? 'text-blue-600 bg-blue-50' 
-                      : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
-                  }`}
+                  className={`relative font-medium px-3 py-2 rounded-lg transition-all duration-300 ${isActive
+                    ? 'text-blue-600 bg-blue-50'
+                    : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
+                    }`}
                 >
                   {item.name}
                 </motion.button>

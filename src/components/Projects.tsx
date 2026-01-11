@@ -31,17 +31,44 @@ interface Project {
 
 const projects: Project[] = [
   {
-    id: 'k8s-python-argocd',
-    title: 'K8s Backend Platform',
-    description: 'Production backend deployment platform with Kubernetes and ArgoCD GitOps',
-    longDescription: 'A complete infrastructure-as-code solution for deploying and managing backend applications in production using Kubernetes orchestration and ArgoCD for continuous delivery.',
-    technologies: ['Python', 'Kubernetes', 'ArgoCD', 'Docker', 'Helm', 'Prometheus'],
-    primaryTech: 'Kubernetes',
+    id: 'logs-and-alerting',
+    title: 'Logs-and-Alerting',
+    description: 'Log Parser with alerting configs',
+    longDescription: 'A robust log parsing system with configurable alerting mechanisms for real-time monitoring and incident response.',
+    technologies: ['Python', 'Regex', 'YAML', 'Logging', 'Alerting', 'JSON'],
+    primaryTech: 'Python',
     category: 'Infrastructure/DevOps',
     icon: <Server className="w-6 h-6" />,
     color: {
       primary: 'bg-gradient-to-r from-orange-600 to-amber-600',
       secondary: 'bg-orange-100'
+    },
+    links: {
+      github: 'https://github.com/cjanowski/Logs-and-Alerting'
+    },
+    stats: [
+      { label: 'Alert Speed', value: '<1s' },
+      { label: 'Log Processing', value: '10k/s' }
+    ],
+    features: [
+      'Real-time log parsing',
+      'Custom alert configurations',
+      'Pattern matching engine',
+      'Multi-source integration'
+    ]
+  },
+  {
+    id: 'k8s-python-argocd',
+    title: 'K8s Python ArgoCD',
+    description: 'Deployment Boilerplate',
+    longDescription: 'A complete infrastructure-as-code solution for deploying and managing backend applications in production using Kubernetes orchestration and ArgoCD for continuous delivery.',
+    technologies: ['Python', 'Kubernetes', 'ArgoCD', 'Docker', 'Helm', 'GitOps'],
+    primaryTech: 'Kubernetes',
+    category: 'Infrastructure/DevOps',
+    icon: <Server className="w-6 h-6" />,
+    color: {
+      primary: 'bg-gradient-to-r from-blue-600 to-indigo-600',
+      secondary: 'bg-blue-100'
     },
     links: {
       github: 'https://github.com/cjanowski/k8s-python-argocd'
@@ -58,37 +85,64 @@ const projects: Project[] = [
     ]
   },
   {
-    id: 'cpp-110111',
-    title: 'CPP-110111',
-    description: 'Low-level C++ systems programming with advanced memory management',
-    longDescription: 'A comprehensive systems programming project showcasing advanced C++ techniques, custom memory allocators, and high-performance computing patterns.',
-    technologies: ['C++17', 'CMake', 'Boost', 'Intel TBB', 'Valgrind', 'GDB'],
-    primaryTech: 'C++',
-    category: 'Low Level',
-    icon: <Cpu className="w-6 h-6" />,
+    id: 'scrapy-play',
+    title: 'Scrapy Play',
+    description: 'Data Collection and Analytics',
+    longDescription: 'A powerful web scraping framework for collecting, processing, and analyzing data from various online sources with robust error handling and rate limiting.',
+    technologies: ['Python', 'Scrapy', 'BeautifulSoup', 'Pandas', 'SQLite', 'Redis'],
+    primaryTech: 'Python',
+    category: 'ML Systems',
+    icon: <Bot className="w-6 h-6" />,
     color: {
-      primary: 'bg-gradient-to-r from-blue-600 to-cyan-600',
-      secondary: 'bg-blue-100'
+      primary: 'bg-gradient-to-r from-purple-600 to-pink-600',
+      secondary: 'bg-purple-100'
     },
     links: {
-      github: 'https://github.com/cjanowski/CPP-110111'
+      github: 'https://github.com/cjanowski/scrapy_play'
     },
     stats: [
-      { label: 'Performance', value: '300% faster' },
-      { label: 'Memory Usage', value: '60% reduced' }
+      { label: 'Pages/Hour', value: '10k+' },
+      { label: 'Success Rate', value: '98%' }
     ],
     features: [
-      'Custom memory allocators',
-      'Lock-free data structures',
-      'SIMD optimizations',
-      'Template metaprogramming'
+      'Intelligent rate limiting',
+      'Multi-site support',
+      'Data validation pipeline',
+      'Analytics dashboard'
+    ]
+  },
+  {
+    id: 'proxy-rot',
+    title: 'Proxy Rotation',
+    description: 'Proxy Creation and Rotation',
+    longDescription: 'Dynamic proxy rotation system for managing and cycling through multiple proxy servers to ensure reliable and anonymous web requests.',
+    technologies: ['Python', 'Proxy', 'Requests', 'Threading', 'IP Rotation', 'API'],
+    primaryTech: 'Python',
+    category: 'Infrastructure/DevOps',
+    icon: <Server className="w-6 h-6" />,
+    color: {
+      primary: 'bg-gradient-to-r from-cyan-600 to-teal-600',
+      secondary: 'bg-cyan-100'
+    },
+    links: {
+      github: 'https://github.com/cjanowski/proxy-rot'
+    },
+    stats: [
+      { label: 'Proxies', value: '100+' },
+      { label: 'Rotation Time', value: '<100ms' }
+    ],
+    features: [
+      'Automatic proxy rotation',
+      'Health check monitoring',
+      'Load balancing',
+      'Failover support'
     ]
   },
   {
     id: 'ragzzy',
     title: 'Ragzzy',
-    description: 'Modern customer service application built with JavaScript and cloud architecture',
-    longDescription: 'A full-stack customer service platform featuring real-time communication, intelligent routing, and comprehensive analytics dashboard.',
+    description: 'Customer service at its best',
+    longDescription: 'A full-stack customer service platform featuring real-time communication, intelligent routing, and comprehensive analytics dashboard powered by modern web technologies.',
     technologies: ['JavaScript', 'Node.js', 'React', 'Express', 'MongoDB', 'Socket.io'],
     primaryTech: 'JavaScript',
     category: 'Web Application',
@@ -98,8 +152,7 @@ const projects: Project[] = [
       secondary: 'bg-green-100'
     },
     links: {
-      github: 'https://github.com/cjanowski/ragzzy',
-      demo: 'https://ragzzy.vercel.app/'
+      github: 'https://github.com/cjanowski/ragzzy'
     },
     stats: [
       { label: 'Response Time', value: '<200ms' },
@@ -110,6 +163,33 @@ const projects: Project[] = [
       'Intelligent ticket routing',
       'Analytics dashboard',
       'Multi-channel support'
+    ]
+  },
+  {
+    id: 'toml-and-jerry',
+    title: 'TOML and Jerry',
+    description: 'Polyglot config validator',
+    longDescription: 'A high-performance configuration validator written in Rust that supports multiple configuration formats and provides comprehensive validation and linting capabilities.',
+    technologies: ['Rust', 'TOML', 'YAML', 'JSON', 'CLI', 'Validation'],
+    primaryTech: 'Rust',
+    category: 'Low Level',
+    icon: <Cpu className="w-6 h-6" />,
+    color: {
+      primary: 'bg-gradient-to-r from-red-600 to-orange-600',
+      secondary: 'bg-red-100'
+    },
+    links: {
+      github: 'https://github.com/cjanowski/toml-and-jerry'
+    },
+    stats: [
+      { label: 'Performance', value: '50x faster' },
+      { label: 'Formats', value: '10+' }
+    ],
+    features: [
+      'Multi-format support',
+      'Schema validation',
+      'Custom rule engine',
+      'Zero-copy parsing'
     ]
   }
 ]
@@ -136,7 +216,7 @@ export default function Projects() {
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-2 gap-8">
           {projects.map((project, index) => (
             <ProjectCard
               key={project.id}
@@ -162,8 +242,8 @@ function ProjectCard({ project, index, isInView }: ProjectCardProps) {
     <motion.div
       initial={{ opacity: 0, y: 60, scale: 0.9 }}
       animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 60, scale: 0.9 }}
-      transition={{ 
-        duration: 0.7, 
+      transition={{
+        duration: 0.7,
         delay: index * 0.2,
         type: "spring",
         stiffness: 100,
@@ -257,11 +337,10 @@ function ProjectCard({ project, index, isInView }: ProjectCardProps) {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.3, delay: (index * 0.2) + (techIndex * 0.1) }}
-                className={`px-3 py-1 text-xs font-medium rounded-full transition-all duration-200 ${
-                  tech === project.primaryTech 
+                className={`px-3 py-1 text-xs font-medium rounded-full transition-all duration-200 ${tech === project.primaryTech
                     ? `${project.color.primary} text-white shadow-md`
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
+                  }`}
               >
                 {tech}
               </motion.span>
