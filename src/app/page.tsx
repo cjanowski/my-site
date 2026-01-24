@@ -41,10 +41,6 @@ export default function Home() {
           <Skills />
         </div>
 
-        <div id="skills">
-          <Skills />
-        </div>
-
         {/* Secret Retro Gaming Corner */}
         <div className="border-t border-pcb-copper-500/10">
           <DoomContainer />

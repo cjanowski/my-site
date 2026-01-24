@@ -134,7 +134,7 @@ export default function Hero() {
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 group-hover:opacity-100 opacity-0 transition-opacity" />
                 <Mail className="w-5 h-5 text-blue-400 group-hover:text-blue-300 transition-colors" />
                 <span className="font-mono text-gray-300 group-hover:text-white transition-colors relative z-10">EMAIL_IO</span>
-                <LEDIndicator color="blue" state="off" className="ml-2 opacity-50 group-hover:opacity-100" />
+                <LEDIndicator color="amber" state="off" className="ml-2 opacity-50 group-hover:opacity-100 [&>div]:group-hover:!shadow-[0_0_10px_#ffbf00,0_0_20px_#ffbf00] [&>div]:group-hover:!bg-[#ffbf00]" />
               </motion.a>
 
               <motion.a
@@ -146,7 +146,7 @@ export default function Hero() {
                 <div className="absolute inset-0 bg-gradient-to-r from-green-600/20 to-emerald-600/20 group-hover:opacity-100 opacity-0 transition-opacity" />
                 <Phone className="w-5 h-5 text-green-400 group-hover:text-green-300 transition-colors" />
                 <span className="font-mono text-gray-300 group-hover:text-white transition-colors relative z-10">VOICE_LINK</span>
-                <LEDIndicator color="green" state="off" className="ml-2 opacity-50 group-hover:opacity-100" />
+                <LEDIndicator color="amber" state="off" className="ml-2 opacity-50 group-hover:opacity-100 [&>div]:group-hover:!shadow-[0_0_10px_#ffbf00,0_0_20px_#ffbf00] [&>div]:group-hover:!bg-[#ffbf00]" />
               </motion.a>
 
               <motion.a
@@ -160,7 +160,7 @@ export default function Hero() {
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-700/20 to-cyan-600/20 group-hover:opacity-100 opacity-0 transition-opacity" />
                 <Linkedin className="w-5 h-5 text-blue-500 group-hover:text-blue-400 transition-colors" />
                 <span className="font-mono text-gray-300 group-hover:text-white transition-colors relative z-10">LINKEDIN</span>
-                <LEDIndicator color="blue" state="off" className="ml-2 opacity-50 group-hover:opacity-100" />
+                <LEDIndicator color="amber" state="off" className="ml-2 opacity-50 group-hover:opacity-100 [&>div]:group-hover:!shadow-[0_0_10px_#ffbf00,0_0_20px_#ffbf00] [&>div]:group-hover:!bg-[#ffbf00]" />
               </motion.a>
 
               <motion.a
@@ -174,7 +174,7 @@ export default function Hero() {
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-700/50 to-gray-600/50 group-hover:opacity-100 opacity-0 transition-opacity" />
                 <Github className="w-5 h-5 text-white group-hover:text-gray-200 transition-colors" />
                 <span className="font-mono text-gray-300 group-hover:text-white transition-colors relative z-10">GITHUB_REPO</span>
-                <LEDIndicator color="amber" state="off" className="ml-2 opacity-50 group-hover:opacity-100" />
+                <LEDIndicator color="amber" state="off" className="ml-2 opacity-50 group-hover:opacity-100 [&>div]:group-hover:!shadow-[0_0_10px_#ffbf00,0_0_20px_#ffbf00] [&>div]:group-hover:!bg-[#ffbf00]" />
               </motion.a>
             </motion.div>
           </motion.div>

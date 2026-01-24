@@ -94,11 +94,15 @@ export default function DoomContainer() {
                                     <motion.div
                                         initial={{ opacity: 0, scale: 0.9 }}
                                         animate={{ opacity: 1, scale: 1 }}
-                                        className="w-full h-full"
+                                        className="w-full h-full flex items-center justify-center overflow-hidden bg-black"
                                     >
                                         <iframe
                                             src="https://archive.org/embed/msdos_DOOM_1993"
-                                            className="w-full h-full border-0"
+                                            className="w-full h-full border-0 scale-110"
+                                            style={{
+                                                transformOrigin: 'center center',
+                                                objectFit: 'cover'
+                                            }}
                                             allowFullScreen
                                             allow="autoplay; gamepad"
                                         />
