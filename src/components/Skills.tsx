@@ -3,134 +3,110 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
+import ComponentChip from './ComponentChip'
+import LEDIndicator from './LEDIndicator'
 
 // Define all skills as individual items with their categories for color coding
 const allSkills = [
   // Development Skills
   { name: "Microservices", category: "development", color: "blue" },
   { name: "REST APIs", category: "development", color: "blue" },
-  { name: "gRPC", category: "development", color: "blue" },
-  { name: "Message Queues", category: "development", color: "blue" },
   { name: "System Design", category: "development", color: "blue" },
-  { name: "Distributed Systems", category: "development", color: "blue" },
-  { name: "Caching Strategies", category: "development", color: "blue" },
   { name: "Go", category: "development", color: "blue" },
   { name: "Python", category: "development", color: "blue" },
-  { name: "Java", category: "development", color: "blue" },
-  { name: "C++", category: "development", color: "blue" },
-  { name: "PHP", category: "development", color: "blue" },
   { name: "TypeScript", category: "development", color: "blue" },
-  { name: "JavaScript", category: "development", color: "blue" },
   { name: "Node.js", category: "development", color: "blue" },
-  
+
   // Cloud & Infrastructure
-  { name: "Google Cloud Platform", category: "cloud", color: "green" },
-  { name: "Amazon Web Services", category: "cloud", color: "green" },
+  { name: "GCP", category: "cloud", color: "green" },
+  { name: "AWS", category: "cloud", color: "green" },
   { name: "Docker", category: "cloud", color: "green" },
-  { name: "Kubernetes", category: "cloud", color: "green" },
+  { name: "K8s", category: "cloud", color: "green" },
   { name: "Terraform", category: "cloud", color: "green" },
-  { name: "CI/CD Pipelines", category: "cloud", color: "green" },
-  { name: "Infrastructure as Code", category: "cloud", color: "green" },
-  { name: "Cloud Functions", category: "cloud", color: "green" },
-  { name: "Cloud Storage", category: "cloud", color: "green" },
-  { name: "IAM", category: "cloud", color: "green" },
-  
+
   // Observability
   { name: "Grafana", category: "observability", color: "purple" },
-  { name: "OpenTelemetry", category: "observability", color: "purple" },
-  { name: "Prometheus", category: "observability", color: "purple" },
   { name: "Splunk", category: "observability", color: "purple" },
-  { name: "DataDog", category: "observability", color: "purple" },
-]
-
-const getSkillColorClasses = (color: string) => {
-  const colorMap = {
-    blue: "bg-gradient-to-r from-blue-500 to-cyan-500 text-white hover:from-blue-600 hover:to-cyan-600 border-blue-300",
-    green: "bg-gradient-to-r from-green-500 to-emerald-500 text-white hover:from-green-600 hover:to-emerald-600 border-green-300",
-    purple: "bg-gradient-to-r from-purple-500 to-pink-500 text-white hover:from-purple-600 hover:to-pink-600 border-purple-300",
-    orange: "bg-gradient-to-r from-orange-500 to-red-500 text-white hover:from-orange-600 hover:to-red-600 border-orange-300"
-  }
-  return colorMap[color as keyof typeof colorMap] || colorMap.blue
-}
+  { name: "DataDog", category: "observability", color: "purple" }
+] as const
 
 export default function Skills() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section ref={ref} className="py-24 section-padding glass-section-light">
+    <section ref={ref} className="py-24 section-padding relative">
       <div className="container-max">
-        <motion.h2
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.6 }}
-          className="text-4xl lg:text-5xl font-bold text-gray-900 mb-16 text-center"
-        >
-          Technical
-          <span className="gradient-title-tech block">Skills</span>
-        </motion.h2>
+        <div className="flex flex-col items-center mb-16">
+          <div className="flex items-center gap-4 mb-4">
+            <div className="h-px w-12 bg-gray-500" />
+            <span className="font-mono text-gray-400 text-sm tracking-widest">MODULES_DETECTED: {allSkills.length}</span>
+            <div className="h-px w-12 bg-gray-500" />
+          </div>
 
-        {/* Skills as Individual Buttons */}
-        <div className="flex flex-wrap justify-center gap-4 max-w-5xl mx-auto">
-          {allSkills.map((skill, index) => {
-            const colorClasses = getSkillColorClasses(skill.color)
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                animate={isInView ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.8, y: 20 }}
-                transition={{ 
-                  duration: 0.4, 
-                  delay: index * 0.03,
-                  type: "spring",
-                  stiffness: 100,
-                  damping: 10
-                }}
-                whileHover={{ 
-                  scale: 1.05, 
-                  y: -2,
-                  transition: { duration: 0.2 }
-                }}
-                whileTap={{ 
-                  scale: 0.98,
-                  transition: { duration: 0.1 }
-                }}
-                className={`
-                  ${colorClasses}
-                  rounded-full px-6 py-3
-                  font-medium text-sm
-                  cursor-pointer select-none
-                  border transition-all duration-200
-                  backdrop-blur-md glass-skill-button
-                  shadow-sm hover:shadow-md
-                `}
-              >
-                {skill.name}
-              </motion.div>
-            )
-          })}
+          <h2 className="text-4xl lg:text-5xl font-bold text-white tracking-tight text-center">
+            Technical
+            <span className="gradient-title-tech block">Skills</span>
+          </h2>
         </div>
 
-        {/* Category Legend */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, delay: 0.8 }}
-          className="mt-16 flex flex-wrap justify-center gap-6 text-sm text-gray-600"
-        >
+        {/* Categories Legend as a mini-circuit */}
+        <div className="flex flex-wrap justify-center gap-8 mb-12 text-sm font-mono border-b border-gray-800 pb-8">
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-            <span>Development</span>
+            <div className="w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
+            <span className="text-gray-400">CORE_DEV</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-green-500"></div>
-            <span>Cloud & Infrastructure</span>
+            <div className="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]" />
+            <span className="text-gray-400">INFRA_OP</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-purple-500"></div>
-            <span>Observability</span>
+            <div className="w-3 h-3 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.5)]" />
+            <span className="text-gray-400">OBSERVABILITY</span>
           </div>
-        </motion.div>
+        </div>
+
+        {/* Skills Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+          {allSkills.map((skill, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
+              transition={{
+                duration: 0.4,
+                delay: index * 0.05,
+                type: "spring",
+                stiffness: 100
+              }}
+              whileHover={{ scale: 1.05, zIndex: 10 }}
+              className="relative group"
+            >
+              {/* Circuit Connectors (Decorative) */}
+              {(index % 2 === 0) && <div className="absolute -right-4 top-1/2 w-4 h-1 bg-gray-800 hidden md:block" />}
+              {(Math.floor(index / 4) < Math.floor(allSkills.length / 4)) && <div className="absolute -bottom-4 left-1/2 w-1 h-4 bg-gray-800 hidden lg:block" />}
+
+              <ComponentChip
+                pins="left-right"
+                className="h-full"
+              >
+                <div className="flex flex-col items-center justify-center p-4 text-center h-full min-h-[100px] cursor-default bg-gray-900/80 hover:bg-gray-800/80 transition-colors">
+                  <div className="absolute top-2 right-2">
+                    <div className={`w-1.5 h-1.5 rounded-full ${skill.color === 'blue' ? 'bg-blue-500 shadow-[0_0_5px_rgba(59,130,246,0.8)]' :
+                        skill.color === 'green' ? 'bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.8)]' :
+                          'bg-purple-500 shadow-[0_0_5px_rgba(168,85,247,0.8)]'
+                      }`} />
+                  </div>
+
+                  <span className="font-mono text-xs text-gray-500 mb-1 block opacity-50">IC-{100 + index}</span>
+                  <span className="text-white font-bold tracking-wide group-hover:text-pcb-copper-300 transition-colors">
+                    {skill.name}
+                  </span>
+                </div>
+              </ComponentChip>
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   )

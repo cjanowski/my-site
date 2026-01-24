@@ -1,17 +1,18 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
+import LEDIndicator from '@/components/LEDIndicator'
 
 const navItems = [
-  { name: 'Home', href: '#home' },
-  { name: 'About', href: '#about' },
-  { name: 'Experience', href: '#experience' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Education', href: '#education' },
-  { name: 'Skills', href: '#skills' },
-]
+  { name: 'Home', href: '#home', ledColor: 'red' },
+  { name: 'About', href: '#about', ledColor: 'amber' },
+  { name: 'Experience', href: '#experience', ledColor: 'blue' },
+  { name: 'Projects', href: '#projects', ledColor: 'green' },
+  { name: 'Education', href: '#education', ledColor: 'amber' },
+  { name: 'Skills', href: '#skills', ledColor: 'blue' },
+] as const
 
 export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -20,7 +21,7 @@ export default function Navigation() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
+      setIsScrolled(window.scrollY > 20)
 
       // Update active section based on scroll position
       const sections = navItems.map(item => item.href.substring(1))
@@ -28,7 +29,7 @@ export default function Navigation() {
         const element = document.getElementById(section)
         if (element) {
           const rect = element.getBoundingClientRect()
-          return rect.top <= 100 && rect.bottom >= 100
+          return rect.top <= 200 && rect.bottom >= 200
         }
         return false
       })
@@ -63,41 +64,66 @@ export default function Navigation() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-        ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-200'
-        : 'bg-white/80 backdrop-blur-sm'
+          ? 'glass-panel-heavy border-b border-white/10'
+          : 'bg-transparent'
         }`}
     >
       <div className="container-max section-padding">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+        <div className="flex items-center justify-between h-20">
+          {/* Logo / System Badge */}
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="text-2xl font-bold gradient-logo cursor-pointer transition-all duration-300"
+            className="group relative cursor-pointer"
             onClick={() => scrollToSection('#home')}
           >
-            CJ
+            <div className="flex items-center gap-3">
+              {/* Microchip Logo Icon */}
+              <div className="w-10 h-10 bg-gray-900 border border-gray-600 rounded-sm flex items-center justify-center relative overflow-hidden shadow-lg group-hover:shadow-blue-500/20 transition-shadow">
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
+                <span className="font-mono text-xl font-bold text-white relative z-10">CJ</span>
+                {/* Pins */}
+                <div className="absolute -left-[2px] top-1 bottom-1 w-[2px] flex flex-col justify-between py-1">
+                  {[...Array(4)].map((_, i) => <div key={i} className="w-full h-1 bg-gray-500" />)}
+                </div>
+                <div className="absolute -right-[2px] top-1 bottom-1 w-[2px] flex flex-col justify-between py-1">
+                  {[...Array(4)].map((_, i) => <div key={i} className="w-full h-1 bg-gray-500" />)}
+                </div>
+              </div>
+
+              <div className="flex flex-col">
+                <span className="text-sm font-bold tracking-widest text-gray-200">SYSTEM</span>
+                <span className="text-[10px] text-pcb-copper-300 font-mono">v2.0.26</span>
+              </div>
+            </div>
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-1">
             {navItems.map((item) => {
               const sectionId = item.href.substring(1)
               const isActive = activeSection === sectionId
 
               return (
-                <motion.button
-                  key={item.name}
-                  onClick={() => scrollToSection(item.href)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className={`relative font-medium px-3 py-2 rounded-lg transition-all duration-300 ${isActive
-                    ? 'text-blue-600 bg-blue-50'
-                    : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
-                    }`}
-                >
-                  {item.name}
-                </motion.button>
+                <div key={item.name} className="relative flex flex-col items-center group">
+                  <motion.button
+                    onClick={() => scrollToSection(item.href)}
+                    className={`relative px-4 py-2 rounded-md transition-all duration-300 flex items-center gap-2 ${isActive
+                        ? 'text-white bg-white/10 shadow-lg border border-white/10'
+                        : 'text-gray-400 hover:text-white hover:bg-white/5'
+                      }`}
+                  >
+                    <LEDIndicator
+                      color={item.ledColor}
+                      state={isActive ? 'on' : 'off'}
+                      size="sm"
+                    />
+                    <span className="font-mono text-sm tracking-wide">{item.name}</span>
+                  </motion.button>
+
+                  {/* Connection Line to Content */}
+                  <div className={`h-px w-full mt-1 transition-all duration-300 ${isActive ? 'bg-gradient-to-r from-transparent via-pcb-copper-500 to-transparent opacity-100' : 'opacity-0'}`} />
+                </div>
               )
             })}
           </div>
@@ -106,60 +132,81 @@ export default function Navigation() {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="md:hidden p-3 rounded-lg hover:bg-gray-100 active:bg-gray-200 transition-all duration-300 min-h-[44px] min-w-[44px] flex items-center justify-center"
+            className="md:hidden p-2 rounded-lg glass-panel hover:bg-white/10 transition-colors"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle mobile menu"
           >
             {isMobileMenuOpen ? (
-              <X className="w-6 h-6 text-gray-600" />
+              <X className="w-6 h-6 text-white" />
             ) : (
-              <Menu className="w-6 h-6 text-gray-600" />
+              <Menu className="w-6 h-6 text-white" />
             )}
           </motion.button>
         </div>
 
         {/* Mobile Menu Backdrop */}
-        {isMobileMenuOpen && (
-          <div
-            className="fixed inset-0 bg-black bg-opacity-25 z-40 md:hidden"
-            onClick={() => setIsMobileMenuOpen(false)}
-            aria-hidden="true"
-          />
-        )}
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 md:hidden"
+              onClick={() => setIsMobileMenuOpen(false)}
+            />
+          )}
+        </AnimatePresence>
 
         {/* Mobile Menu */}
-        <motion.div
-          initial={false}
-          animate={{
-            height: isMobileMenuOpen ? 'auto' : 0,
-            opacity: isMobileMenuOpen ? 1 : 0,
-          }}
-          transition={{ duration: 0.3 }}
-          className="md:hidden overflow-hidden relative z-50"
-        >
-          <div className="py-4 space-y-2 glass-tile-subtle rounded-xl mt-4">
-            {navItems.map((item, index) => (
-              <motion.button
-                key={item.name}
-                onClick={() => scrollToSection(item.href)}
-                initial={{ opacity: 0, x: -20 }}
-                animate={{
-                  opacity: isMobileMenuOpen ? 1 : 0,
-                  x: isMobileMenuOpen ? 0 : -20
-                }}
-                transition={{
-                  duration: 0.3,
-                  delay: isMobileMenuOpen ? index * 0.1 : 0
-                }}
-                whileHover={{ scale: 1.02, x: 4 }}
-                whileTap={{ scale: 0.98 }}
-                className="block w-full text-left px-6 py-4 text-gray-600 hover:text-blue-600 hover:bg-gray-50 active:bg-gray-100 rounded-lg transition-all duration-300 font-medium min-h-[44px] flex items-center"
-              >
-                {item.name}
-              </motion.button>
-            ))}
-          </div>
-        </motion.div>
+        <AnimatePresence>
+          {isMobileMenuOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="md:hidden overflow-hidden relative z-50 glass-panel-heavy rounded-b-2xl border-b border-white/10 mx-[-24px] px-6"
+            >
+              <div className="py-6 space-y-2">
+                {navItems.map((item, index) => {
+                  const isActive = activeSection === item.href.substring(1)
+                  return (
+                    <motion.button
+                      key={item.name}
+                      onClick={() => scrollToSection(item.href)}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{
+                        opacity: 1,
+                        x: 0,
+                        transition: { delay: index * 0.05 }
+                      }}
+                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 ${isActive
+                          ? 'bg-white/10 border border-white/10 text-white'
+                          : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                        }`}
+                    >
+                      <LEDIndicator
+                        color={item.ledColor}
+                        state={isActive ? 'on' : 'off'}
+                        size="md"
+                      />
+                      <span className="font-mono text-lg">{item.name}</span>
+
+                      {isActive && (
+                        <motion.div
+                          layoutId="active-indicator"
+                          className="ml-auto text-xs text-pcb-copper-300 font-mono"
+                        >
+                          &lt;ACTIVE/&gt;
+                        </motion.div>
+                      )}
+                    </motion.button>
+                  )
+                })}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </motion.nav>
   )
