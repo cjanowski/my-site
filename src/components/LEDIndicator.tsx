@@ -22,28 +22,40 @@ export default function LEDIndicator({
         lg: 'w-4 h-4'
     }
 
-    const getStatusClass = () => {
-        // Determine base color class
-        const colorKey = `led-${color}`
-
-        // Determine state suffix
-        let suffix = '-on'
-        if (state === 'off') suffix = '-off'
-
-        // Combine for final class
-        let classes = `${colorKey}${suffix}`
-
-        // Add animation classes
-        if (state === 'pulse') classes += ' animate-led-pulse'
-        if (state === 'blink') classes += ' animate-pulse' // Use standard pulse for blink effect
-
-        return classes
+    const colorStateMap = {
+        red: {
+            off: 'led-red-off',
+            on: 'led-red-on',
+            pulse: 'led-red-on animate-led-pulse',
+            blink: 'led-red-on animate-pulse'
+        },
+        green: {
+            off: 'led-green-off',
+            on: 'led-green-on',
+            pulse: 'led-green-on animate-led-pulse',
+            blink: 'led-green-on animate-pulse'
+        },
+        blue: {
+            off: 'led-blue-off',
+            on: 'led-blue-on',
+            pulse: 'led-blue-on animate-led-pulse',
+            blink: 'led-blue-on animate-pulse'
+        },
+        amber: {
+            off: 'led-amber-off',
+            on: 'led-amber-on',
+            pulse: 'led-amber-on animate-led-pulse',
+            blink: 'led-amber-on animate-pulse'
+        }
     }
+
+    // Fallback if color/state combo invalid (though types prevent this generally)
+    const baseColorClass = colorStateMap[color]?.[state] || 'led-green-on'
 
     return (
         <div className={`flex items-center gap-2 ${className}`}>
             <div
-                className={`led ${sizeClasses[size]} ${getStatusClass()}`}
+                className={`led ${sizeClasses[size]} ${baseColorClass}`}
                 aria-hidden="true"
             />
             {label && (

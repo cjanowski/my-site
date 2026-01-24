@@ -160,10 +160,11 @@ export default function Hero() {
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-700/20 to-cyan-600/20 group-hover:opacity-100 opacity-0 transition-opacity" />
                 <Linkedin className="w-5 h-5 text-blue-500 group-hover:text-blue-400 transition-colors" />
                 <span className="font-mono text-gray-300 group-hover:text-white transition-colors relative z-10">LINKEDIN</span>
+                <LEDIndicator color="blue" state="off" className="ml-2 opacity-50 group-hover:opacity-100" />
               </motion.a>
 
               <motion.a
-                href="https://github.com/cjanowski"
+                href="https://github.com/coryjanowski"
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
@@ -173,6 +174,7 @@ export default function Hero() {
                 <div className="absolute inset-0 bg-gradient-to-r from-gray-700/50 to-gray-600/50 group-hover:opacity-100 opacity-0 transition-opacity" />
                 <Github className="w-5 h-5 text-white group-hover:text-gray-200 transition-colors" />
                 <span className="font-mono text-gray-300 group-hover:text-white transition-colors relative z-10">GITHUB_REPO</span>
+                <LEDIndicator color="amber" state="off" className="ml-2 opacity-50 group-hover:opacity-100" />
               </motion.a>
             </motion.div>
           </motion.div>
