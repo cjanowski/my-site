@@ -54,12 +54,12 @@ export default function Summary() {
                   <span className="text-pcb-copper-300">&gt; execute summary_log.txt</span>
                   <br /><br />
                   Software engineer with over{' '}
-                  <span className="text-emerald-400 font-bold">5+ years experience</span>{' '}
+                  <span className="text-amber-400 font-bold">5+ years experience</span>{' '}
                   in Software Development, Distributed Systems, Data Ingestion, and Cloud infrastructure.
                   I have extensive production experience with{' '}
-                  <span className="text-blue-400 font-bold">Python</span>,{' '}
-                  <span className="text-blue-400 font-bold">Go</span>,{' '}
-                  <span className="text-blue-400 font-bold">IaC</span>,{' '}
+                  <span className="text-amber-300 font-bold">Python</span>,{' '}
+                  <span className="text-amber-300 font-bold">Go</span>,{' '}
+                  <span className="text-amber-300 font-bold">IaC</span>,{' '}
                   Observability and Ops tooling.
                 </p>
               </div>
@@ -87,7 +87,7 @@ export default function Summary() {
           >
             <ComponentChip label="EXP_CTR">
               <div className="p-6 text-center">
-                <div className="text-4xl font-bold text-emerald-400 mb-2 font-mono">
+                <div className="text-4xl font-bold text-amber-400 mb-2 font-mono">
                   05+
                 </div>
                 <div className="text-gray-400 font-medium text-xs tracking-wider uppercase">Years Experience</div>
@@ -96,7 +96,7 @@ export default function Summary() {
 
             <ComponentChip label="DATA_BUS">
               <div className="p-6 text-center">
-                <div className="text-4xl font-bold text-blue-400 mb-2 font-mono">
+                <div className="text-4xl font-bold text-amber-400 mb-2 font-mono">
                   150+
                 </div>
                 <div className="text-gray-400 font-medium text-xs tracking-wider uppercase">Formats Integrated</div>
@@ -105,7 +105,7 @@ export default function Summary() {
 
             <ComponentChip label="UPTIME">
               <div className="p-6 text-center">
-                <div className="text-4xl font-bold text-purple-400 mb-2 font-mono">
+                <div className="text-4xl font-bold text-amber-400 mb-2 font-mono">
                   99.9%
                 </div>
                 <div className="text-gray-400 font-medium text-xs tracking-wider uppercase">Platform Uptime</div>
