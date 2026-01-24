@@ -23,7 +23,7 @@ export default function Summary() {
             <LEDIndicator color="amber" state="on" />
             <h2 className="text-4xl lg:text-5xl font-bold text-white tracking-tight">
               System
-              <span className="gradient-title block">Summary</span>
+              <span className="gradient-title-summary block">Summary</span>
             </h2>
           </div>
 
