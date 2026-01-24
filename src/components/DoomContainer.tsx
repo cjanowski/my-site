@@ -1,22 +1,14 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Power, Terminal, AlertTriangle, Maximize2, Volume2 } from 'lucide-react'
+import { Power, Terminal, AlertTriangle, Volume2 } from 'lucide-react'
 import LEDIndicator from './LEDIndicator'
-import Script from 'next/script'
-
-declare global {
-    interface Window {
-        Dos: any;
-    }
-}
 
 export default function DoomContainer() {
     const [isPowerOn, setIsPowerOn] = useState(false)
     const [isBooting, setIsBooting] = useState(false)
     const [showGame, setShowGame] = useState(false)
-    const containerRef = useRef<HTMLCanvasElement>(null)
 
     const handlePowerToggle = () => {
         if (isPowerOn) {
@@ -102,19 +94,13 @@ export default function DoomContainer() {
                                     <motion.div
                                         initial={{ opacity: 0, scale: 0.9 }}
                                         animate={{ opacity: 1, scale: 1 }}
-                                        className="w-full h-full bg-black relative"
+                                        className="w-full h-full"
                                     >
-                                        <canvas ref={containerRef} className="w-full h-full block" />
-                                        <Script
-                                            src="https://js-dos.com/6.22/current/js-dos.js"
-                                            onLoad={() => {
-                                                if (window.Dos && containerRef.current) {
-                                                    window.Dos(containerRef.current, {
-                                                        style: "none",
-                                                        center: false,
-                                                    }).run('/doom.jsdos');
-                                                }
-                                            }}
+                                        <iframe
+                                            src="https://archive.org/embed/msdos_DOOM_1993"
+                                            className="w-full h-full border-0"
+                                            allowFullScreen
+                                            allow="autoplay; gamepad"
                                         />
                                     </motion.div>
                                 )}
