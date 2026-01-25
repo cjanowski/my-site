@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import Navigation from '@/components/Navigation'
 import Hero from '@/components/Hero'
 import Summary from '@/components/Summary'
@@ -12,10 +13,30 @@ import DoomContainer from '@/components/DoomContainer'
 import { motion } from 'framer-motion'
 
 export default function Home() {
+  const [showDoom, setShowDoom] = useState(false)
+
+  const handleDoomClick = () => {
+    setShowDoom(true)
+    // Small delay to allow component to mount
+    setTimeout(() => {
+      const element = document.getElementById('doom')
+      if (element) {
+        const headerOffset = 80
+        const elementPosition = element.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        })
+      }
+    }, 100)
+  }
+
   return (
     <>
       <CircuitBackground />
-      <Navigation />
+      <Navigation onDoomClick={handleDoomClick} />
       <main className="min-h-screen relative z-10">
         <div id="home">
           <Hero />
@@ -42,9 +63,16 @@ export default function Home() {
         </div>
 
         {/* Secret Retro Gaming Corner */}
-        <div className="border-t border-pcb-copper-500/10">
-          <DoomContainer />
-        </div>
+        {showDoom && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            transition={{ duration: 0.5 }}
+            className="border-t border-pcb-copper-500/10"
+          >
+            <DoomContainer />
+          </motion.div>
+        )}
 
         {/* Footer */}
         <footer className="py-12 section-padding glass-panel-heavy mt-0 border-t border-pcb-copper-500/30">

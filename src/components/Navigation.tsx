@@ -14,7 +14,7 @@ const navItems = [
   { name: 'Skills', href: '#skills', ledColor: 'blue' },
 ] as const
 
-export default function Navigation() {
+export default function Navigation({ onDoomClick }: { onDoomClick?: () => void }) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('home')
@@ -44,6 +44,13 @@ export default function Navigation() {
   }, [])
 
   const scrollToSection = (href: string) => {
+    // Special handling for Doom button
+    if (href === '#doom' && onDoomClick) {
+      onDoomClick()
+      setIsMobileMenuOpen(false)
+      return
+    }
+
     const element = document.querySelector(href)
     if (element) {
       // Add a small offset for mobile header
@@ -132,10 +139,10 @@ export default function Navigation() {
               onClick={() => scrollToSection('#doom')}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="relative px-3 py-2 rounded-md transition-all duration-300 text-gray-500 hover:text-red-500 hover:bg-red-900/10 group"
+              className="relative px-3 py-2 rounded-md transition-all duration-300 text-red-500 bg-red-900/20 hover:bg-red-900/40 shadow-[0_0_10px_rgba(220,38,38,0.3)] hover:shadow-[0_0_15px_rgba(220,38,38,0.5)] border border-red-500/20 group ml-2"
               title="???"
             >
-              <Skull className="w-5 h-5 group-hover:animate-pulse" />
+              <Skull className="w-5 h-5 animate-[pulse_3s_ease-in-out_infinite]" />
             </motion.button>
           </div>
 
@@ -224,11 +231,11 @@ export default function Navigation() {
                     x: 0,
                     transition: { delay: navItems.length * 0.05 }
                   }}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 text-gray-500 hover:bg-red-900/20 hover:text-red-400 border border-transparent hover:border-red-500/30 group"
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 text-red-500 bg-red-900/20 hover:bg-red-900/40 border border-red-500/20 shadow-[0_0_10px_rgba(220,38,38,0.3)] group mt-4"
                 >
-                  <Skull className="w-5 h-5 group-hover:animate-pulse" />
+                  <Skull className="w-5 h-5 animate-[pulse_3s_ease-in-out_infinite]" />
                   <span className="font-mono text-lg">???
-                    <span className="text-xs text-red-500 ml-2 opacity-0 group-hover:opacity-100 transition-opacity">DOOM</span>
+                    <span className="text-xs text-red-500 ml-2">DOOM</span>
                   </span>
                 </motion.button>
               </div>
