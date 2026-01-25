@@ -2,15 +2,15 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Skull } from 'lucide-react'
 import LEDIndicator from '@/components/LEDIndicator'
 
 const navItems = [
-  { name: 'Home', href: '#home', ledColor: 'red' },
+  { name: 'Home', href: '#home', ledColor: 'green' },
   { name: 'About', href: '#about', ledColor: 'amber' },
   { name: 'Experience', href: '#experience', ledColor: 'blue' },
-  { name: 'Projects', href: '#projects', ledColor: 'green' },
-  { name: 'Education', href: '#education', ledColor: 'amber' },
+  { name: 'Projects', href: '#projects', ledColor: 'purple' },
+  { name: 'Education', href: '#education', ledColor: 'red' },
   { name: 'Skills', href: '#skills', ledColor: 'blue' },
 ] as const
 
@@ -64,8 +64,8 @@ export default function Navigation() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-          ? 'glass-panel-heavy border-b border-white/10'
-          : 'bg-transparent'
+        ? 'glass-panel-heavy border-b border-white/10'
+        : 'bg-transparent'
         }`}
     >
       <div className="container-max section-padding">
@@ -109,8 +109,8 @@ export default function Navigation() {
                   <motion.button
                     onClick={() => scrollToSection(item.href)}
                     className={`relative px-4 py-2 rounded-md transition-all duration-300 flex items-center gap-2 ${isActive
-                        ? 'text-white bg-white/10 shadow-lg border border-white/10'
-                        : 'text-gray-400 hover:text-white hover:bg-white/5'
+                      ? 'text-white bg-white/10 shadow-lg border border-white/10'
+                      : 'text-gray-400 hover:text-white hover:bg-white/5'
                       }`}
                   >
                     <LEDIndicator
@@ -126,6 +126,17 @@ export default function Navigation() {
                 </div>
               )
             })}
+
+            {/* Secret Doom Button */}
+            <motion.button
+              onClick={() => scrollToSection('#doom')}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="relative px-3 py-2 rounded-md transition-all duration-300 text-gray-500 hover:text-red-500 hover:bg-red-900/10 group"
+              title="???"
+            >
+              <Skull className="w-5 h-5 group-hover:animate-pulse" />
+            </motion.button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -181,8 +192,8 @@ export default function Navigation() {
                         transition: { delay: index * 0.05 }
                       }}
                       className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 ${isActive
-                          ? 'bg-white/10 border border-white/10 text-white'
-                          : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                        ? 'bg-white/10 border border-white/10 text-white'
+                        : 'text-gray-400 hover:bg-white/5 hover:text-white'
                         }`}
                     >
                       <LEDIndicator
@@ -203,6 +214,23 @@ export default function Navigation() {
                     </motion.button>
                   )
                 })}
+
+                {/* Secret Doom Button */}
+                <motion.button
+                  onClick={() => scrollToSection('#doom')}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                    transition: { delay: navItems.length * 0.05 }
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 text-gray-500 hover:bg-red-900/20 hover:text-red-400 border border-transparent hover:border-red-500/30 group"
+                >
+                  <Skull className="w-5 h-5 group-hover:animate-pulse" />
+                  <span className="font-mono text-lg">???
+                    <span className="text-xs text-red-500 ml-2 opacity-0 group-hover:opacity-100 transition-opacity">DOOM</span>
+                  </span>
+                </motion.button>
               </div>
             </motion.div>
           )}

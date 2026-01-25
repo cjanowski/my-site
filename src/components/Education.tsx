@@ -6,6 +6,7 @@ import { useRef } from 'react'
 import { GraduationCap, Calendar, Award } from 'lucide-react'
 import ComponentChip from './ComponentChip'
 import LEDIndicator from './LEDIndicator'
+import CircuitTrace from './CircuitTrace'
 
 interface EducationItem {
   institution: string
@@ -45,13 +46,24 @@ export default function Education() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          className="flex items-center justify-center gap-4 mb-16"
+          className="flex items-center justify-center gap-4 mb-16 relative"
         >
-          <LEDIndicator color="amber" state="on" />
+          {/* Left ornament */}
+          <div className="absolute -left-24 top-1/2 -translate-y-1/2 hidden xl:block">
+            <CircuitTrace width={80} height={2} color="#f59e0b" />
+          </div>
+
+          <LEDIndicator color="amber" state="pulse" />
           <h2 className="text-4xl lg:text-5xl font-bold text-white tracking-tight text-center">
-            <span className="gradient-title-education">Education</span>
+            Academic
+            <span className="gradient-title-education block">Education</span>
           </h2>
-          <LEDIndicator color="amber" state="on" />
+          <LEDIndicator color="amber" state="pulse" />
+
+          {/* Right ornament */}
+          <div className="absolute -right-24 top-1/2 -translate-y-1/2 hidden xl:block">
+            <CircuitTrace width={80} height={2} color="#f59e0b" />
+          </div>
         </motion.div>
 
         <div className="max-w-3xl mx-auto relative px-4">
@@ -120,6 +132,14 @@ export default function Education() {
               </ComponentChip>
             </motion.div>
           ))}
+        </div>
+
+        {/* Additional Circuit Traces */}
+        <div className="absolute top-1/2 right-24 hidden xl:block">
+          <CircuitTrace width={90} height={2} color="#22c55e" delay={1.1} />
+        </div>
+        <div className="absolute bottom-1/3 left-16 hidden xl:block">
+          <CircuitTrace width={105} height={2} color="#8b5cf6" delay={0.2} />
         </div>
       </div>
     </section>

@@ -6,6 +6,7 @@ import { useRef, useState } from 'react'
 import { ChevronDown, ChevronUp, Calendar } from 'lucide-react'
 import LEDIndicator from './LEDIndicator'
 import ComponentChip from './ComponentChip'
+import CircuitTrace from './CircuitTrace'
 
 interface ExperienceItem {
   company: string
@@ -75,14 +76,24 @@ export default function Experience() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          className="flex items-center justify-center gap-4 mb-16"
+          className="flex items-center justify-center gap-4 mb-16 relative"
         >
+          {/* Left ornament */}
+          <div className="absolute -left-24 top-1/2 -translate-y-1/2 hidden xl:block">
+            <CircuitTrace width={80} height={2} color="#3b82f6" />
+          </div>
+
           <LEDIndicator color="blue" state="pulse" />
           <h2 className="text-4xl lg:text-5xl font-bold text-white tracking-tight text-center">
             Work
             <span className="gradient-title-experience block">Experience</span>
           </h2>
           <LEDIndicator color="blue" state="pulse" />
+
+          {/* Right ornament */}
+          <div className="absolute -right-24 top-1/2 -translate-y-1/2 hidden xl:block">
+            <CircuitTrace width={80} height={2} color="#3b82f6" />
+          </div>
         </motion.div>
 
         <div className="max-w-4xl mx-auto relative">
@@ -179,6 +190,14 @@ export default function Experience() {
               </ComponentChip>
             </motion.div>
           ))}
+        </div>
+
+        {/* Additional Circuit Traces */}
+        <div className="absolute top-1/3 right-16 hidden xl:block">
+          <CircuitTrace width={110} height={2} color="#a855f7" delay={0.4} />
+        </div>
+        <div className="absolute bottom-1/4 left-12 hidden xl:block">
+          <CircuitTrace width={130} height={2} color="#ef4444" delay={0.9} />
         </div>
       </div>
     </section>

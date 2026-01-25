@@ -6,6 +6,7 @@ import { useRef } from 'react'
 import { Github, ExternalLink, Bot, Cpu, Globe, Server } from 'lucide-react'
 import ComponentChip from './ComponentChip'
 import LEDIndicator from './LEDIndicator'
+import CircuitTrace from './CircuitTrace'
 
 interface Project {
   id: string
@@ -100,14 +101,24 @@ export default function Projects() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          className="flex items-center justify-center gap-4 mb-16"
+          className="flex items-center justify-center gap-4 mb-16 relative"
         >
-          <LEDIndicator color="green" state="pulse" />
+          {/* Left ornament */}
+          <div className="absolute -left-24 top-1/2 -translate-y-1/2 hidden xl:block">
+            <CircuitTrace width={80} height={2} color="#a855f7" />
+          </div>
+
+          <LEDIndicator color="purple" state="pulse" />
           <h2 className="text-4xl lg:text-5xl font-bold text-white tracking-tight text-center">
             Featured
             <span className="gradient-title-projects block">Projects</span>
           </h2>
-          <LEDIndicator color="green" state="pulse" />
+          <LEDIndicator color="purple" state="pulse" />
+
+          {/* Right ornament */}
+          <div className="absolute -right-24 top-1/2 -translate-y-1/2 hidden xl:block">
+            <CircuitTrace width={80} height={2} color="#a855f7" />
+          </div>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-8">
@@ -119,6 +130,47 @@ export default function Projects() {
               isInView={isInView}
             />
           ))}
+        </div>
+
+        {/* Structured PCB Circuit Traces - Purple Theme Grid */}
+        {/* Top Row - Horizontal traces */}
+        <div className="absolute top-24 left-0 hidden lg:block z-0">
+          <CircuitTrace width={180} height={2} color="#a855f7" delay={0} />
+        </div>
+        <div className="absolute top-24 right-0 hidden lg:block z-0">
+          <CircuitTrace width={180} height={2} color="#c084fc" delay={0.2} />
+        </div>
+
+        {/* Upper Middle - Connecting between project cards */}
+        <div className="absolute top-1/3 left-8 hidden lg:block z-0">
+          <CircuitTrace width={150} height={2} color="#9333ea" delay={0.4} />
+        </div>
+        <div className="absolute top-1/3 right-8 hidden lg:block z-0">
+          <CircuitTrace width={150} height={2} color="#a855f7" delay={0.6} />
+        </div>
+
+        {/* Middle Row */}
+        <div className="absolute top-1/2 left-16 hidden lg:block z-0">
+          <CircuitTrace width={130} height={2} color="#c084fc" delay={0.8} />
+        </div>
+        <div className="absolute top-1/2 right-16 hidden lg:block z-0">
+          <CircuitTrace width={130} height={2} color="#9333ea" delay={1.0} />
+        </div>
+
+        {/* Lower Middle */}
+        <div className="absolute top-2/3 left-4 hidden lg:block z-0">
+          <CircuitTrace width={140} height={2} color="#a855f7" delay={1.2} />
+        </div>
+        <div className="absolute top-2/3 right-4 hidden lg:block z-0">
+          <CircuitTrace width={140} height={2} color="#c084fc" delay={1.4} />
+        </div>
+
+        {/* Complex traces for visual interest */}
+        <div className="absolute top-1/4 left-1/3 hidden lg:block z-0">
+          <CircuitTrace width={110} height={2} color="#9333ea" delay={0.5} style="complex" />
+        </div>
+        <div className="absolute bottom-1/4 right-1/3 hidden lg:block z-0">
+          <CircuitTrace width={110} height={2} color="#a855f7" delay={1.1} style="complex" />
         </div>
       </div>
     </section>
@@ -150,10 +202,10 @@ function ProjectCard({ project, index, isInView }: { project: Project, index: nu
           <div className="flex items-start justify-between mb-6 relative z-10">
             <div className="flex items-center gap-3">
               <div className={`p-3 rounded-sm ${project.color === 'blue' ? 'bg-blue-900/50 text-blue-400 border border-blue-500/30' :
-                  project.color === 'green' ? 'bg-green-900/50 text-green-400 border border-green-500/30' :
-                    project.color === 'purple' ? 'bg-purple-900/50 text-purple-400 border border-purple-500/30' :
-                      project.color === 'amber' ? 'bg-amber-900/50 text-amber-400 border border-amber-500/30' :
-                        'bg-red-900/50 text-red-400 border border-red-500/30'
+                project.color === 'green' ? 'bg-green-900/50 text-green-400 border border-green-500/30' :
+                  project.color === 'purple' ? 'bg-purple-900/50 text-purple-400 border border-purple-500/30' :
+                    project.color === 'amber' ? 'bg-amber-900/50 text-amber-400 border border-amber-500/30' :
+                      'bg-red-900/50 text-red-400 border border-red-500/30'
                 }`}>
                 {project.icon}
               </div>

@@ -5,6 +5,7 @@ import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import ComponentChip from './ComponentChip'
 import LEDIndicator from './LEDIndicator'
+import CircuitTrace from './CircuitTrace'
 
 export default function Summary() {
   const ref = useRef(null)
@@ -19,12 +20,22 @@ export default function Summary() {
           transition={{ duration: 0.8 }}
           className="max-w-5xl mx-auto"
         >
-          <div className="flex items-center gap-4 mb-8">
+          <div className="flex items-center gap-4 mb-8 relative">
+            {/* Left circuit trace */}
+            <div className="absolute -left-16 top-1/2 -translate-y-1/2 hidden lg:block">
+              <CircuitTrace width={48} height={2} color="#fbbf24" />
+            </div>
+
             <LEDIndicator color="amber" state="on" />
             <h2 className="text-4xl lg:text-5xl font-bold text-white tracking-tight">
               System
               <span className="gradient-title-summary block">Summary</span>
             </h2>
+
+            {/* Right circuit trace */}
+            <div className="absolute -right-16 top-1/2 -translate-y-1/2 hidden lg:block">
+              <CircuitTrace width={48} height={2} color="#fbbf24" />
+            </div>
           </div>
 
           <motion.div
@@ -113,6 +124,14 @@ export default function Summary() {
             </ComponentChip>
           </motion.div>
         </motion.div>
+
+        {/* Additional Circuit Traces */}
+        <div className="absolute top-1/4 right-20 hidden xl:block">
+          <CircuitTrace width={100} height={2} color="#b8860b" delay={0.3} />
+        </div>
+        <div className="absolute bottom-1/3 left-8 hidden xl:block">
+          <CircuitTrace width={120} height={2} color="#3b82f6" delay={0.6} />
+        </div>
       </div>
     </section>
   )

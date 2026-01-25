@@ -5,6 +5,14 @@
 @tailwind utilities;
 
 @layer base {
+
+  /* Core Reset & Global Tokens */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
   html {
     scroll-behavior: smooth;
   }
@@ -15,6 +23,80 @@
     -moz-osx-font-smoothing: grayscale;
     @apply bg-pcb-green-900 text-gray-100;
     overflow-x: hidden;
+    position: relative;
+  }
+
+  /* Motherboard Background with Circuit Traces */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.03;
+    pointer-events: none;
+    background-image:
+      /* Horizontal traces */
+      linear-gradient(90deg, transparent 0%, transparent 49%, #b8860b 49%, #b8860b 51%, transparent 51%, transparent 100%),
+      linear-gradient(90deg, transparent 0%, transparent 49%, #4ade80 49%, #4ade80 51%, transparent 51%, transparent 100%),
+      linear-gradient(90deg, transparent 0%, transparent 49%, #3b82f6 49%, #3b82f6 51%, transparent 51%, transparent 100%),
+      /* Vertical traces */
+      linear-gradient(0deg, transparent 0%, transparent 49%, #b8860b 49%, #b8860b 51%, transparent 51%, transparent 100%),
+      linear-gradient(0deg, transparent 0%, transparent 49%, #ef4444 49%, #ef4444 51%, transparent 51%, transparent 100%),
+      linear-gradient(0deg, transparent 0%, transparent 49%, #8b5cf6 49%, #8b5cf6 51%, transparent 51%, transparent 100%),
+      /* Grid pattern */
+      linear-gradient(90deg, #1f2937 1px, transparent 1px),
+      linear-gradient(0deg, #1f2937 1px, transparent 1px);
+    background-size:
+      100% 20vh,
+      100% 40vh,
+      100% 60vh,
+      25vw 100%,
+      50vw 100%,
+      75vw 100%,
+      50px 50px,
+      50px 50px;
+    background-position:
+      0 15vh,
+      0 35vh,
+      0 55vh,
+      15vw 0,
+      40vw 0,
+      70vw 0,
+      0 0,
+      0 0;
+  }
+
+  /* PCB Solder Mask Texture */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    opacity: 0.015;
+    pointer-events: none;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(184, 134, 11, 0.1) 0%, transparent 3%),
+      radial-gradient(circle at 60% 70%, rgba(74, 222, 128, 0.1) 0%, transparent 3%),
+      radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 3%),
+      radial-gradient(circle at 40% 80%, rgba(239, 68, 68, 0.1) 0%, transparent 3%);
+    background-size: 200px 200px;
+    animation: pcb-shimmer 20s linear infinite;
+  }
+
+  @keyframes pcb-shimmer {
+    0% {
+      background-position: 0 0, 50px 50px, 100px 0, 0 100px;
+    }
+
+    100% {
+      background-position: 200px 200px, 250px 250px, 300px 200px, 200px 300px;
+    }
   }
 }
 
@@ -141,6 +223,19 @@
     background: #4d3900;
   }
 
+  .led-purple-on {
+    background: #a855f7;
+    box-shadow:
+      0 0 10px #a855f7,
+      0 0 20px #a855f7,
+      inset 0 2px 4px rgba(255, 255, 255, 0.5),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.4);
+  }
+
+  .led-purple-off {
+    background: #3d1766;
+  }
+
   /* Component Chip Styling */
   .component-chip {
     @apply relative bg-gray-900 border border-gray-700 rounded-sm shadow-2xl;
@@ -152,6 +247,31 @@
   .component-chip-text {
     font-family: 'Courier New', monospace;
     @apply text-gray-400 tracking-wider text-xs opacity-70;
+  }
+
+  /* Vintage 90s PC Button Styling */
+  .vintage-button {
+    position: relative;
+    background: linear-gradient(135deg, #c0c0c0 0%, #a8a8a8 100%);
+    border: 2px solid;
+    border-color: #ffffff #404040 #404040 #ffffff;
+    box-shadow:
+      inset 1px 1px 0 rgba(255, 255, 255, 0.5),
+      inset -1px -1px 0 rgba(0, 0, 0, 0.5),
+      2px 2px 0 rgba(0, 0, 0, 0.3);
+    transition: all 0.1s ease;
+  }
+
+  .vintage-button:hover {
+    background: linear-gradient(135deg, #d0d0d0 0%, #b8b8b8 100%);
+  }
+
+  .vintage-button:active {
+    border-color: #404040 #ffffff #ffffff #404040;
+    box-shadow:
+      inset -1px -1px 0 rgba(255, 255, 255, 0.5),
+      inset 1px 1px 0 rgba(0, 0, 0, 0.5);
+    transform: translate(1px, 1px);
   }
 
   /* CRT Monitor Effects */
@@ -203,19 +323,19 @@
 
   /* LED Display Gradients for Section Titles */
   .gradient-title-tech {
-    background: linear-gradient(135deg, #d4af37 0%, #fbbf24 50%, #b8860b 100%);
+    background: linear-gradient(135deg, #f87171 0%, #ef4444 50%, #dc2626 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 10px rgba(184, 134, 11, 0.3));
+    filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.4));
   }
 
   .gradient-title-projects {
-    background: linear-gradient(135deg, #d4af37 0%, #fbbf24 50%, #b8860b 100%);
+    background: linear-gradient(135deg, #c084fc 0%, #a855f7 50%, #9333ea 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 10px rgba(184, 134, 11, 0.3));
+    filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.4));
   }
 
   .gradient-title-experience {
@@ -227,28 +347,80 @@
   }
 
   .gradient-title-education {
-    background: linear-gradient(135deg, #d4af37 0%, #fbbf24 50%, #b8860b 100%);
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 10px rgba(184, 134, 11, 0.3));
+    filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.4));
   }
 
   .gradient-title-summary {
-    background: linear-gradient(135deg, #d4af37 0%, #fbbf24 50%, #b8860b 100%);
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 10px rgba(184, 134, 11, 0.3));
+    filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.4));
   }
 
   .gradient-name {
-    background: linear-gradient(135deg, #d4af37 0%, #fbbf24 50%, #b8860b 100%);
+    background: linear-gradient(135deg,
+        #ff00ff 0%,
+        #00ffff 15%,
+        #ffff00 30%,
+        #ff00ff 45%,
+        #00ff00 60%,
+        #ff8800 75%,
+        #ff00ff 90%,
+        #00ffff 100%);
+    background-size: 400% 400%;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4));
-    animation: led-glow 3s ease-in-out infinite;
+    position: relative;
+    animation: gradient-shift 8s ease infinite, name-pulse 2s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(255, 0, 255, 0.6)) drop-shadow(0 0 40px rgba(0, 255, 255, 0.4)) drop-shadow(0 0 60px rgba(255, 255, 0, 0.3));
+  }
+
+  /* Holographic shimmer effect */
+  @keyframes gradient-shift {
+    0% {
+      background-position: 0% 50%;
+      filter: hue-rotate(0deg) drop-shadow(0 0 20px rgba(255, 0, 255, 0.6));
+    }
+
+    25% {
+      background-position: 50% 50%;
+      filter: hue-rotate(90deg) drop-shadow(0 0 30px rgba(0, 255, 255, 0.6));
+    }
+
+    50% {
+      background-position: 100% 50%;
+      filter: hue-rotate(180deg) drop-shadow(0 0 40px rgba(255, 255, 0, 0.6));
+    }
+
+    75% {
+      background-position: 50% 50%;
+      filter: hue-rotate(270deg) drop-shadow(0 0 30px rgba(0, 255, 0, 0.6));
+    }
+
+    100% {
+      background-position: 0% 50%;
+      filter: hue-rotate(360deg) drop-shadow(0 0 20px rgba(255, 0, 255, 0.6));
+    }
+  }
+
+  @keyframes name-pulse {
+
+    0%,
+    100% {
+      transform: scale(1);
+      filter: brightness(1);
+    }
+
+    50% {
+      transform: scale(1.02);
+      filter: brightness(1.2);
+    }
   }
 
   /* LED Clock Text Effects - For headings and important text */

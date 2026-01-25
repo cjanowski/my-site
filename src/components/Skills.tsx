@@ -5,6 +5,7 @@ import { useInView } from 'framer-motion'
 import { useRef } from 'react'
 import ComponentChip from './ComponentChip'
 import LEDIndicator from './LEDIndicator'
+import CircuitTrace from './CircuitTrace'
 
 // Define all skills as individual items with their categories for color coding
 const allSkills = [
@@ -37,18 +38,28 @@ export default function Skills() {
   return (
     <section ref={ref} className="py-24 section-padding relative">
       <div className="container-max">
-        <div className="flex flex-col items-center mb-16">
-          <div className="flex items-center gap-4 mb-4">
-            <div className="h-px w-12 bg-gray-500" />
-            <span className="font-mono text-gray-400 text-sm tracking-widest">MODULES_DETECTED: {allSkills.length}</span>
-            <div className="h-px w-12 bg-gray-500" />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          className="flex items-center justify-center gap-4 mb-16 relative"
+        >
+          {/* Left ornament */}
+          <div className="absolute -left-24 top-1/2 -translate-y-1/2 hidden xl:block">
+            <CircuitTrace width={80} height={2} color="#ef4444" />
           </div>
 
+          <LEDIndicator color="red" state="pulse" />
           <h2 className="text-4xl lg:text-5xl font-bold text-white tracking-tight text-center">
             Technical
             <span className="gradient-title-tech block">Skills</span>
           </h2>
-        </div>
+          <LEDIndicator color="red" state="pulse" />
+
+          {/* Right ornament */}
+          <div className="absolute -right-24 top-1/2 -translate-y-1/2 hidden xl:block">
+            <CircuitTrace width={80} height={2} color="#ef4444" />
+          </div>
+        </motion.div>
 
         {/* Categories Legend as a mini-circuit */}
         <div className="flex flex-wrap justify-center gap-8 mb-12 text-sm font-mono border-b border-gray-800 pb-8">
@@ -93,8 +104,8 @@ export default function Skills() {
                 <div className="flex flex-col items-center justify-center p-4 text-center h-full min-h-[100px] cursor-default bg-gray-900/80 hover:bg-gray-800/80 transition-colors">
                   <div className="absolute top-2 right-2">
                     <div className={`w-1.5 h-1.5 rounded-full ${skill.color === 'blue' ? 'bg-blue-500 shadow-[0_0_5px_rgba(59,130,246,0.8)]' :
-                        skill.color === 'green' ? 'bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.8)]' :
-                          'bg-purple-500 shadow-[0_0_5px_rgba(168,85,247,0.8)]'
+                      skill.color === 'green' ? 'bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.8)]' :
+                        'bg-purple-500 shadow-[0_0_5px_rgba(168,85,247,0.8)]'
                       }`} />
                   </div>
 
@@ -106,6 +117,39 @@ export default function Skills() {
               </ComponentChip>
             </motion.div>
           ))}
+        </div>
+
+        {/* Structured PCB Circuit Traces - Grid Layout */}
+        {/* Top Row - Horizontal traces */}
+        <div className="absolute top-32 left-0 hidden lg:block z-0">
+          <CircuitTrace width={160} height={2} color="#ef4444" delay={0} />
+        </div>
+        <div className="absolute top-32 right-0 hidden lg:block z-0">
+          <CircuitTrace width={160} height={2} color="#3b82f6" delay={0.3} />
+        </div>
+
+        {/* Middle Row - Connecting to skill cards */}
+        <div className="absolute top-1/2 left-12 hidden lg:block z-0">
+          <CircuitTrace width={140} height={2} color="#22c55e" delay={0.6} />
+        </div>
+        <div className="absolute top-1/2 right-12 hidden lg:block z-0">
+          <CircuitTrace width={140} height={2} color="#a855f7" delay={0.9} />
+        </div>
+
+        {/* Bottom Row */}
+        <div className="absolute bottom-32 left-4 hidden lg:block z-0">
+          <CircuitTrace width={120} height={2} color="#fbbf24" delay={1.2} />
+        </div>
+        <div className="absolute bottom-32 right-4 hidden lg:block z-0">
+          <CircuitTrace width={120} height={2} color="#ef4444" delay={1.5} />
+        </div>
+
+        {/* Diagonal/Cross traces for depth */}
+        <div className="absolute top-1/3 left-1/4 hidden lg:block z-0">
+          <CircuitTrace width={100} height={2} color="#3b82f6" delay={0.4} style="complex" />
+        </div>
+        <div className="absolute bottom-1/3 right-1/4 hidden lg:block z-0">
+          <CircuitTrace width={100} height={2} color="#22c55e" delay={1.0} style="complex" />
         </div>
       </div>
     </section>

@@ -28,7 +28,7 @@ export default function DoomContainer() {
     }
 
     return (
-        <section className="py-24 section-padding relative overflow-hidden flex flex-col items-center">
+        <section id="doom" className="py-24 section-padding relative overflow-hidden flex flex-col items-center">
 
             {/* Section Header */}
             <div className="mb-12 text-center relative z-10">
@@ -98,11 +98,7 @@ export default function DoomContainer() {
                                     >
                                         <iframe
                                             src="https://archive.org/embed/msdos_DOOM_1993"
-                                            className="w-full h-full border-0 scale-110"
-                                            style={{
-                                                transformOrigin: 'center center',
-                                                objectFit: 'cover'
-                                            }}
+                                            className="w-full h-full border-0"
                                             allowFullScreen
                                             allow="autoplay; gamepad"
                                         />

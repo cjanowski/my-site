@@ -1,7 +1,7 @@
 import React from 'react'
 
 interface LEDProps {
-    color?: 'red' | 'green' | 'blue' | 'amber';
+    color?: 'red' | 'green' | 'blue' | 'amber' | 'purple';
     state?: 'off' | 'on' | 'pulse' | 'blink';
     size?: 'sm' | 'md' | 'lg';
     label?: string;
@@ -46,6 +46,12 @@ export default function LEDIndicator({
             on: 'led-amber-on',
             pulse: 'led-amber-on animate-led-pulse',
             blink: 'led-amber-on animate-pulse'
+        },
+        purple: {
+            off: 'led-purple-off',
+            on: 'led-purple-on',
+            pulse: 'led-purple-on animate-led-pulse',
+            blink: 'led-purple-on animate-pulse'
         }
     }
 

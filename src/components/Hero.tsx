@@ -27,8 +27,11 @@ export default function Hero() {
             className="flex justify-center lg:justify-start order-2 lg:order-1 relative"
           >
             {/* Connection Traces - Decorations */}
-            <div className="absolute -right-8 top-1/2 w-16 hidden lg:block">
-              <CircuitTrace width={64} height={2} color="#b8860b" />
+            <div className="absolute -right-8 top-1/3 w-20 hidden lg:block">
+              <CircuitTrace width={80} height={2} color="#fbbf24" delay={0} />
+            </div>
+            <div className="absolute -right-8 top-2/3 w-20 hidden lg:block">
+              <CircuitTrace width={80} height={2} color="#4ade80" delay={0.8} />
             </div>
 
             <ComponentChip
@@ -91,8 +94,8 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="text-5xl sm:text-6xl lg:text-8xl font-bold mb-4 tracking-tight leading-none"
             >
-              <span className="text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">Cory</span>
-              <span className="block gradient-name">Janowski</span>
+              <span className="gradient-name">Cory</span>
+              <span className="gradient-name block">Janowski</span>
             </motion.h1>
 
             <motion.div
