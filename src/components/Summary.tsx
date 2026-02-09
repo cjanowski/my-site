@@ -65,7 +65,7 @@ export default function Summary() {
                   <span className="text-pcb-copper-300">&gt; execute summary_log.txt</span>
                   <br /><br />
                   Software engineer with over{' '}
-                  <span className="text-amber-400 font-bold">5+ years experience</span>{' '}
+                  <span className="text-amber-400 font-bold">7+ years experience</span>{' '}
                   in Software Development, Distributed Systems, Data Ingestion, and Cloud infrastructure.
                   I have extensive production experience with{' '}
                   <span className="text-amber-300 font-bold">Python</span>,{' '}
@@ -99,7 +99,7 @@ export default function Summary() {
             <ComponentChip label="EXP_CTR">
               <div className="p-6 text-center">
                 <div className="text-4xl font-bold text-amber-400 mb-2 font-mono">
-                  05+
+                  07+
                 </div>
                 <div className="text-gray-400 font-medium text-xs tracking-wider uppercase">Years Experience</div>
               </div>
