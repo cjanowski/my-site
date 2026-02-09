@@ -30,7 +30,7 @@ const education: EducationItem[] = [
     institution: "Regis University",
     degree: "Bachelor of Science - BS, Computer Science",
     duration: "Jan 2017 - Feb 2018",
-    status: "Foundations completed",
+    status: "CS Foundations",
     details: "CS Foundations, Data Structures, and Algorithms",
     dateCode: "2018-02-UNDG"
   }
