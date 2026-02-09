@@ -20,7 +20,7 @@ interface ExperienceItem {
 const experiences: ExperienceItem[] = [
   {
     company: "Abre",
-    position: "Software Engineer II | Full Stack",
+    position: "Software Engineer II",
     duration: "Jan 2024 - Present",
     active: true,
     achievements: [
@@ -36,7 +36,7 @@ const experiences: ExperienceItem[] = [
   },
   {
     company: "Total Expert",
-    position: "Engineer II QA/SDET",
+    position: "Engineer II SDET",
     duration: "Jun 2021 - Dec 2023",
     active: false,
     achievements: [
