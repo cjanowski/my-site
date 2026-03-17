@@ -3,32 +3,28 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
-import ComponentChip from './ComponentChip'
-import LEDIndicator from './LEDIndicator'
-import CircuitTrace from './CircuitTrace'
 
-// Define all skills as individual items with their categories for color coding
 const allSkills = [
   // Development Skills
-  { name: "Microservices", category: "development", color: "blue" },
-  { name: "REST APIs", category: "development", color: "blue" },
-  { name: "System Design", category: "development", color: "blue" },
-  { name: "Go", category: "development", color: "blue" },
-  { name: "Python", category: "development", color: "blue" },
-  { name: "TypeScript", category: "development", color: "blue" },
-  { name: "Node.js", category: "development", color: "blue" },
+  { name: "Microservices", category: "development" },
+  { name: "REST APIs", category: "development" },
+  { name: "System Design", category: "development" },
+  { name: "Go", category: "development" },
+  { name: "Python", category: "development" },
+  { name: "TypeScript", category: "development" },
+  { name: "Node.js", category: "development" },
 
   // Cloud & Infrastructure
-  { name: "GCP", category: "cloud", color: "green" },
-  { name: "AWS", category: "cloud", color: "green" },
-  { name: "Docker", category: "cloud", color: "green" },
-  { name: "K8s", category: "cloud", color: "green" },
-  { name: "Terraform", category: "cloud", color: "green" },
+  { name: "GCP", category: "cloud" },
+  { name: "AWS", category: "cloud" },
+  { name: "Docker", category: "cloud" },
+  { name: "K8s", category: "cloud" },
+  { name: "Terraform", category: "cloud" },
 
   // Observability
-  { name: "Grafana", category: "observability", color: "purple" },
-  { name: "Splunk", category: "observability", color: "purple" },
-  { name: "DataDog", category: "observability", color: "purple" }
+  { name: "Grafana", category: "observability" },
+  { name: "Splunk", category: "observability" },
+  { name: "DataDog", category: "observability" }
 ] as const
 
 export default function Skills() {
@@ -36,120 +32,67 @@ export default function Skills() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section ref={ref} className="py-24 section-padding relative">
+    <section ref={ref} className="py-24 section-padding relative z-10 bg-white/30 backdrop-blur-sm border-t border-b border-gray-100/50">
       <div className="container-max">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          className="flex items-center justify-center gap-4 mb-16 relative"
+          className="flex flex-col items-center justify-center mb-16"
         >
-          {/* Left ornament */}
-          <div className="absolute -left-24 top-1/2 -translate-y-1/2 hidden xl:block">
-            <CircuitTrace width={80} height={2} color="#ef4444" />
-          </div>
-
-          <LEDIndicator color="red" state="pulse" />
-          <h2 className="text-4xl lg:text-5xl font-bold text-white tracking-tight text-center">
-            Technical
-            <span className="gradient-title-tech block">Skills</span>
+          <span className="text-secondary-600 font-semibold tracking-wider text-sm uppercase mb-3">Expertise</span>
+          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight text-center">
+            Technical <span className="gradient-text">Skills</span>
           </h2>
-          <LEDIndicator color="red" state="pulse" />
-
-          {/* Right ornament */}
-          <div className="absolute -right-24 top-1/2 -translate-y-1/2 hidden xl:block">
-            <CircuitTrace width={80} height={2} color="#ef4444" />
-          </div>
         </motion.div>
 
-        {/* Categories Legend as a mini-circuit */}
-        <div className="flex flex-wrap justify-center gap-8 mb-12 text-sm font-mono border-b border-gray-800 pb-8">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.5)]" />
-            <span className="text-gray-400">CORE_DEV</span>
+        {/* Categories Legend */}
+        <div className="flex flex-wrap justify-center gap-6 mb-12 text-sm font-medium border-b border-gray-200 pb-8">
+          <div className="flex items-center gap-2 px-4 py-2 rounded-full glass-panel-subtle bg-primary-50 text-primary-700">
+            <div className="w-2 h-2 rounded-full bg-primary-500 shadow-sm shadow-primary-500/50" />
+            <span>Development</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_8px_rgba(34,197,94,0.5)]" />
-            <span className="text-gray-400">INFRA_OP</span>
+          <div className="flex items-center gap-2 px-4 py-2 rounded-full glass-panel-subtle bg-secondary-50 text-secondary-700">
+            <div className="w-2 h-2 rounded-full bg-secondary-500 shadow-sm shadow-secondary-500/50" />
+            <span>Cloud & Infra</span>
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.5)]" />
-            <span className="text-gray-400">OBSERVABILITY</span>
+          <div className="flex items-center gap-2 px-4 py-2 rounded-full glass-panel-subtle bg-purple-50 text-purple-700">
+            <div className="w-2 h-2 rounded-full bg-purple-500 shadow-sm shadow-purple-500/50" />
+            <span>Observability</span>
           </div>
         </div>
 
         {/* Skills Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-          {allSkills.map((skill, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.8 }}
-              transition={{
-                duration: 0.4,
-                delay: index * 0.05,
-                type: "spring",
-                stiffness: 100
-              }}
-              whileHover={{ scale: 1.05, zIndex: 10 }}
-              className="relative group"
-            >
-              {/* Circuit Connectors (Decorative) */}
-              {(index % 2 === 0) && <div className="absolute -right-4 top-1/2 w-4 h-1 bg-gray-800 hidden md:block" />}
-              {(Math.floor(index / 4) < Math.floor(allSkills.length / 4)) && <div className="absolute -bottom-4 left-1/2 w-1 h-4 bg-gray-800 hidden lg:block" />}
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
+          {allSkills.map((skill, index) => {
+            const isDev = skill.category === 'development';
+            const isCloud = skill.category === 'cloud';
 
-              <ComponentChip
-                pins="left-right"
-                className="h-full"
+            const dotColor = isDev ? 'bg-primary-500' : isCloud ? 'bg-secondary-500' : 'bg-purple-500';
+            const textHover = isDev ? 'group-hover:text-primary-600' : isCloud ? 'group-hover:text-secondary-600' : 'group-hover:text-purple-600';
+
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={isInView ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.9, y: 20 }}
+                transition={{
+                  duration: 0.4,
+                  delay: index * 0.05,
+                }}
+                whileHover={{ y: -5, scale: 1.02 }}
+                className="group cursor-default"
               >
-                <div className="flex flex-col items-center justify-center p-4 text-center h-full min-h-[100px] cursor-default bg-gray-900/80 hover:bg-gray-800/80 transition-colors">
-                  <div className="absolute top-2 right-2">
-                    <div className={`w-1.5 h-1.5 rounded-full ${skill.color === 'blue' ? 'bg-blue-500 shadow-[0_0_5px_rgba(59,130,246,0.8)]' :
-                      skill.color === 'green' ? 'bg-green-500 shadow-[0_0_5px_rgba(34,197,94,0.8)]' :
-                        'bg-purple-500 shadow-[0_0_5px_rgba(168,85,247,0.8)]'
-                      }`} />
+                <div className="glass-card flex flex-col items-center justify-center p-6 text-center h-full min-h-[120px] transition-all hover:shadow-xl hover:shadow-primary-900/5">
+                  <div className="absolute top-4 right-4 group-hover:animate-pulse">
+                    <div className={`w-2 h-2 rounded-full ${dotColor} shadow-sm`} />
                   </div>
-
-                  <span className="font-mono text-xs text-gray-500 mb-1 block opacity-50">IC-{100 + index}</span>
-                  <span className="text-white font-bold tracking-wide group-hover:text-pcb-copper-300 transition-colors">
+                  <span className={`text-lg md:text-xl font-bold text-gray-800 transition-colors ${textHover}`}>
                     {skill.name}
                   </span>
                 </div>
-              </ComponentChip>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Structured PCB Circuit Traces - Grid Layout */}
-        {/* Top Row - Horizontal traces */}
-        <div className="absolute top-32 left-0 hidden lg:block z-0">
-          <CircuitTrace width={160} height={2} color="#ef4444" delay={0} />
-        </div>
-        <div className="absolute top-32 right-0 hidden lg:block z-0">
-          <CircuitTrace width={160} height={2} color="#3b82f6" delay={0.3} />
-        </div>
-
-        {/* Middle Row - Connecting to skill cards */}
-        <div className="absolute top-1/2 left-12 hidden lg:block z-0">
-          <CircuitTrace width={140} height={2} color="#22c55e" delay={0.6} />
-        </div>
-        <div className="absolute top-1/2 right-12 hidden lg:block z-0">
-          <CircuitTrace width={140} height={2} color="#a855f7" delay={0.9} />
-        </div>
-
-        {/* Bottom Row */}
-        <div className="absolute bottom-32 left-4 hidden lg:block z-0">
-          <CircuitTrace width={120} height={2} color="#fbbf24" delay={1.2} />
-        </div>
-        <div className="absolute bottom-32 right-4 hidden lg:block z-0">
-          <CircuitTrace width={120} height={2} color="#ef4444" delay={1.5} />
-        </div>
-
-        {/* Diagonal/Cross traces for depth */}
-        <div className="absolute top-1/3 left-1/4 hidden lg:block z-0">
-          <CircuitTrace width={100} height={2} color="#3b82f6" delay={0.4} style="complex" />
-        </div>
-        <div className="absolute bottom-1/3 right-1/4 hidden lg:block z-0">
-          <CircuitTrace width={100} height={2} color="#22c55e" delay={1.0} style="complex" />
+              </motion.div>
+            )
+          })}
         </div>
       </div>
     </section>

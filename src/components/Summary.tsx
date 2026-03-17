@@ -3,16 +3,13 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
-import ComponentChip from './ComponentChip'
-import LEDIndicator from './LEDIndicator'
-import CircuitTrace from './CircuitTrace'
 
 export default function Summary() {
   const ref = useRef(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section ref={ref} className="py-24 section-padding relative">
+    <section ref={ref} className="py-24 section-padding relative z-10">
       <div className="container-max">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -20,118 +17,63 @@ export default function Summary() {
           transition={{ duration: 0.8 }}
           className="max-w-5xl mx-auto"
         >
-          <div className="flex items-center gap-4 mb-8 relative">
-            {/* Left circuit trace */}
-            <div className="absolute -left-16 top-1/2 -translate-y-1/2 hidden lg:block">
-              <CircuitTrace width={48} height={2} color="#fbbf24" />
-            </div>
-
-            <LEDIndicator color="amber" state="on" />
-            <h2 className="text-4xl lg:text-5xl font-bold text-white tracking-tight">
-              System
-              <span className="gradient-title-summary block">Summary</span>
+          <div className="flex items-center gap-4 mb-12">
+            <h2 className="text-4xl lg:text-5xl font-semibold tracking-tight text-gray-900">
+              Professional <span className="gradient-text">Summary</span>
             </h2>
-
-            {/* Right circuit trace */}
-            <div className="absolute -right-16 top-1/2 -translate-y-1/2 hidden lg:block">
-              <CircuitTrace width={48} height={2} color="#fbbf24" />
-            </div>
           </div>
 
+          {/* Main Glass Panel */}
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.95 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="glass-panel-heavy rounded-sm p-1 border-gray-700 mx-auto"
+            className="glass-panel-heavy p-8 lg:p-12 mb-12 relative overflow-hidden"
           >
-            {/* Memory Stick Aesthetic */}
-            <div className="bg-gray-900/50 rounded-sm p-8 lg:p-12 relative overflow-hidden group">
+            {/* Subtle light flair */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-primary-100 rounded-full mix-blend-multiply blur-3xl opacity-50 -translate-y-1/2 translate-x-1/3" />
 
-              {/* RAM Heat Spreader Visuals */}
-              <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-gray-700 via-gray-500 to-gray-700 opacity-50" />
-              <div className="absolute top-4 right-4 flex gap-1">
-                {[...Array(4)].map((_, i) => (
-                  <div key={i} className="w-1 h-3 bg-pcb-copper-500/50 rounded-sm" />
-                ))}
-              </div>
-
-              {/* Memory Label */}
-              <div className="absolute top-4 left-6 border border-gray-600 px-2 py-0.5 rounded-sm">
-                <span className="text-[10px] font-mono text-gray-400">DDR5-6400  32GB  CL32</span>
-              </div>
-
-              <div className="relative z-10 mt-6 pointer-events-none">
-                <p className="text-lg lg:text-xl leading-relaxed text-gray-300 font-medium font-mono">
-                  <span className="text-pcb-copper-300">&gt; execute summary_log.txt</span>
-                  <br /><br />
-                  Software engineer with over{' '}
-                  <span className="text-amber-400 font-bold">7+ years experience</span>{' '}
-                  in Software Development, Distributed Systems, Data Ingestion, and Cloud infrastructure.
-                  I have extensive production experience with{' '}
-                  <span className="text-amber-300 font-bold">Python</span>,{' '}
-                  <span className="text-amber-300 font-bold">Go</span>,{' '}
-                  <span className="text-amber-300 font-bold">IaC</span>,{' '}
-                  Observability and Ops tooling.
-                </p>
-              </div>
-
-              {/* Gold Contacts Bottom Edge */}
-              <div className="absolute -bottom-1 left-4 right-4 h-4 flex justify-between space-x-1 opacity-80">
-                {[...Array(40)].map((_, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ height: "40%" }}
-                    whileHover={{ height: "100%", backgroundColor: "#fbbf24" }}
-                    className="w-full bg-gradient-to-b from-yellow-600 to-yellow-400 rounded-b-sm"
-                  />
-                ))}
-              </div>
+            <div className="relative z-10">
+              <p className="text-xl lg:text-2xl leading-relaxed text-gray-700 font-light">
+                Software engineer with over{' '}
+                <span className="font-semibold text-primary-600">7+ years experience</span>{' '}
+                in Software Development, Distributed Systems, Data Ingestion, and Cloud infrastructure.
+                I have extensive production experience with{' '}
+                <span className="font-medium text-secondary-600">Python</span>,{' '}
+                <span className="font-medium text-secondary-600">Go</span>,{' '}
+                <span className="font-medium text-secondary-600">IaC</span>,{' '}
+                Observability and Ops tooling.
+              </p>
             </div>
           </motion.div>
 
-          {/* Key Highlights wrapped in ComponentChips */}
+          {/* Key Metric Glass Cards */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ duration: 0.6, delay: 0.6 }}
-            className="grid md:grid-cols-3 gap-6 mt-12"
+            transition={{ duration: 0.6, delay: 0.4 }}
+            className="grid md:grid-cols-3 gap-6"
           >
-            <ComponentChip label="EXP_CTR">
-              <div className="p-6 text-center">
-                <div className="text-4xl font-bold text-amber-400 mb-2 font-mono">
-                  07+
+            {[
+              { value: "07+", label: "Years Experience" },
+              { value: "150+", label: "Formats Integrated" },
+              { value: "99.9%", label: "Platform Uptime" }
+            ].map((stat, i) => (
+              <motion.div
+                key={i}
+                whileHover={{ y: -5 }}
+                className="glass-card text-center items-center justify-center py-10"
+              >
+                <div className="text-4xl lg:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-br from-primary-500 to-secondary-500 mb-2">
+                  {stat.value}
                 </div>
-                <div className="text-gray-400 font-medium text-xs tracking-wider uppercase">Years Experience</div>
-              </div>
-            </ComponentChip>
-
-            <ComponentChip label="DATA_BUS">
-              <div className="p-6 text-center">
-                <div className="text-4xl font-bold text-amber-400 mb-2 font-mono">
-                  150+
+                <div className="text-gray-500 font-medium text-sm tracking-wider uppercase">
+                  {stat.label}
                 </div>
-                <div className="text-gray-400 font-medium text-xs tracking-wider uppercase">Formats Integrated</div>
-              </div>
-            </ComponentChip>
-
-            <ComponentChip label="UPTIME">
-              <div className="p-6 text-center">
-                <div className="text-4xl font-bold text-amber-400 mb-2 font-mono">
-                  99.9%
-                </div>
-                <div className="text-gray-400 font-medium text-xs tracking-wider uppercase">Platform Uptime</div>
-              </div>
-            </ComponentChip>
+              </motion.div>
+            ))}
           </motion.div>
         </motion.div>
-
-        {/* Additional Circuit Traces */}
-        <div className="absolute top-1/4 right-20 hidden xl:block">
-          <CircuitTrace width={100} height={2} color="#b8860b" delay={0.3} />
-        </div>
-        <div className="absolute bottom-1/3 left-8 hidden xl:block">
-          <CircuitTrace width={120} height={2} color="#3b82f6" delay={0.6} />
-        </div>
       </div>
     </section>
   )

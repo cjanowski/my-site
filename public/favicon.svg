@@ -1,48 +1,11 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Dark PCB Green Background -->
-  <rect width="32" height="32" rx="6" fill="#0f2818"/>
-  
-  <!-- Floppy Disk Body with gradient -->
-  <rect x="6" y="6" width="20" height="20" rx="2" fill="url(#floppy-gradient)" stroke="url(#floppy-stroke)" stroke-width="0.5"/>
-  
-  <!-- Metal Shutter (bottom third) -->
-  <rect x="8" y="19" width="16" height="5" rx="0.5" fill="url(#metal-gradient)" stroke="#8B7355" stroke-width="0.3"/>
-  <rect x="10" y="21" width="5" height="1.5" rx="0.3" fill="#4d3900" opacity="0.6"/>
-  
-  <!-- Label Area (top-middle) -->
-  <rect x="8.5" y="8.5" width="15" height="8" rx="1" fill="#ffffff" opacity="0.9"/>
-  
-  <!-- Write-protect notch (top right) -->
-  <rect x="23" y="7" width="2" height="2" fill="#4d3900" opacity="0.8"/>
-  
-  <!-- LED glow effect -->
-  <circle cx="16" cy="16" r="14" fill="url(#glow-gradient)" opacity="0.15"/>
-  
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
   <defs>
-    <!-- Main Floppy Gradient (Yellow/Orange/Gold theme) -->
-    <linearGradient id="floppy-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#d4af37"/>
-      <stop offset="50%" style="stop-color:#fbbf24"/>
-      <stop offset="100%" style="stop-color:#b8860b"/>
+    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7C3AED;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF8B3D;stop-opacity:1" />
     </linearGradient>
-    
-    <!-- Stroke gradient for depth -->
-    <linearGradient id="floppy-stroke" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#b8860b"/>
-      <stop offset="100%" style="stop-color:#d4af37"/>
-    </linearGradient>
-    
-    <!-- Metal shutter gradient -->
-    <linearGradient id="metal-gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" style="stop-color:#9ca3af"/>
-      <stop offset="50%" style="stop-color:#6b7280"/>
-      <stop offset="100%" style="stop-color:#4b5563"/>
-    </linearGradient>
-    
-    <!-- LED Glow effect -->
-    <radialGradient id="glow-gradient">
-      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:0.3"/>
-      <stop offset="100%" style="stop-color:#fbbf24;stop-opacity:0"/>
-    </radialGradient>
   </defs>
+  <path fill="none" stroke="url(#grad1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+  <polyline fill="none" stroke="url(#grad1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="17 21 17 13 7 13 7 21"/>
+  <polyline fill="none" stroke="url(#grad1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" points="7 3 7 8 15 8"/>
 </svg>

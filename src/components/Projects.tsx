@@ -3,10 +3,7 @@
 import { motion } from 'framer-motion'
 import { useInView } from 'framer-motion'
 import { useRef } from 'react'
-import { Github, ExternalLink, Bot, Cpu, Globe, Server } from 'lucide-react'
-import ComponentChip from './ComponentChip'
-import LEDIndicator from './LEDIndicator'
-import CircuitTrace from './CircuitTrace'
+import { Github, ExternalLink, Bot, Cpu, Globe, Server, ArrowRight } from 'lucide-react'
 
 interface Project {
   id: string
@@ -26,13 +23,13 @@ interface Project {
 const projects: Project[] = [
   {
     id: 'logs-and-alerting',
-    title: 'Logs-and-Alerting',
+    title: 'Logs & Alerting',
     description: 'A robust log parsing system with configurable alerting mechanisms for real-time monitoring and incident response.',
     technologies: ['Python', 'Regex', 'YAML', 'JSON'],
     primaryTech: 'Python',
     category: 'DevOps',
-    icon: <Server className="w-5 h-5" />,
-    color: 'amber',
+    icon: <Server className="w-6 h-6" />,
+    color: 'from-amber-400 to-orange-500',
     links: {
       github: 'https://github.com/cjanowski/Logs-and-Alerting'
     }
@@ -44,8 +41,8 @@ const projects: Project[] = [
     technologies: ['Python', 'Kubernetes', 'ArgoCD', 'Docker', 'Helm'],
     primaryTech: 'Kubernetes',
     category: 'Infrastructure',
-    icon: <Server className="w-5 h-5" />,
-    color: 'blue',
+    icon: <Server className="w-6 h-6" />,
+    color: 'from-blue-400 to-indigo-500',
     links: {
       github: 'https://github.com/cjanowski/k8s-python-argocd'
     }
@@ -57,8 +54,8 @@ const projects: Project[] = [
     technologies: ['Python', 'Scrapy', 'BeautifulSoup', 'Redis'],
     primaryTech: 'Python',
     category: 'ML Systems',
-    icon: <Bot className="w-5 h-5" />,
-    color: 'purple',
+    icon: <Bot className="w-6 h-6" />,
+    color: 'from-purple-400 to-pink-500',
     links: {
       github: 'https://github.com/cjanowski/scrapy_play'
     }
@@ -70,21 +67,21 @@ const projects: Project[] = [
     technologies: ['Node.js', 'React', 'MongoDB', 'Socket.io'],
     primaryTech: 'JavaScript',
     category: 'Web App',
-    icon: <Globe className="w-5 h-5" />,
-    color: 'green',
+    icon: <Globe className="w-6 h-6" />,
+    color: 'from-emerald-400 to-teal-500',
     links: {
       github: 'https://github.com/cjanowski/ragzzy'
     }
   },
   {
     id: 'toml-and-jerry',
-    title: 'TOML and Jerry',
+    title: 'TOML & Jerry',
     description: 'A high-performance configuration validator written in Rust that supports multiple configuration formats.',
     technologies: ['Rust', 'TOML', 'YAML', 'JSON'],
     primaryTech: 'Rust',
     category: 'Low Level',
-    icon: <Cpu className="w-5 h-5" />,
-    color: 'red',
+    icon: <Cpu className="w-6 h-6" />,
+    color: 'from-rose-400 to-red-500',
     links: {
       github: 'https://github.com/cjanowski/toml-and-jerry'
     }
@@ -96,32 +93,20 @@ export default function Projects() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section ref={ref} className="py-24 section-padding relative">
+    <section ref={ref} className="py-24 section-padding relative z-10">
       <div className="container-max">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          className="flex items-center justify-center gap-4 mb-16 relative"
+          className="flex flex-col items-center justify-center mb-16"
         >
-          {/* Left ornament */}
-          <div className="absolute -left-24 top-1/2 -translate-y-1/2 hidden xl:block">
-            <CircuitTrace width={80} height={2} color="#a855f7" />
-          </div>
-
-          <LEDIndicator color="purple" state="pulse" />
-          <h2 className="text-4xl lg:text-5xl font-bold text-white tracking-tight text-center">
-            Featured
-            <span className="gradient-title-projects block">Projects</span>
+          <span className="text-secondary-600 font-semibold tracking-wider text-sm uppercase mb-3">Portfolio</span>
+          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight text-center">
+            Featured <span className="gradient-text">Projects</span>
           </h2>
-          <LEDIndicator color="purple" state="pulse" />
-
-          {/* Right ornament */}
-          <div className="absolute -right-24 top-1/2 -translate-y-1/2 hidden xl:block">
-            <CircuitTrace width={80} height={2} color="#a855f7" />
-          </div>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {projects.map((project, index) => (
             <ProjectCard
               key={project.id}
@@ -131,47 +116,6 @@ export default function Projects() {
             />
           ))}
         </div>
-
-        {/* Structured PCB Circuit Traces - Purple Theme Grid */}
-        {/* Top Row - Horizontal traces */}
-        <div className="absolute top-24 left-0 hidden lg:block z-0">
-          <CircuitTrace width={180} height={2} color="#a855f7" delay={0} />
-        </div>
-        <div className="absolute top-24 right-0 hidden lg:block z-0">
-          <CircuitTrace width={180} height={2} color="#c084fc" delay={0.2} />
-        </div>
-
-        {/* Upper Middle - Connecting between project cards */}
-        <div className="absolute top-1/3 left-8 hidden lg:block z-0">
-          <CircuitTrace width={150} height={2} color="#9333ea" delay={0.4} />
-        </div>
-        <div className="absolute top-1/3 right-8 hidden lg:block z-0">
-          <CircuitTrace width={150} height={2} color="#a855f7" delay={0.6} />
-        </div>
-
-        {/* Middle Row */}
-        <div className="absolute top-1/2 left-16 hidden lg:block z-0">
-          <CircuitTrace width={130} height={2} color="#c084fc" delay={0.8} />
-        </div>
-        <div className="absolute top-1/2 right-16 hidden lg:block z-0">
-          <CircuitTrace width={130} height={2} color="#9333ea" delay={1.0} />
-        </div>
-
-        {/* Lower Middle */}
-        <div className="absolute top-2/3 left-4 hidden lg:block z-0">
-          <CircuitTrace width={140} height={2} color="#a855f7" delay={1.2} />
-        </div>
-        <div className="absolute top-2/3 right-4 hidden lg:block z-0">
-          <CircuitTrace width={140} height={2} color="#c084fc" delay={1.4} />
-        </div>
-
-        {/* Complex traces for visual interest */}
-        <div className="absolute top-1/4 left-1/3 hidden lg:block z-0">
-          <CircuitTrace width={110} height={2} color="#9333ea" delay={0.5} style="complex" />
-        </div>
-        <div className="absolute bottom-1/4 right-1/3 hidden lg:block z-0">
-          <CircuitTrace width={110} height={2} color="#a855f7" delay={1.1} style="complex" />
-        </div>
       </div>
     </section>
   )
@@ -180,99 +124,74 @@ export default function Projects() {
 function ProjectCard({ project, index, isInView }: { project: Project, index: number, isInView: boolean }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 60, scale: 0.9 }}
-      animate={isInView ? { opacity: 1, y: 0, scale: 1 } : { opacity: 0, y: 60, scale: 0.9 }}
+      initial={{ opacity: 0, scale: 0.95, y: 30 }}
+      animate={isInView ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.95, y: 30 }}
       transition={{
-        duration: 0.7,
+        duration: 0.6,
         delay: index * 0.1,
-        type: "spring",
-        stiffness: 100
       }}
-      className="group"
+      className="group h-full"
     >
-      <ComponentChip
-        label={`REV.A.${index}`}
-        id={project.id.toUpperCase()}
-        pins="top-bottom"
-        className="h-full"
-      >
-        <div className="p-6 h-full flex flex-col relative overflow-hidden group-hover:bg-white/5 transition-colors">
+      <div className="glass-card h-full flex flex-col hover:-translate-y-2 transition-transform duration-300">
+        {/* Header Icon & Links */}
+        <div className="flex items-start justify-between mb-6">
+          <div className={`p-4 rounded-2xl bg-gradient-to-br ${project.color} text-white shadow-lg shadow-gray-200`}>
+            {project.icon}
+          </div>
 
-          {/* Header Row */}
-          <div className="flex items-start justify-between mb-6 relative z-10">
-            <div className="flex items-center gap-3">
-              <div className={`p-3 rounded-sm ${project.color === 'blue' ? 'bg-blue-900/50 text-blue-400 border border-blue-500/30' :
-                project.color === 'green' ? 'bg-green-900/50 text-green-400 border border-green-500/30' :
-                  project.color === 'purple' ? 'bg-purple-900/50 text-purple-400 border border-purple-500/30' :
-                    project.color === 'amber' ? 'bg-amber-900/50 text-amber-400 border border-amber-500/30' :
-                      'bg-red-900/50 text-red-400 border border-red-500/30'
-                }`}>
-                {project.icon}
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-white group-hover:text-pcb-copper-300 transition-colors">
-                  {project.title}
-                </h3>
-                <span className="text-xs font-mono text-gray-500 uppercase tracking-widest">{project.category}</span>
-              </div>
-            </div>
-
-            <div className="flex gap-2">
+          <div className="flex gap-2">
+            <motion.a
+              href={project.links.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="p-2 rounded-full bg-white/50 text-gray-600 hover:text-gray-900 hover:bg-white shadow-sm transition-colors"
+              aria-label="GitHub Repository"
+            >
+              <Github className="w-5 h-5" />
+            </motion.a>
+            {project.links.demo && (
               <motion.a
-                href={project.links.github}
+                href={project.links.demo}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                className="p-2 rounded-sm bg-gray-800 border border-gray-600 text-gray-400 hover:text-white hover:border-pcb-copper-500 transition-all"
+                className="p-2 rounded-full bg-white/50 text-gray-600 hover:text-gray-900 hover:bg-white shadow-sm transition-colors"
+                aria-label="Live Demo"
               >
-                <Github className="w-4 h-4" />
+                <ExternalLink className="w-5 h-5" />
               </motion.a>
-              {project.links.demo && (
-                <motion.a
-                  href={project.links.demo}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="p-2 rounded-sm bg-gray-800 border border-gray-600 text-gray-400 hover:text-green-400 hover:border-green-500 transition-all"
-                >
-                  <ExternalLink className="w-4 h-4" />
-                </motion.a>
-              )}
-            </div>
-          </div>
-
-          <p className="text-gray-400 mb-6 leading-relaxed flex-grow font-mono text-sm border-l-2 border-gray-800 pl-4 relative z-10">
-            {project.description}
-          </p>
-
-          <div className="mt-auto relative z-10">
-            <div className="flex items-center gap-2 mb-3">
-              <LEDIndicator color={project.color as any} state="pulse" size="sm" />
-              <span className="text-[10px] text-gray-500 font-mono">STATUS: ACTIVE</span>
-            </div>
-
-            <div className="flex flex-wrap gap-2">
-              {project.technologies.slice(0, 4).map((tech, i) => (
-                <span
-                  key={i}
-                  className="px-2 py-1 text-[10px] font-mono rounded-sm bg-gray-900 border border-gray-700 text-gray-300"
-                >
-                  {tech}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          {/* Background Circuit Pattern */}
-          <div className="absolute right-0 bottom-0 opacity-10 pointer-events-none group-hover:opacity-20 transition-opacity">
-            <svg width="200" height="200" viewBox="0 0 200 200">
-              <path d="M50,200 L50,150 L100,100 L200,100" stroke="currentColor" fill="none" strokeWidth="2" />
-            </svg>
+            )}
           </div>
         </div>
-      </ComponentChip>
+
+        {/* Content */}
+        <div>
+          <span className="text-xs font-semibold text-secondary-600 uppercase tracking-widest mb-2 block">{project.category}</span>
+          <h3 className="text-2xl font-bold text-gray-900 mb-3 group-hover:text-primary-600 transition-colors">
+            {project.title}
+          </h3>
+          <p className="text-gray-600 leading-relaxed mb-6 font-light">
+            {project.description}
+          </p>
+        </div>
+
+        {/* Footer (Technologies) */}
+        <div className="mt-auto">
+          <div className="flex flex-wrap gap-2 pt-6 border-t border-gray-100">
+            {project.technologies.map((tech, i) => (
+              <span
+                key={i}
+                className="px-3 py-1 text-xs font-medium rounded-full bg-white/60 text-gray-600 border border-gray-200"
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
     </motion.div>
   )
 }

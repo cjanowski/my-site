@@ -13,52 +13,40 @@ export default function CircuitBackground() {
     if (!mounted) return null
 
     return (
-        <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
-            {/* Base PCB Texture */}
-            <div className="absolute inset-0 bg-pcb-green-900 pcb-texture opacity-80" />
-
-            {/* Vignette */}
-            <div className="absolute inset-0 bg-radial-gradient from-transparent to-black/60" />
-
-            {/* Animated Glow Orbs (faked components) */}
+        <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-[#FCFCFC]">
+            {/* Elegant abstract gradient blobs for clear glass aesthetic */}
             <motion.div
                 animate={{
-                    opacity: [0.2, 0.4, 0.2],
-                    scale: [1, 1.1, 1]
+                    x: [0, 50, -50, 0],
+                    y: [0, -50, 50, 0],
+                    scale: [1, 1.1, 0.9, 1],
                 }}
-                transition={{ duration: 4, repeat: Infinity }}
-                className="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-pcb-green-500/10 blur-3xl"
+                transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+                className="absolute top-[-10%] left-[10%] w-[50vw] h-[50vw] rounded-[100px] bg-primary-500/[0.12] blur-[100px]"
             />
 
             <motion.div
                 animate={{
-                    opacity: [0.1, 0.3, 0.1],
-                    y: [0, -20, 0]
+                    x: [0, -70, 50, 0],
+                    y: [0, 50, -30, 0],
+                    scale: [1, 1.1, 1.2, 1],
                 }}
-                transition={{ duration: 7, repeat: Infinity, delay: 1 }}
-                className="absolute bottom-1/3 right-1/4 w-64 h-64 rounded-full bg-apple-blue-500/10 blur-3xl"
+                transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+                className="absolute top-[30%] right-[-5%] w-[45vw] h-[45vw] rounded-[100px] bg-secondary-500/[0.08] blur-[120px]"
             />
 
-            {/* Decorative Copper Traces (Background) */}
-            <svg className="absolute inset-0 w-full h-full opacity-10">
-                <pattern id="trace-pattern" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse">
-                    <path d="M20,100 L80,100 L100,80 L100,20" stroke="#b8860b" strokeWidth="1" fill="none" />
-                    <circle cx="20" cy="100" r="2" fill="#b8860b" />
-                    <circle cx="100" cy="20" r="2" fill="#b8860b" />
-
-                    <path d="M120,180 L150,180 L180,150" stroke="#b8860b" strokeWidth="1" fill="none" />
-                    <circle cx="120" cy="180" r="2" fill="#b8860b" />
-                </pattern>
-                <rect x="0" y="0" width="100%" height="100%" fill="url(#trace-pattern)" />
-            </svg>
-
-            {/* Grid Overlay */}
-            <div className="absolute inset-0"
-                style={{
-                    backgroundImage: 'linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)',
-                    backgroundSize: '100px 100px'
+            <motion.div
+                animate={{
+                    x: [0, 50, -30, 0],
+                    y: [0, -30, 50, 0],
+                    scale: [1, 1.2, 1, 1],
                 }}
+                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                className="absolute bottom-[-10%] left-[20%] w-[60vw] h-[60vw] rounded-[100px] bg-accent-500/[0.08] blur-[120px]"
             />
+
+            {/* A perfectly clear finish without noise or grids */}
+            <div className="absolute inset-0 bg-white/[0.02]" />
         </div>
     )
 }

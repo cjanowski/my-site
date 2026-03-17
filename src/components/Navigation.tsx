@@ -2,16 +2,15 @@
 
 import { motion, AnimatePresence } from 'framer-motion'
 import { useState, useEffect } from 'react'
-import { Menu, X, Skull } from 'lucide-react'
-import LEDIndicator from '@/components/LEDIndicator'
+import { Menu, X, Gamepad2 } from 'lucide-react'
 
 const navItems = [
-  { name: 'Home', href: '#home', ledColor: 'green' },
-  { name: 'About', href: '#about', ledColor: 'amber' },
-  { name: 'Experience', href: '#experience', ledColor: 'blue' },
-  { name: 'Projects', href: '#projects', ledColor: 'purple' },
-  { name: 'Education', href: '#education', ledColor: 'red' },
-  { name: 'Skills', href: '#skills', ledColor: 'blue' },
+  { name: 'Home', href: '#home' },
+  { name: 'About', href: '#about' },
+  { name: 'Experience', href: '#experience' },
+  { name: 'Projects', href: '#projects' },
+  { name: 'Education', href: '#education' },
+  { name: 'Skills', href: '#skills' },
 ] as const
 
 export default function Navigation({ onDoomClick }: { onDoomClick?: () => void }) {
@@ -44,7 +43,7 @@ export default function Navigation({ onDoomClick }: { onDoomClick?: () => void }
   }, [])
 
   const scrollToSection = (href: string) => {
-    // Special handling for Doom button
+    // Special handling for Doom button left as an easter egg for later if needed, but not exposed right now
     if (href === '#doom' && onDoomClick) {
       onDoomClick()
       setIsMobileMenuOpen(false)
@@ -71,13 +70,13 @@ export default function Navigation({ onDoomClick }: { onDoomClick?: () => void }
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-        ? 'glass-panel-heavy border-b border-white/10'
-        : 'bg-transparent'
+        ? 'backdrop-blur-xl bg-white/70 shadow-[0_4px_30px_rgba(0,0,0,0.05)] border-b border-white/80'
+        : 'bg-transparent pt-4'
         }`}
     >
       <div className="container-max section-padding">
-        <div className="flex items-center justify-between h-20">
-          {/* Logo / System Badge */}
+        <div className="flex items-center justify-between h-16 md:h-20">
+          {/* Logo */}
           <motion.div
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
@@ -85,79 +84,65 @@ export default function Navigation({ onDoomClick }: { onDoomClick?: () => void }
             onClick={() => scrollToSection('#home')}
           >
             <div className="flex items-center gap-3">
-              {/* Microchip Logo Icon */}
-              <div className="w-10 h-10 bg-gray-900 border border-gray-600 rounded-sm flex items-center justify-center relative overflow-hidden shadow-lg group-hover:shadow-blue-500/20 transition-shadow">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent" />
-                <span className="font-mono text-xl font-bold text-white relative z-10">CJ</span>
-                {/* Pins */}
-                <div className="absolute -left-[2px] top-1 bottom-1 w-[2px] flex flex-col justify-between py-1">
-                  {[...Array(4)].map((_, i) => <div key={i} className="w-full h-1 bg-gray-500" />)}
-                </div>
-                <div className="absolute -right-[2px] top-1 bottom-1 w-[2px] flex flex-col justify-between py-1">
-                  {[...Array(4)].map((_, i) => <div key={i} className="w-full h-1 bg-gray-500" />)}
-                </div>
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                CJ
               </div>
-
-              <div className="flex flex-col">
-                <span className="text-sm font-bold tracking-widest text-gray-200">SYSTEM</span>
-                <span className="text-[10px] text-pcb-copper-300 font-mono">v2.0.26</span>
-              </div>
+              <span className="font-semibold text-gray-800 tracking-tight text-lg hidden sm:block">Cory Janowski</span>
             </div>
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden md:flex items-center space-x-1 glass-panel-subtle px-2 py-1 rounded-full">
             {navItems.map((item) => {
               const sectionId = item.href.substring(1)
               const isActive = activeSection === sectionId
 
               return (
-                <div key={item.name} className="relative flex flex-col items-center group">
-                  <motion.button
+                <div key={item.name} className="relative">
+                  {isActive && (
+                    <motion.div
+                      layoutId="nav-pill"
+                      className="absolute inset-0 bg-white rounded-full shadow-sm"
+                      transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                  <button
                     onClick={() => scrollToSection(item.href)}
-                    className={`relative px-4 py-2 rounded-md transition-all duration-300 flex items-center gap-2 ${isActive
-                      ? 'text-white bg-white/10 shadow-lg border border-white/10'
-                      : 'text-gray-400 hover:text-white hover:bg-white/5'
+                    className={`relative px-5 py-2 rounded-full transition-colors text-sm font-medium ${isActive
+                      ? 'text-gray-900'
+                      : 'text-gray-500 hover:text-gray-800'
                       }`}
                   >
-                    <LEDIndicator
-                      color={item.ledColor}
-                      state={isActive ? 'on' : 'off'}
-                      size="sm"
-                    />
-                    <span className="font-mono text-sm tracking-wide">{item.name}</span>
-                  </motion.button>
-
-                  {/* Connection Line to Content */}
-                  <div className={`h-px w-full mt-1 transition-all duration-300 ${isActive ? 'bg-gradient-to-r from-transparent via-pcb-copper-500 to-transparent opacity-100' : 'opacity-0'}`} />
+                    {item.name}
+                  </button>
                 </div>
               )
             })}
 
-            {/* Secret Doom Button */}
+            {/* Doom Game Easter Egg */}
             <motion.button
               onClick={() => scrollToSection('#doom')}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, rotate: 5 }}
               whileTap={{ scale: 0.95 }}
-              className="relative px-3 py-2 rounded-md transition-all duration-300 text-red-500 bg-red-900/20 hover:bg-red-900/40 shadow-[0_0_10px_rgba(220,38,38,0.3)] hover:shadow-[0_0_15px_rgba(220,38,38,0.5)] border border-red-500/20 group ml-2"
-              title="???"
+              className="ml-2 p-2 rounded-full text-gray-400 hover:text-primary-600 hover:bg-white/50 transition-colors"
+              title="Play DOOM"
             >
-              <Skull className="w-5 h-5 animate-[pulse_3s_ease-in-out_infinite]" />
+              <Gamepad2 className="w-5 h-5" />
             </motion.button>
           </div>
 
           {/* Mobile Menu Button */}
           <motion.button
-            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="md:hidden p-2 rounded-lg glass-panel hover:bg-white/10 transition-colors"
+            className={`md:hidden p-2 rounded-xl transition-colors ${isScrolled ? 'hover:bg-gray-100 text-gray-800' : 'glass-panel text-gray-800'
+              }`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle mobile menu"
           >
             {isMobileMenuOpen ? (
-              <X className="w-6 h-6 text-white" />
+              <X className="w-6 h-6" />
             ) : (
-              <Menu className="w-6 h-6 text-white" />
+              <Menu className="w-6 h-6" />
             )}
           </motion.button>
         </div>
@@ -169,7 +154,7 @@ export default function Navigation({ onDoomClick }: { onDoomClick?: () => void }
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 bg-black/80 backdrop-blur-sm z-40 md:hidden"
+              className="fixed inset-0 bg-white/80 backdrop-blur-md z-40 md:hidden top-[4rem] sm:top-[5rem]"
               onClick={() => setIsMobileMenuOpen(false)}
             />
           )}
@@ -183,7 +168,7 @@ export default function Navigation({ onDoomClick }: { onDoomClick?: () => void }
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden overflow-hidden relative z-50 glass-panel-heavy rounded-b-2xl border-b border-white/10 mx-[-24px] px-6"
+              className="md:hidden overflow-hidden relative z-50 bg-white/90 backdrop-blur-xl rounded-b-3xl border-b border-gray-200 shadow-xl mx-[-24px] px-6"
             >
               <div className="py-6 space-y-2">
                 {navItems.map((item, index) => {
@@ -198,31 +183,17 @@ export default function Navigation({ onDoomClick }: { onDoomClick?: () => void }
                         x: 0,
                         transition: { delay: index * 0.05 }
                       }}
-                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 ${isActive
-                        ? 'bg-white/10 border border-white/10 text-white'
-                        : 'text-gray-400 hover:bg-white/5 hover:text-white'
+                      className={`w-full flex items-center px-6 py-4 rounded-xl transition-all duration-300 ${isActive
+                        ? 'bg-primary-50 text-primary-700 font-semibold'
+                        : 'text-gray-600 hover:bg-gray-50 font-medium'
                         }`}
                     >
-                      <LEDIndicator
-                        color={item.ledColor}
-                        state={isActive ? 'on' : 'off'}
-                        size="md"
-                      />
-                      <span className="font-mono text-lg">{item.name}</span>
-
-                      {isActive && (
-                        <motion.div
-                          layoutId="active-indicator"
-                          className="ml-auto text-xs text-pcb-copper-300 font-mono"
-                        >
-                          &lt;ACTIVE/&gt;
-                        </motion.div>
-                      )}
+                      <span className="text-lg">{item.name}</span>
                     </motion.button>
                   )
                 })}
 
-                {/* Secret Doom Button */}
+                {/* Mobile Doom Button */}
                 <motion.button
                   onClick={() => scrollToSection('#doom')}
                   initial={{ opacity: 0, x: -20 }}
@@ -231,12 +202,10 @@ export default function Navigation({ onDoomClick }: { onDoomClick?: () => void }
                     x: 0,
                     transition: { delay: navItems.length * 0.05 }
                   }}
-                  className="w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-300 text-red-500 bg-red-900/20 hover:bg-red-900/40 border border-red-500/20 shadow-[0_0_10px_rgba(220,38,38,0.3)] group mt-4"
+                  className="w-full flex items-center px-6 py-4 rounded-xl transition-all duration-300 text-gray-500 hover:bg-gray-50 font-medium mt-4 border-t border-gray-100/50"
                 >
-                  <Skull className="w-5 h-5 animate-[pulse_3s_ease-in-out_infinite]" />
-                  <span className="font-mono text-lg">???
-                    <span className="text-xs text-red-500 ml-2">DOOM</span>
-                  </span>
+                  <Gamepad2 className="w-5 h-5 mr-3 text-primary-500" />
+                  <span className="text-lg">Play DOOM</span>
                 </motion.button>
               </div>
             </motion.div>

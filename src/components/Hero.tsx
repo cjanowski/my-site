@@ -1,184 +1,149 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Mail, Phone, Linkedin, Github, MapPin, Cpu, Zap, Activity } from 'lucide-react'
+import { Mail, Phone, Linkedin, Github, MapPin, Code, Layers, Sparkles } from 'lucide-react'
 import Image from 'next/image'
-import CircuitTrace from './CircuitTrace'
-import ComponentChip from './ComponentChip'
-import LEDIndicator from './LEDIndicator'
 
 export default function Hero() {
   return (
     <section className="min-h-screen flex items-center justify-center section-padding pt-32 pb-20 relative overflow-hidden">
 
-      {/* Background Decor */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-white/5 rounded-full z-0 opacity-20 pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white/5 rounded-full z-0 opacity-30 pointer-events-none" />
+      {/* Subtle floating glass decorators */}
+      <motion.div
+        animate={{ y: [-10, 10, -10], rotate: [0, 5, 0] }}
+        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute top-1/4 right-1/4 w-32 h-32 glass-panel rounded-2xl hidden lg:block z-0 blur-[2px]"
+      />
+      <motion.div
+        animate={{ y: [15, -15, 15], rotate: [0, -5, 0] }}
+        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute bottom-1/4 left-1/4 w-24 h-24 glass-panel rounded-full hidden lg:block z-0 blur-[1px]"
+      />
 
-      <div className="container-max relative z-10">
-        {/* Main CPU Complex */}
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+      <div className="container-max relative z-10 w-full">
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
-          {/* CPU Core (Profile) */}
+          {/* Portrait Container */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="flex justify-center lg:justify-start order-2 lg:order-1 relative"
+            initial={{ opacity: 0, scale: 0.9, filter: 'blur(10px)' }}
+            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="flex justify-center lg:justify-end order-2 lg:order-2 relative"
           >
-            {/* Connection Traces - Decorations */}
-            <div className="absolute -right-8 top-1/3 w-20 hidden lg:block">
-              <CircuitTrace width={80} height={2} color="#fbbf24" delay={0} />
-            </div>
-            <div className="absolute -right-8 top-2/3 w-20 hidden lg:block">
-              <CircuitTrace width={80} height={2} color="#4ade80" delay={0.8} />
-            </div>
+            <div className="relative">
+              {/* Outer decorative ring */}
+              <div className="absolute inset-[-20px] rounded-[3rem] border border-white/40 bg-white/20 backdrop-blur-md shadow-glass-heavy -z-10 rotate-3 transition-transform hover:rotate-6 duration-700" />
 
-            <ComponentChip
-              className="max-w-md"
-              label="CPU-CORE-i9"
-              id="CJ-2026-X"
-              pins="all"
-            >
-              <div className="relative z-10">
-                <div className="w-64 h-64 sm:w-80 sm:h-80 rounded-full overflow-hidden border-4 border-gray-800 shadow-2xl mx-auto relative group">
-                  <Image
-                    src="/portrait.jpeg"
-                    alt="Cory Janowski"
-                    width={320}
-                    height={320}
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-                    style={{ objectPosition: '50% 15%' }}
-                    priority
-                  />
+              <div className="w-[280px] h-[350px] sm:w-[320px] sm:h-[400px] rounded-[2.5rem] overflow-hidden border-4 border-white shadow-2xl relative group bg-white">
+                <Image
+                  src="/portrait.jpeg"
+                  alt="Cory Janowski"
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  style={{ objectPosition: '50% 15%' }}
+                  priority
+                />
 
-                  {/* Holographic Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-purple-500/10 opacity-50 group-hover:opacity-20 transition-opacity" />
-
-                  {/* Scanline */}
-                  <div className="absolute inset-0 bg-[url('/scanline.png')] opacity-30 pointer-events-none" />
-                </div>
-
-                {/* Status Indicators */}
-                <div className="mt-6 flex justify-center gap-4">
-                  <div className="bg-black/40 px-3 py-1 rounded-full border border-white/10 flex items-center gap-2">
-                    <Activity className="w-3 h-3 text-green-500" />
-                    <span className="text-xs font-mono text-green-400">ONLINE</span>
-                  </div>
-                  <div className="bg-black/40 px-3 py-1 rounded-full border border-white/10 flex items-center gap-2">
-                    <Zap className="w-3 h-3 text-amber-500" />
-                    <span className="text-xs font-mono text-amber-400">OPTIMIZED</span>
-                  </div>
-                </div>
+                {/* Subtle overlay glare */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/20 to-white/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 transform -translate-x-full group-hover:translate-x-full" />
               </div>
-            </ComponentChip>
+
+            </div>
           </motion.div>
 
-          {/* Logic & Interaction Unit (Content) */}
+          {/* Hero Content */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-center lg:text-left order-1 lg:order-2"
+            className="text-center lg:text-left order-1 lg:order-1"
           >
-            {/* System Header */}
-            <div className="flex items-center justify-center lg:justify-start gap-4 mb-4">
-              <LEDIndicator color="green" state="pulse" />
-              <div className="h-px w-12 bg-gray-700" />
-              <span className="text-pcb-copper-300 font-mono text-xs tracking-widest">INITIALIZING SEQUENCE...</span>
+            <div className="inline-block glass-panel px-4 py-1.5 rounded-full mb-6">
+              <span className="text-sm font-medium bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-secondary-600 tracking-wide">
+                HELLO WORLD
+              </span>
             </div>
 
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.4 }}
-              className="text-5xl sm:text-6xl lg:text-8xl font-bold mb-4 tracking-tight leading-none"
+              className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-4 tracking-tight leading-tight text-gray-900 drop-shadow-sm"
             >
-              <span className="gradient-name">Cory</span>
-              <span className="gradient-name block">Janowski</span>
+              Hi, I'm <span className="gradient-text">Cory</span>
+              <br className="hidden sm:block" />
+              <span> Janowski</span>
             </motion.h1>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.6 }}
-              className="flex items-center justify-center lg:justify-start gap-3 mb-8"
+              className="flex items-center justify-center lg:justify-start gap-3 mb-6"
             >
-              <Cpu className="w-5 h-5 text-pcb-copper-500" />
-              <span className="text-2xl lg:text-3xl font-bold text-gray-400">
+              <Code className="w-5 h-5 text-secondary-500" />
+              <span className="text-2xl lg:text-3xl font-medium text-gray-600">
                 Software Engineer
-                <span className="animate-pulse text-pcb-copper-500">_</span>
+                <span className="animate-pulse text-primary-500 font-light hidden sm:inline-block"> |</span>
               </span>
             </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-              className="flex items-center justify-center lg:justify-start mb-10 text-gray-500 font-mono text-sm"
+              transition={{ duration: 0.6, delay: 0.7 }}
+              className="flex items-center justify-center lg:justify-start mb-10 text-gray-500 font-medium"
             >
-              <MapPin className="w-4 h-4 mr-2 text-pcb-copper-500" />
-              <span>LOC: Fort Wayne, Indiana, US</span>
+              <div className="flex items-center gap-2 glass-panel-subtle px-3 py-1.5 rounded-lg">
+                <MapPin className="w-4 h-4 text-accent-500" />
+                <span className="text-sm">Fort Wayne, Indiana, US</span>
+              </div>
             </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 1 }}
+              transition={{ duration: 0.6, delay: 0.9 }}
               className="flex flex-wrap gap-4 justify-center lg:justify-start"
             >
-              {/* Output Ports (Buttons) */}
+              {/* Action Buttons */}
               <motion.a
                 href="mailto:coryjanowski@gmail.com"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="group relative px-6 py-3 bg-gray-900 border border-gray-700 rounded-sm flex items-center gap-3 overflow-hidden"
+                className="glass-button flex items-center gap-2"
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 to-purple-600/20 group-hover:opacity-100 opacity-0 transition-opacity" />
-                <Mail className="w-5 h-5 text-blue-400 group-hover:text-blue-300 transition-colors" />
-                <span className="font-mono text-gray-300 group-hover:text-white transition-colors relative z-10">EMAIL_IO</span>
-                <LEDIndicator color="amber" state="off" className="ml-2 opacity-50 group-hover:opacity-100 [&>div]:group-hover:!shadow-[0_0_10px_#ffbf00,0_0_20px_#ffbf00] [&>div]:group-hover:!bg-[#ffbf00]" />
+                <Mail className="w-4 h-4 text-primary-600" />
+                <span>Email me</span>
               </motion.a>
 
-              <motion.a
-                href="tel:1-260-699-7339"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="group relative px-6 py-3 bg-gray-900 border border-gray-700 rounded-sm flex items-center gap-3 overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-green-600/20 to-emerald-600/20 group-hover:opacity-100 opacity-0 transition-opacity" />
-                <Phone className="w-5 h-5 text-green-400 group-hover:text-green-300 transition-colors" />
-                <span className="font-mono text-gray-300 group-hover:text-white transition-colors relative z-10">VOICE_LINK</span>
-                <LEDIndicator color="amber" state="off" className="ml-2 opacity-50 group-hover:opacity-100 [&>div]:group-hover:!shadow-[0_0_10px_#ffbf00,0_0_20px_#ffbf00] [&>div]:group-hover:!bg-[#ffbf00]" />
-              </motion.a>
+              {/* Action Buttons Removed */}
 
-              <motion.a
-                href="https://www.linkedin.com/in/coryjanowski/"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="group relative px-6 py-3 bg-gray-900 border border-gray-700 rounded-sm flex items-center gap-3 overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-700/20 to-cyan-600/20 group-hover:opacity-100 opacity-0 transition-opacity" />
-                <Linkedin className="w-5 h-5 text-blue-500 group-hover:text-blue-400 transition-colors" />
-                <span className="font-mono text-gray-300 group-hover:text-white transition-colors relative z-10">LINKEDIN</span>
-                <LEDIndicator color="amber" state="off" className="ml-2 opacity-50 group-hover:opacity-100 [&>div]:group-hover:!shadow-[0_0_10px_#ffbf00,0_0_20px_#ffbf00] [&>div]:group-hover:!bg-[#ffbf00]" />
-              </motion.a>
+              <div className="w-full flex justify-center lg:justify-start gap-4 mt-2 lg:w-auto lg:mt-0">
+                <motion.a
+                  href="https://www.linkedin.com/in/coryjanowski/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-12 h-12 glass-panel flex items-center justify-center rounded-full text-blue-600 hover:text-blue-700 transition-colors"
+                  aria-label="LinkedIn"
+                >
+                  <Linkedin className="w-5 h-5" />
+                </motion.a>
 
-              <motion.a
-                href="https://github.com/coryjanowski"
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="group relative px-6 py-3 bg-gray-900 border border-gray-700 rounded-sm flex items-center gap-3 overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-gray-700/50 to-gray-600/50 group-hover:opacity-100 opacity-0 transition-opacity" />
-                <Github className="w-5 h-5 text-white group-hover:text-gray-200 transition-colors" />
-                <span className="font-mono text-gray-300 group-hover:text-white transition-colors relative z-10">GITHUB_REPO</span>
-                <LEDIndicator color="amber" state="off" className="ml-2 opacity-50 group-hover:opacity-100 [&>div]:group-hover:!shadow-[0_0_10px_#ffbf00,0_0_20px_#ffbf00] [&>div]:group-hover:!bg-[#ffbf00]" />
-              </motion.a>
+                <motion.a
+                  href="https://github.com/coryjanowski"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.1, y: -2 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-12 h-12 glass-panel flex items-center justify-center rounded-full text-gray-800 hover:text-gray-900 transition-colors"
+                  aria-label="GitHub"
+                >
+                  <Github className="w-5 h-5" />
+                </motion.a>
+              </div>
             </motion.div>
           </motion.div>
         </div>

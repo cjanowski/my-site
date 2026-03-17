@@ -68,14 +68,14 @@ export default function Home() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             transition={{ duration: 0.5 }}
-            className="border-t border-pcb-copper-500/10"
+            className="border-t border-gray-200"
           >
             <DoomContainer />
           </motion.div>
         )}
 
         {/* Footer */}
-        <footer className="py-12 section-padding glass-panel-heavy mt-0 border-t border-pcb-copper-500/30">
+        <footer className="py-12 section-padding bg-white/40 backdrop-blur-md mt-0 border-t border-gray-200">
           <div className="container-max">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -84,16 +84,16 @@ export default function Home() {
               className="text-center"
             >
               <div className="flex justify-center mb-8">
-                <div className="w-full max-w-xs h-1 bg-gradient-to-r from-transparent via-pcb-copper-500 to-transparent opacity-50" />
+                <div className="w-full max-w-xs h-1 bg-gradient-to-r from-transparent via-primary-300 to-transparent opacity-50" />
               </div>
 
-              <p className="text-gray-300 mb-4 font-mono">
-                © 2026 Cory Janowski. All rights reserved.
+              <p className="text-gray-800 mb-4 font-medium">
+                © {new Date().getFullYear()} Cory Janowski. All rights reserved.
               </p>
-              <p className="text-gray-500 text-sm font-mono">
-                System Status: <span className="text-green-400">OPERATIONAL</span>
+              <p className="text-gray-600 text-sm font-medium">
+                System Status: <span className="text-primary-600 font-bold">OPERATIONAL</span>
               </p>
-              <p className="text-gray-600 text-xs mt-2">
+              <p className="text-gray-500 text-xs mt-2">
                 Built with Next.js, TypeScript, Tailwind CSS, and Framer Motion
               </p>
             </motion.div>

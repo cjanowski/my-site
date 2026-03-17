@@ -2,8 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Power, Terminal, AlertTriangle, Volume2 } from 'lucide-react'
-import LEDIndicator from './LEDIndicator'
+import { Power, Terminal, AlertTriangle, Volume2, Gamepad2 } from 'lucide-react'
 
 export default function DoomContainer() {
     const [isPowerOn, setIsPowerOn] = useState(false)
@@ -28,47 +27,63 @@ export default function DoomContainer() {
     }
 
     return (
-        <section id="doom" className="py-24 section-padding relative overflow-hidden flex flex-col items-center">
+        <section id="doom" className="py-24 section-padding relative overflow-hidden flex flex-col items-center z-10 bg-white/20 backdrop-blur-sm">
 
             {/* Section Header */}
-            <div className="mb-12 text-center relative z-10">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-900/30 border border-red-500/30 text-red-400 text-xs font-mono mb-4 animate-pulse">
-                    <AlertTriangle className="w-3 h-3" />
-                    <span>LEGACY_PROTOCOL_DETECTED</span>
+            <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                className="flex flex-col items-center justify-center mb-16 relative z-10"
+            >
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-panel-subtle bg-primary-50 text-primary-700 text-xs font-semibold tracking-wider mb-4">
+                    <Gamepad2 className="w-4 h-4" />
+                    <span>HIDDEN_EASTER_EGG</span>
                 </div>
-                <h2 className="text-3xl lg:text-4xl font-bold text-white mb-2">System Diagnostics</h2>
-                <p className="text-gray-500 font-mono text-sm">/usr/bin/retro_module --force</p>
-            </div>
+                <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 tracking-tight text-center">
+                    Retro <span className="gradient-text">Gaming Area</span>
+                </h2>
+                <p className="text-gray-500 font-medium mt-4">/usr/bin/retro_module --force</p>
+            </motion.div>
 
-            {/* CRT Monitor Container */}
-            <div className="relative z-10 max-w-4xl w-full mx-4">
+            {/* Premium Glass Container for Monitor */}
+            <div className="relative z-10 max-w-4xl w-full mx-4 glass-panel p-6 sm:p-10 shadow-glass-heavy">
 
-                {/* Monitor Casing */}
-                <div className="bg-[#e0e0e0] p-4 sm:p-8 rounded-3xl shadow-[0_0_50px_rgba(0,0,0,0.5),inset_0_0_20px_rgba(0,0,0,0.2)] border-b-8 border-r-8 border-[#c0c0c0] relative">
+                {/* Monitor Casing (Keeping CRT feel but cleaner) */}
+                <div className="bg-[#EAEAEA] p-4 sm:p-8 rounded-[32px] shadow-[0_0_50px_rgba(0,0,0,0.05),inset_0_2px_10px_rgba(255,255,255,1)] border border-white relative">
 
                     {/* Ventilation Grills */}
-                    <div className="absolute top-4 right-8 flex gap-2 opacity-20">
-                        {[...Array(6)].map((_, i) => <div key={i} className="w-1 h-6 bg-black rounded-full" />)}
+                    <div className="absolute top-4 right-8 flex gap-2 opacity-10">
+                        {[...Array(6)].map((_, i) => <div key={i} className="w-1.5 h-6 bg-gray-500 rounded-full" />)}
                     </div>
 
                     {/* Screen Bezel */}
-                    <div className="bg-[#2a2a2a] p-4 sm:p-6 rounded-2xl shadow-[inset_0_0_15px_rgba(0,0,0,0.8)] relative overflow-hidden">
+                    <div className="bg-[#1a1a1a] p-3 sm:p-4 rounded-3xl shadow-[inset_0_5px_15px_rgba(0,0,0,0.8)] relative overflow-hidden ring-1 ring-white/10">
 
                         {/* The CRT Screen */}
-                        <div className="aspect-[4/3] bg-black relative rounded-lg overflow-hidden shadow-[inset_0_0_20px_rgba(0,0,0,1)]">
+                        <div className="aspect-[4/3] bg-black relative rounded-2xl overflow-hidden shadow-[inset_0_0_20px_rgba(0,0,0,1)]">
+
+                            {/* CRT Effects Overlay */}
+                            <div className="absolute inset-0 pointer-events-none z-20">
+                                {/* Curve Reflection */}
+                                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-30 rounded-lg" />
+                                {/* Scanlines */}
+                                <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 bg-[length:100%_4px,6px_100%] pointer-events-none" />
+                                {/* Vignette */}
+                                <div className="absolute inset-0 bg-radial-gradient from-transparent to-black/80" />
+                            </div>
 
                             {/* Screen Content */}
                             <AnimatePresence mode="wait">
                                 {!isPowerOn ? (
                                     <div className="absolute inset-0 bg-[#050505] flex items-center justify-center">
-                                        <div className="w-full h-[2px] bg-white opacity-20" />
+                                        <div className="w-full h-[1px] bg-white opacity-10" />
                                     </div>
                                 ) : isBooting ? (
                                     <motion.div
                                         initial={{ opacity: 0 }}
                                         animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
-                                        className="absolute inset-0 bg-blue-900 text-white p-8 font-mono text-xs sm:text-sm leading-tight overflow-hidden"
+                                        className="absolute inset-0 bg-blue-900 text-white p-8 font-mono text-xs sm:text-sm leading-tight overflow-hidden z-10"
                                     >
                                         <div className="space-y-1">
                                             <p>BIOS DATE 01/24/96 14:22:56 VER 1.0.2</p>
@@ -92,50 +107,24 @@ export default function DoomContainer() {
                                     </motion.div>
                                 ) : (
                                     <motion.div
-                                        initial={{ opacity: 0, scale: 0.9 }}
+                                        initial={{ opacity: 0, scale: 0.95 }}
                                         animate={{ opacity: 1, scale: 1 }}
-                                        className="w-full h-full flex items-center justify-center overflow-hidden bg-black"
+                                        className="w-full h-full flex items-center justify-center overflow-hidden bg-black z-10 relative"
                                     >
                                         <iframe
                                             src="https://archive.org/embed/msdos_DOOM_1993"
-                                            className="w-full h-full border-0"
+                                            className="w-full h-full border-0 absolute inset-0 z-30"
                                             allowFullScreen
                                             allow="autoplay; gamepad"
                                         />
                                     </motion.div>
                                 )}
                             </AnimatePresence>
-
-                            {/* CRT Effects Overlay */}
-                            <div className="absolute inset-0 pointer-events-none z-20">
-                                {/* Curve Reflection */}
-                                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent opacity-30 rounded-lg" />
-
-                                {/* Scanlines */}
-                                <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-10 bg-[length:100%_4px,6px_100%] pointer-events-none" />
-
-                                {/* Screen Flicker */}
-                                <motion.div
-                                    className="absolute inset-0 bg-white/5 mix-blend-overlay"
-                                    animate={{ opacity: [0.03, 0.06, 0.03] }}
-                                    transition={{ duration: 0.2, repeat: Infinity, ease: "linear" }}
-                                />
-
-                                {/* Vignette */}
-                                <div className="absolute inset-0 bg-radial-gradient from-transparent to-black/80" />
-                            </div>
                         </div>
 
-                        {/* Monitor Controls */}
-                        <div className="mt-4 flex items-center justify-between px-2">
-                            <div className="flex items-center gap-4">
-                                <LEDIndicator color="green" state={isPowerOn ? 'on' : 'off'} size="sm" label="PWR" />
-                                <LEDIndicator color="red" state={showGame ? 'blink' : 'off'} size="sm" label="HDD" />
-                            </div>
-
-                            <div className="flex gap-2">
-                                <div className="text-[10px] text-gray-500 font-mono uppercase tracking-widest">Sony Trinitron</div>
-                            </div>
+                        {/* Monitor Branding */}
+                        <div className="mt-3 flex items-center justify-center">
+                            <span className="text-[10px] text-gray-500 font-mono uppercase tracking-widest font-bold">Sony Trinitron</span>
                         </div>
 
                     </div>
@@ -143,47 +132,41 @@ export default function DoomContainer() {
 
                 {/* Master Control Panel */}
                 <div className="mt-8 flex justify-center">
-                    <div className="p-4 rounded-xl bg-gray-900 border border-gray-700 flex items-center gap-6 shadow-2xl">
+                    <div className="p-4 sm:p-6 rounded-[24px] bg-white/50 backdrop-blur-md border border-white/60 flex flex-wrap justify-center items-center gap-4 sm:gap-8 shadow-sm">
+
                         <button
                             onClick={handlePowerToggle}
                             className={`
-                group relative px-6 py-6 rounded-lg transition-all duration-200 border-2
-                ${isPowerOn
-                                    ? 'bg-red-900/20 border-red-500/50 shadow-[0_0_20px_rgba(220,38,38,0.3)]'
-                                    : 'bg-gray-800 border-gray-600 hover:border-gray-500'}
-              `}
+                                group relative px-6 py-4 rounded-2xl transition-all duration-300 font-medium
+                                ${isPowerOn
+                                    ? 'bg-red-50 text-red-600 border border-red-200 shadow-sm shadow-red-500/10'
+                                    : 'bg-white text-gray-600 border border-gray-200 hover:border-gray-300 hover:shadow-sm'}
+                            `}
                         >
                             <div className="flex flex-col items-center gap-2">
-                                <Power className={`w-8 h-8 ${isPowerOn ? 'text-red-500' : 'text-gray-400'}`} />
-                                <span className="text-[10px] font-mono text-gray-400 uppercase tracking-widest">
+                                <Power className={`w-6 h-6 ${isPowerOn ? 'text-red-500' : 'text-gray-400 group-hover:text-primary-500 transition-colors'}`} />
+                                <span className="text-xs uppercase tracking-wider font-bold">
                                     {isPowerOn ? 'SHUTDOWN' : 'INIT_SYS'}
                                 </span>
                             </div>
                         </button>
 
-                        <div className="h-12 w-px bg-gray-700" />
+                        <div className="hidden sm:block h-12 w-px bg-gray-200" />
 
-                        <div className="space-y-2">
-                            <div className="flex items-center gap-3 text-sm text-gray-400 font-mono">
-                                <Terminal className="w-4 h-4" />
-                                <span>Override Status: <span className={isPowerOn ? "text-green-400" : "text-gray-600"}>{isPowerOn ? "GRANTED" : "LOCKED"}</span></span>
+                        <div className="space-y-3 bg-white/60 p-4 rounded-xl border border-white/80">
+                            <div className="flex items-center gap-3 text-sm text-gray-600 font-mono">
+                                <Terminal className="w-4 h-4 text-primary-500" />
+                                <span>Status: <span className={isPowerOn ? "text-green-600 font-bold" : "text-gray-500"}>{isPowerOn ? "GRANTED" : "LOCKED"}</span></span>
                             </div>
-                            <div className="flex items-center gap-3 text-sm text-gray-400 font-mono">
-                                <Volume2 className="w-4 h-4" />
-                                <span>Audio Protocol: <span className="text-gray-500">ENABLED</span></span>
+                            <div className="flex items-center gap-3 text-sm text-gray-600 font-mono">
+                                <Volume2 className="w-4 h-4 text-secondary-500" />
+                                <span>Audio: <span className="font-bold text-gray-700">ENABLED</span></span>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
 
-            {/* Decorative Wires */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-12 flex gap-4 opacity-50 pointer-events-none">
-                <div className="w-2 h-40 bg-gray-800 rounded-full" />
-                <div className="w-3 h-40 bg-black rounded-full" />
-                <div className="w-2 h-40 bg-gray-700 rounded-full" />
-            </div>
         </section>
     )
 }
