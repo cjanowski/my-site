@@ -12,7 +12,7 @@ const title = `${profile.name} · ${profile.title}`
 const description = profile.about[0]
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://coryjanowski.vercel.app'),
+  metadataBase: new URL('https://my-site-woad-ten.vercel.app'),
   title,
   description,
   keywords: ['Software Engineer', 'AI Engineer', 'Backend', 'Distributed Systems', 'LLM agents', 'Python', 'Go', 'TypeScript', 'AWS'],

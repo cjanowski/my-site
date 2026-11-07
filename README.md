@@ -1,4 +1,4 @@
-# coryjanowski.vercel.app
+# my-site-woad-ten.vercel.app
 
 Personal site. Next.js 14 (App Router), TypeScript, Tailwind, deployed on Vercel.
 
