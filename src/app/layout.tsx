@@ -18,8 +18,8 @@ export const metadata: Metadata = {
   keywords: ['Software Engineer', 'AI Engineer', 'Backend', 'Distributed Systems', 'LLM agents', 'Python', 'Go', 'TypeScript', 'AWS'],
   authors: [{ name: profile.name, url: profile.links.linkedin }],
   icons: { icon: '/favicon.svg', apple: '/favicon.svg' },
-  openGraph: { title, description, url: '/', siteName: profile.name, locale: 'en_US', type: 'profile', images: ['/portrait.jpeg'] },
-  twitter: { card: 'summary', title, description },
+  openGraph: { title, description, url: '/', siteName: profile.name, locale: 'en_US', type: 'profile' },
+  twitter: { card: 'summary_large_image', title, description },
   robots: { index: true, follow: true },
 }
 
