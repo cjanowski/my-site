@@ -1,105 +1,96 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Theme tokens as RGB channels so Tailwind's /<alpha> modifiers work. One neutral scale, one accent. */
 @layer base {
-
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  :root {
+    color-scheme: light;
+    --bg: 250 250 249;
+    --surface: 255 255 255;
+    --raised: 244 244 243;
+    --fg: 24 24 27;
+    --muted: 82 82 91;
+    --subtle: 140 140 150;
+    --line: 228 228 231;
+    --accent: 5 150 105;
+    --accent-fg: 255 255 255;
+    --code-kw: 147 51 234;
+    --code-str: 5 120 85;
+    --code-num: 194 65 12;
+    --code-key: 37 99 235;
+    --code-type: 190 24 93;
+  }
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+    --bg: 12 12 14;
+    --surface: 22 22 25;
+    --raised: 32 32 36;
+    --fg: 244 244 245;
+    --muted: 175 175 185;
+    --subtle: 120 120 130;
+    --line: 45 45 50;
+    --accent: 52 211 153;
+    --accent-fg: 6 30 22;
+    --code-kw: 192 132 252;
+    --code-str: 110 231 183;
+    --code-num: 253 186 116;
+    --code-key: 125 175 255;
+    --code-type: 244 114 182;
   }
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
-
   body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    @apply text-gray-800 bg-[#FCFCFC];
-    overflow-x: hidden;
-    position: relative;
-    /* Clean clear background with subtle mesh gradient will be added behind */
+    @apply bg-bg text-fg antialiased;
+    font-feature-settings: 'cv11', 'ss01';
   }
-
   ::selection {
-    @apply bg-primary-500/30 text-primary-600;
+    @apply bg-accent/25;
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent/60 ring-offset-2 ring-offset-bg rounded-md;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
   }
 }
 
 @layer components {
-  .section-padding {
-    @apply px-6 sm:px-8 lg:px-12 xl:px-16;
+  .container-content {
+    @apply mx-auto w-full max-w-content px-4 sm:px-6;
   }
-
-  .container-max {
-    @apply max-w-7xl mx-auto;
+  .section {
+    @apply py-20 sm:py-24 border-t border-line;
   }
-
-  /* --- Premium Glass System --- */
-
-  .glass-panel {
-    @apply backdrop-blur-[25px] bg-white/30 border border-white/50 shadow-glass rounded-[40px] transition-all duration-300;
+  .eyebrow {
+    @apply font-mono text-xs uppercase tracking-[0.18em] text-accent;
   }
-
-  .glass-panel:hover {
-    @apply shadow-glass-hover bg-white/40 border-white/70;
+  .heading {
+    @apply mt-2 text-3xl sm:text-4xl font-semibold tracking-tight text-fg;
   }
-
-  .glass-panel-heavy {
-    @apply backdrop-blur-[35px] bg-white/50 border border-white/70 shadow-glass-heavy rounded-[40px];
+  .card {
+    @apply rounded-2xl border border-line bg-surface;
   }
-
-  .glass-panel-subtle {
-    @apply backdrop-blur-md bg-white/20 border border-white/40 rounded-xl;
+  .chip {
+    @apply inline-flex items-center rounded-md border border-line bg-raised px-2 py-0.5 font-mono text-[11px] text-muted;
   }
-
-  .glass-card {
-    @apply glass-panel p-6 flex flex-col;
+  .btn {
+    @apply inline-flex items-center gap-2 rounded-lg border border-line bg-surface px-4 py-2 text-sm font-medium text-fg transition-colors hover:border-fg/30;
   }
-
-  /* Typography Enhancements */
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    @apply font-semibold tracking-tight;
+  .btn-primary {
+    @apply btn border-transparent bg-fg text-bg hover:bg-fg/85;
   }
-
-  .gradient-text {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-secondary-600;
+  .kbd {
+    @apply rounded border border-line bg-raised px-1.5 py-0.5 font-mono text-[10px] text-muted;
   }
-
-  .gradient-text-alt {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-accent-600 to-primary-600;
+  /* Faint dot grid behind the hero */
+  .grid-bg {
+    background-image: radial-gradient(rgb(var(--fg) / 0.07) 1px, transparent 1px);
+    background-size: 22px 22px;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, black 40%, transparent 100%);
   }
-
-  .glass-button {
-    @apply px-6 py-3 backdrop-blur-md bg-white/50 border border-white/60 text-gray-700 font-medium rounded-full shadow-sm hover:shadow-md hover:bg-white/70 transition-all duration-300;
-  }
-}
-
-/* Custom minimal scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(0, 0, 0, 0.2);
 }

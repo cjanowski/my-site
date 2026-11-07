@@ -1,105 +1,31 @@
-'use client'
-
-import { useState } from 'react'
-import Navigation from '@/components/Navigation'
+import Shell from '@/components/Shell'
 import Hero from '@/components/Hero'
-import Summary from '@/components/Summary'
-import Experience from '@/components/Experience'
-import Skills from '@/components/Skills'
-import Projects from '@/components/Projects'
-import Education from '@/components/Education'
-import CircuitBackground from '@/components/CircuitBackground'
-import DoomContainer from '@/components/DoomContainer'
-import { motion } from 'framer-motion'
+import { About, Education, Experience, Projects, Skills } from '@/components/Sections'
+import { profile } from '@/content/profile'
+import { yearsSince } from '@/lib/dates'
+
+// Durations ("7 mos") and years in industry are computed at render; re-render daily so they stay current.
+export const revalidate = 86400
 
 export default function Home() {
-  const [showDoom, setShowDoom] = useState(false)
-
-  const handleDoomClick = () => {
-    setShowDoom(true)
-    // Small delay to allow component to mount
-    setTimeout(() => {
-      const element = document.getElementById('doom')
-      if (element) {
-        const headerOffset = 80
-        const elementPosition = element.getBoundingClientRect().top
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        })
-      }
-    }, 100)
-  }
-
   return (
-    <>
-      <CircuitBackground />
-      <Navigation onDoomClick={handleDoomClick} />
-      <main className="min-h-screen relative z-10">
-        <div id="home">
-          <Hero />
-        </div>
-
-        <div id="about">
-          <Summary />
-        </div>
-
-        <div id="experience">
-          <Experience />
-        </div>
-
-        <div id="projects">
-          <Projects />
-        </div>
-
-        <div id="education">
-          <Education />
-        </div>
-
-        <div id="skills">
-          <Skills />
-        </div>
-
-        {/* Secret Retro Gaming Corner */}
-        {showDoom && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            transition={{ duration: 0.5 }}
-            className="border-t border-gray-200"
-          >
-            <DoomContainer />
-          </motion.div>
-        )}
-
-        {/* Footer */}
-        <footer className="py-12 section-padding bg-white/40 backdrop-blur-md mt-0 border-t border-gray-200">
-          <div className="container-max">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="text-center"
-            >
-              <div className="flex justify-center mb-8">
-                <div className="w-full max-w-xs h-1 bg-gradient-to-r from-transparent via-primary-300 to-transparent opacity-50" />
-              </div>
-
-              <p className="text-gray-800 mb-4 font-medium">
-                © {new Date().getFullYear()} Cory Janowski. All rights reserved.
-              </p>
-              <p className="text-gray-600 text-sm font-medium">
-                System Status: <span className="text-primary-600 font-bold">OPERATIONAL</span>
-              </p>
-              <p className="text-gray-500 text-xs mt-2">
-                Built with Next.js, TypeScript, Tailwind CSS, and Framer Motion
-              </p>
-            </motion.div>
-          </div>
-        </footer>
+    <Shell>
+      <main>
+        <Hero years={yearsSince(profile.careerStart)} />
+        <About />
+        <Experience />
+        <Projects />
+        <Skills />
+        <Education />
       </main>
-    </>
+      <footer className="border-t border-line py-10">
+        <div className="container-content flex flex-col gap-2 text-sm text-subtle sm:flex-row sm:items-center sm:justify-between">
+          <p>© {new Date().getFullYear()} {profile.name}</p>
+          <p className="font-mono text-xs">
+            Next.js · TypeScript · Tailwind · press <kbd className="kbd">⌘K</kbd>, or try the Konami code
+          </p>
+        </div>
+      </footer>
+    </Shell>
   )
 }
